@@ -56,7 +56,7 @@
         /// <value>{{description}}</value>{{/description}}
         [DataMember(Name="{{baseName}}", EmitDefaultValue={{#isNullable}}true{{/isNullable}}{{^isNullable}}false{{/isNullable}})]{{#isDate}}
         [JsonConverter(typeof(OpenAPIDateConverter))]{{/isDate}}
-        public {{{dataType}}}{{#isPrimitiveType}}{{^isString}}?{{/isString}}{{is}}{{/isPrimitiveType}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
+        public {{{dataType}}}{{#isPrimitiveType}}{{^isString}}{{^isContainer}}?{{/isContainer}}{{/isString}}{{is}}{{/isPrimitiveType}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
 
         {{/isEnum}}
         {{/isInherited}}
