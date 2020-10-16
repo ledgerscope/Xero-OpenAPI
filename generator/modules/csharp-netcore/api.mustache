@@ -87,6 +87,8 @@ namespace {{packageName}}.{{apiPackage}}
 
         public string AccessToken { get; set; }
 
+        public ISlidingRateLimiter RateLimiter { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="{{classname}}"/> class
         /// using Configuration object
@@ -296,7 +298,11 @@ namespace {{packageName}}.{{apiPackage}}
             {{/isOAuth}}
 
             {{/authMethods}}
-      
+
+            if (RateLimiter != null)
+            {
+                await RateLimiter.WaitUntilLimitAsync(default);
+            }      
 
             var response = await this.AsynchronousClient.{{#lambda.titlecase}}{{#lambda.lowercase}}{{httpMethod}}{{/lambda.lowercase}}{{/lambda.titlecase}}Async<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}>("{{{path}}}", requestOptions, this.Configuration);
 
