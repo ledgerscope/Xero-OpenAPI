@@ -1,0 +1,73 @@
+name: CSharp Xero SDK generator
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-dotnet@v1
+
+    - name: Setup NuGet
+      run: dotnet nuget add source "https://pkgs.dev.azure.com/ledgerscope/_packaging/LSFeed/nuget/v3/index.json" --name LSFeed -u ledgerscope --password ${{ secrets.LEDGERSCOPEDEVOPS }} --store-password-in-clear-text
+
+    - name: generate csharp Accounting
+      uses: docker://openapitools/openapi-generator-cli:v4.2.0
+      with:
+        args: generate -t ./generator/modules/csharp-netcore -i ./xero_accounting.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/dotnet-oauth2-accounting.json
+    - name: generate csharp Assets
+      if: false
+      uses: docker://openapitools/openapi-generator-cli:v4.2.0
+      with:
+        args: generate -t ./generator/modules/csharp-netcore -i ./xero_assets.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/dotnet-oauth2-accounting.json
+    - name: generate csharp Bankfeeds
+      if: false
+      uses: docker://openapitools/openapi-generator-cli:v4.2.0
+      with:
+        args: generate -t ./generator/modules/csharp-netcore -i ./xero_bankfeeds.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/dotnet-oauth2-accounting.json
+    - name: generate csharp Files
+      if: false
+      uses: docker://openapitools/openapi-generator-cli:v4.2.0
+      with:
+        args: generate -t ./generator/modules/csharp-netcore -i ./xero_files.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/dotnet-oauth2-accounting.json
+    - name: generate csharp Identity
+      if: false
+      uses: docker://openapitools/openapi-generator-cli:v4.2.0
+      with:
+        args: generate -t ./generator/modules/csharp-netcore -i ./xero-identity.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/dotnet-oauth2-accounting.json
+    - name: generate csharp Projects
+      if: false
+      uses: docker://openapitools/openapi-generator-cli:v4.2.0
+      with:
+        args: generate -t ./generator/modules/csharp-netcore -i ./xero-projects.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/dotnet-oauth2-accounting.json
+    
+    - name: Update permissions
+      run: sudo chmod 777 -R .
+
+    - name: Install dependencies
+      run: dotnet restore
+      working-directory: ./output/csharp-netcore/accounting
+    
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+      working-directory: ./output/csharp-netcore/accounting
+    
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal
+      working-directory: ./output/csharp-netcore/accounting
+
+    - name: Package
+      run: dotnet pack -p:PackageVersion=4.0.$GITHUB_RUN_NUMBER
+      working-directory: ./output/csharp-netcore/accounting
+
+    - name: Publish
+      run: dotnet nuget push -s LSFeed --api-key az "**/*.nupkg"
+      working-directory: ./output/csharp-netcore/accounting
+
+    - uses: actions/upload-artifact@v2
+      if: success()
+      with:
+       name: Packages
+       path: ./**/*.nupkg
