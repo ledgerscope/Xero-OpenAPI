@@ -380,6 +380,9 @@ namespace {{packageName}}.Client
             return transformed;
         }
 
+        static string[] _jsonTypes = new[] { "application/json", "text/json", "text/x-json", "text/javascript", "*+json", "*" };
+        static string[] _xmlTypes = new[] { "application/xml", "text/xml", "*+xml" };
+
         private {{#supportsAsync}}async Task<ApiResponse<T>>{{/supportsAsync}}{{^supportsAsync}}ApiResponse<T>{{/supportsAsync}} Exec<T>(RestRequest req, IReadableConfiguration configuration, CancellationToken cancellationToken)
         {
             RestClient client = new RestClient(_baseUrl);
@@ -388,15 +391,21 @@ namespace {{packageName}}.Client
             var existingDeserializer = req.JsonSerializer as IDeserializer;
             if (existingDeserializer != null)
             {
-                client.AddHandler(existingDeserializer, "application/json", "text/json", "text/x-json", "text/javascript", "*+json", "*");
+                foreach (var item in _jsonTypes)
+                    client.AddHandler(item, () => existingDeserializer);
             }
             else
             {
                 var codec = new CustomJsonCodec(configuration);
-                client.AddHandler(codec, "application/json", "text/json", "text/x-json", "text/javascript", "*+json", "*");
+                foreach (var item in _jsonTypes)
+                    client.AddHandler(item, () => codec);
             }
 
-            client.AddHandler(new XmlDeserializer(), "application/xml", "text/xml", "*+xml");
+            foreach (var item in _xmlTypes)
+            {
+                var xmlDeserializer = new XmlDeserializer();
+                client.AddHandler(item, () => xmlDeserializer);
+            }
 
             client.Timeout = configuration.Timeout;
 
