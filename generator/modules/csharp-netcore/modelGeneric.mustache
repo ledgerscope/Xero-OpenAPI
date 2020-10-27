@@ -58,11 +58,16 @@
         [JsonConverter(typeof(OpenAPIDateConverter))]{{/isDate}}
         {{#vendorExtensions.x-is-msdate-time}}
         public DateTime {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
-        
+
         {{/vendorExtensions.x-is-msdate-time}}
         {{^vendorExtensions.x-is-msdate-time}}
         public {{{dataType}}}{{#isPrimitiveType}}{{^isString}}{{^isContainer}}{{^isByteArray}}?{{/isByteArray}}{{/isContainer}}{{/isString}}{{is}}{{/isPrimitiveType}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
 
+        {{#vendorExtensions.x-entity-identifier}}
+        
+        public Guid Id => {{name}};
+
+        {{/vendorExtensions.x-entity-identifier}}
         {{/vendorExtensions.x-is-msdate-time}}
         {{/isEnum}}
         {{/isInherited}}

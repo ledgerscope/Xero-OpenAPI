@@ -23025,6 +23025,7 @@ components:
           type: string
           format: uuid
           example: 00000000-0000-0000-0000-000000000000
+          x-entity-identifier: true
         Type:
           $ref: '#/components/schemas/AccountType'
           type: string
@@ -23335,6 +23336,7 @@ components:
           type: string
           format: uuid
           example: "00000000-0000-0000-0000-000000000000"
+          x-entity-identifier: true
         Description:
           description: Description needs to be at least 1 char long. A line item with just
             a description (i.e no unit amount or quantity) can be created by
@@ -23471,6 +23473,7 @@ components:
           readOnly: true
           type: string
           format: uuid
+          x-entity-identifier: true
         CurrencyRate:
           description: The currency rate
           readOnly: true
@@ -23560,6 +23563,7 @@ components:
           readOnly: true
           type: string
           format: uuid
+          x-entity-identifier: true
         DateString:
           description: Date the payment is being made (YYYY-MM-DD) e.g. 2009-09-06
           type: string
@@ -23725,6 +23729,7 @@ components:
           description: Xero identifier
           type: string
           format: uuid
+		  x-entity-identifier: true
         MergedToContactID:
           description: ID for the destination of a merged contact. 
             Only returned when using paging or when fetching a contact by ContactId or ContactNumber.
@@ -24220,6 +24225,7 @@ components:
           description: Xero generated unique identifier
           type: string
           format: uuid
+          x-entity-identifier: true
         CreditNoteNumber:
           description: ACCRECCREDIT – Unique alpha numeric code identifying credit note
             (when missing will auto-generate from your Organisation Invoice
@@ -24968,6 +24974,7 @@ components:
           description: Xero generated unique identifier for invoice
           type: string
           format: uuid
+          x-entity-identifier: true
         RepeatingInvoiceID:
           description: Xero generated unique identifier for repeating invoices
           type: string
@@ -25468,6 +25475,7 @@ components:
           description: The Xero identifier for a Manual Journal
           type: string
           format: uuid
+          x-entity-identifier: true
         StatusAttributeString:
           description: A string to indicate if a invoice status
           type: string
@@ -26232,6 +26240,7 @@ components:
           description: Xero generated unique identifier
           type: string
           format: uuid
+          x-entity-identifier: true
         CurrencyRate:
           description: The currency rate for a multicurrency overpayment. If no rate is
             specified, the XE.com day rate is used
@@ -26368,6 +26377,7 @@ components:
           description: The Xero identifier for an Payment e.g. 297c2dc5-cc47-4afd-8ec8-74990b8761e9
           type: string
           format: uuid
+          x-entity-identifier: true
           example: 00000000-0000-0000-0000-000000000000
         BatchPaymentID:
           description: Present if the payment was created as part of a batch.
