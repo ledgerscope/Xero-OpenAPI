@@ -56,8 +56,14 @@
         /// <value>{{description}}</value>{{/description}}
         [DataMember(Name="{{baseName}}", EmitDefaultValue={{#isNullable}}true{{/isNullable}}{{^isNullable}}false{{/isNullable}})]{{#isDate}}
         [JsonConverter(typeof(OpenAPIDateConverter))]{{/isDate}}
+        {{#vendorExtensions.x-is-msdate-time}}
+        public DateTime {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
+        
+        {{/vendorExtensions.x-is-msdate-time}}
+        {{^vendorExtensions.x-is-msdate-time}}
         public {{{dataType}}}{{#isPrimitiveType}}{{^isString}}{{^isContainer}}{{^isByteArray}}?{{/isByteArray}}{{/isContainer}}{{/isString}}{{is}}{{/isPrimitiveType}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
 
+        {{/vendorExtensions.x-is-msdate-time}}
         {{/isEnum}}
         {{/isInherited}}
         {{/vars}}
