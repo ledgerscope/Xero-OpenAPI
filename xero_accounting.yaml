@@ -25324,7 +25324,6 @@ components:
           type: number
           format: double
           x-is-money: true
-          readOnly: true
           example: 0.00
         TaxType:
           description: The tax type from TaxRates
