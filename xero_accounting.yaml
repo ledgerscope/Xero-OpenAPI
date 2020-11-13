@@ -25234,7 +25234,6 @@ components:
           type: string
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
-          readOnly: true
         Reference:
           description: reference field for additional indetifying information
           type: string
