@@ -23285,13 +23285,11 @@ components:
           example: "00000000-0000-0000-0000-000000000000"
         PrepaymentID:
           description: Xero generated unique identifier for a Prepayment. This will be returned on BankTransactions with a Type of SPEND-PREPAYMENT or RECEIVE-PREPAYMENT
-          readOnly: true
           type: string
           format: uuid
           example: "00000000-0000-0000-0000-000000000000"
         OverpaymentID:
           description: Xero generated unique identifier for an Overpayment. This will be returned on BankTransactions with a Type of SPEND-OVERPAYMENT or RECEIVE-OVERPAYMENT
-          readOnly: true
           type: string
           format: uuid
           example: "00000000-0000-0000-0000-000000000000"
