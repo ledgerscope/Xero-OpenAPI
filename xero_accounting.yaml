@@ -27360,6 +27360,7 @@ components:
           description: The opening balances of the account. Debits are positive, credits are negative values
           type: number
           format: double
+          x-is-money: true
         BalanceDetails:
           type: array
           items:
@@ -27372,6 +27373,7 @@ components:
           description: The opening balances of the account. Debits are positive, credits are negative values
           type: number
           format: double
+          x-is-money: true
         CurrencyCode:
           description: The currency of the balance (Not required for base currency)
           type: string
