@@ -23015,6 +23015,7 @@ components:
             length = 10)
           type: string
           example: 4400
+          maxLength: 10
         Name:
           description: Name of account (max length = 150)
           maxLength: 150
@@ -23234,6 +23235,7 @@ components:
             Reference for the transaction. Only supported for SPEND and RECEIVE
             transactions.
           type: string
+          maxLength: 250
         CurrencyCode:
           $ref: '#/components/schemas/CurrencyCode'
           type: string
@@ -23334,6 +23336,7 @@ components:
             specifying just a <Description> element that contains at least 1
             character
           type: string
+          maxLength: 4000
         Quantity:
           description: LineItem Quantity
           type: number
@@ -27504,6 +27507,7 @@ components:
         Name:
           description: Name of Tax Component
           type: string
+          maxLength: 50
         Rate:
           description: Tax Rate (up to 4dp)
           type: number
