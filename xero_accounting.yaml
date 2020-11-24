@@ -25222,6 +25222,7 @@ components:
           - EXTERNALSPENDMONEY
           - INTEGRATEDPAYROLLPTPAYMENT
           - INTEGRATEDPAYROLLCN
+          - INTEGRATEDPAYROLLPLL
         JournalLines:
           description: See JournalLines
           type: array
