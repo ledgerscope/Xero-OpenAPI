@@ -16,32 +16,32 @@ jobs:
     - name: generate csharp Accounting
       uses: docker://openapitools/openapi-generator-cli:v4.2.0
       with:
-        args: generate -t ./generator/modules/csharp-netcore -i ./xero_accounting.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/dotnet-oauth2-accounting.json
+        args: generate -t ./generator/modules/csharp-netcore -i ./xero_accounting.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/config.yml
     - name: generate csharp Assets
       if: false
       uses: docker://openapitools/openapi-generator-cli:v4.2.0
       with:
-        args: generate -t ./generator/modules/csharp-netcore -i ./xero_assets.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/dotnet-oauth2-accounting.json
+        args: generate -t ./generator/modules/csharp-netcore -i ./xero_assets.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/config.yml
     - name: generate csharp Bankfeeds
       if: false
       uses: docker://openapitools/openapi-generator-cli:v4.2.0
       with:
-        args: generate -t ./generator/modules/csharp-netcore -i ./xero_bankfeeds.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/dotnet-oauth2-accounting.json
+        args: generate -t ./generator/modules/csharp-netcore -i ./xero_bankfeeds.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/config.yml
     - name: generate csharp Files
       if: false
       uses: docker://openapitools/openapi-generator-cli:v4.2.0
       with:
-        args: generate -t ./generator/modules/csharp-netcore -i ./xero_files.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/dotnet-oauth2-accounting.json
+        args: generate -t ./generator/modules/csharp-netcore -i ./xero_files.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/config.yml
     - name: generate csharp Identity
       if: false
       uses: docker://openapitools/openapi-generator-cli:v4.2.0
       with:
-        args: generate -t ./generator/modules/csharp-netcore -i ./xero-identity.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/dotnet-oauth2-accounting.json
+        args: generate -t ./generator/modules/csharp-netcore -i ./xero-identity.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/config.yml
     - name: generate csharp Projects
       if: false
       uses: docker://openapitools/openapi-generator-cli:v4.2.0
       with:
-        args: generate -t ./generator/modules/csharp-netcore -i ./xero-projects.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/dotnet-oauth2-accounting.json
+        args: generate -t ./generator/modules/csharp-netcore -i ./xero-projects.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/config.yml
     
     - name: Update permissions
       run: sudo chmod 777 -R .
