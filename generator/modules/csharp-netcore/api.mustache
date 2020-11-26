@@ -90,6 +90,7 @@ namespace {{packageName}}.{{apiPackage}}
         }
 
         public string AccessToken { get; set; }
+        public string TenantId { get; set; }
 
         public TimeLimiter RateLimiter { get; set; }
 
@@ -196,6 +197,8 @@ namespace {{packageName}}.{{apiPackage}}
         {{/allParams}}/// <returns>Task of ApiResponse{{#returnType}} ({{returnType}}){{/returnType}}</returns>
         public async System.Threading.Tasks.Task<{{packageName}}.Client.ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}>> {{operationId}}AsyncWithHttpInfo ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}, {{/allParams}}CancellationToken ct = default)
         {
+            xeroTenantId ??= TenantId;
+            
             {{#allParams}}
             {{^isNullable}}
             {{#required}}
