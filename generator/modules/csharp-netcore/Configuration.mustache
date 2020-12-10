@@ -61,6 +61,14 @@ namespace {{packageName}}.Client
 
                     }
                     return new ApiException(status, string.Format("{0}:{1}", error.Message, validationBuilder.ToString()), error);
+                case int code when status == 401:
+                    return new AuthorisationApiException(
+                                        string.Format("Error calling {0}: {1}", methodName, response.Content),
+                                        response.Content);
+                case int code when status == 403:
+                    return new AuthenticationApiException(
+                                        string.Format("Error calling {0}: {1}", methodName, response.Content),
+                                        response.Content);
                 case int code when status > 400:
                     return new ApiException(status,
                                        string.Format("Error calling {0}: {1}", methodName, response.Content),
