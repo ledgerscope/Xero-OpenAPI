@@ -11,7 +11,8 @@
     [JsonSubtypes.KnownSubType(typeof({{{modelName}}}), "{{{mappingName}}}")]
     {{/mappedModels}}
     {{/discriminator}}
-    {{>visibility}} partial class {{classname}} : {{#parent}}{{{parent}}}, {{/parent}} IEquatable<{{classname}}>{{#validatable}}, IValidatableObject{{/validatable}}
+    {{>visibility}} partial class {{classname}} : {{#parent}}{{{parent}}}, {{/parent}} IEquatable<{{classname}}>{{#validatable}}, IValidatableObject{{/validatable}} 
+        {{#vars}}{{#vendorExtensions.x-entity-identifier}}, IHasId{{/vendorExtensions.x-entity-identifier}}{{/vars}}
     {
         {{#vars}}
         {{#items.isEnum}}
