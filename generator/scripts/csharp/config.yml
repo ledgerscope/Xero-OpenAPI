@@ -4,11 +4,4 @@ targetFramework: "netstandard2.0"
 optionalAssemblyInfo: false
 netCoreProjectFile: true
 returnICollection: true
-
-files:
-  local/src/Interfaces.cs:
-    folder: src/Xero.NetStandard.OAuth2/
-    destinationFileName: Interfaces.cs
-  local/src/RateLimiter.cs:
-    folder: src/Xero.NetStandard.OAuth2/
-    destinationFileName: RateLimiter.cs
+useCollection: true
