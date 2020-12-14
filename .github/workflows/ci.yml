@@ -46,6 +46,9 @@ jobs:
     - name: Update permissions
       run: sudo chmod 777 -R .
 
+    - name: Copy additional code files
+      run: cp -r ./src ./output/csharp-netcore/accounting/src/Xero.NetStandard.OAuth2/
+
     - name: Install dependencies
       run: dotnet restore
       working-directory: ./output/csharp-netcore/accounting
