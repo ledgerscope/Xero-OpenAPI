@@ -12,7 +12,10 @@
     {{/mappedModels}}
     {{/discriminator}}
     {{>visibility}} partial class {{classname}} : {{#parent}}{{{parent}}}, {{/parent}} IEquatable<{{classname}}>{{#validatable}}, IValidatableObject{{/validatable}} 
-        {{#vars}}{{#vendorExtensions.x-entity-identifier}}, IHasId{{/vendorExtensions.x-entity-identifier}}{{/vars}}
+        {{#vars}}
+        {{#vendorExtensions.x-entity-identifier}}, IHasId{{/vendorExtensions.x-entity-identifier}}
+        {{#vendorExtensions.x-is-updated-date}}, IHasUpdatedDate{{/vendorExtensions.x-is-updated-date}}
+        {{/vars}}
     {
         {{#vars}}
         {{#items.isEnum}}

@@ -6,6 +6,11 @@ namespace Xero.NetStandard.OAuth2.Model
     {
         public Guid Id { get; }
     }
+
+    public interface IHasUpdatedDate
+    {
+        public DateTime UpdatedDateUTC { get; }
+    }
     
     public interface IXeroEntity
     {

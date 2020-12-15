@@ -23120,6 +23120,7 @@ components:
           type: string
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
+          x-is-updated-date: true
         AddToWatchlist:
           description: Boolean – describes whether the account is shown in the watchlist widget on the dashboard
           type: boolean
@@ -23295,6 +23296,7 @@ components:
           type: string
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
+          x-is-updated-date: true
         HasAttachments:
           description: Boolean to indicate if a bank transaction has an attachment
           type: boolean
@@ -23589,6 +23591,7 @@ components:
           type: string
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
+          x-is-updated-date: true
         IsReconciled:
           description: Booelan that tells you if the batch payment has been reconciled (read-only)
           type: string
@@ -23852,6 +23855,7 @@ components:
           type: string
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
+          x-is-updated-date: true
         ContactGroups:
           description: Displays which contact groups a contact is included in
           type: array
@@ -24190,6 +24194,7 @@ components:
           type: string
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
+          x-is-updated-date: true
         CurrencyCode:
           description: The specified currency code
           $ref: '#/components/schemas/CurrencyCode'
@@ -24705,6 +24710,7 @@ components:
           type: string
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
+          x-is-updated-date: true
         StatusAttributeString:
           description: A string to indicate if a invoice status
           type: string
@@ -24756,6 +24762,7 @@ components:
           type: string
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
+          x-is-updated-date: true
         Total:
           description: The total of an expense claim being paid
           type: number
@@ -24990,6 +24997,7 @@ components:
           type: string
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
+          x-is-updated-date: true
         CreditNotes:
           description: Details of credit notes that have been applied to an invoice
           type: array
@@ -25121,6 +25129,7 @@ components:
           type: string
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
+          x-is-updated-date: true
         ItemID:
           description: The Xero identifier for an Item
           type: string
@@ -25351,6 +25360,7 @@ components:
           type: string
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
+          x-is-updated-date: true
         SourceTransactionTypeCode:
           description:  The Type of the source tranasction. This will be ACCPAY if the
             linked transaction was created from an invoice and SPEND if it was
@@ -25418,6 +25428,7 @@ components:
           type: string
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
+          x-is-updated-date: true
         ManualJournalID:
           description: The Xero identifier for a Manual Journal
           type: string
@@ -26178,6 +26189,7 @@ components:
           type: string
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
+          x-is-updated-date: true
         CurrencyCode:
           $ref: '#/components/schemas/CurrencyCode'
           type: string
@@ -26315,6 +26327,7 @@ components:
           type: string
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
+          x-is-updated-date: true
         PaymentID:
           description: The Xero identifier for an Payment e.g. 297c2dc5-cc47-4afd-8ec8-74990b8761e9
           type: string
@@ -26418,6 +26431,7 @@ components:
           type: string
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
+          x-is-updated-date: true
         CurrencyCode:
           $ref: '#/components/schemas/CurrencyCode'
           type: string
@@ -26576,6 +26590,7 @@ components:
           type: string
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
+          x-is-updated-date: true
         StatusAttributeString:
           description: A string to indicate if a invoice status
           type: string
@@ -26692,6 +26707,7 @@ components:
           type: string
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
+          x-is-updated-date: true
         LineAmountTypes:
           $ref: '#/components/schemas/QuoteLineAmountTypes'
           type: string
@@ -26788,6 +26804,7 @@ components:
           type: string
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
+          x-is-updated-date: true
         HasAttachments:
           description: boolean to indicate if a receipt has an attachment
           type: boolean
@@ -26934,6 +26951,7 @@ components:
           type: string
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
+          x-is-updated-date: true
         Fields:
           type: array
           items:
@@ -27028,6 +27046,7 @@ components:
           type: string
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
+          x-is-updated-date: true
         Contacts:
           type: array
           items:
@@ -27638,6 +27657,7 @@ components:
           type: string
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
+          x-is-updated-date: true
         IsSubscriber:
           description: Boolean to indicate if user is the subscriber
           type: boolean
