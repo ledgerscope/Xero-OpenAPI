@@ -22331,6 +22331,7 @@ components:
       schema:
         type: string
       required: true
+      x-universal: true
     summarizeErrors:
       in: query
       name: summarizeErrors
@@ -22341,6 +22342,7 @@ components:
       schema:
         type: boolean
         default: false
+      x-universal: true
     unitdp:
       in: query
       name: unitdp
@@ -22348,6 +22350,7 @@ components:
       example: 4
       schema:
         type: integer
+      x-universal: true
     ifModifiedSince:
       in: header
       name: If-Modified-Since
@@ -22357,6 +22360,7 @@ components:
       schema:
         type: string
         format: date-time
+      x-universal: true
     includeOnline:
       in: query
       name: IncludeOnline
