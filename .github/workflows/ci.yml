@@ -18,32 +18,32 @@ jobs:
       run: dotnet nuget add source "https://pkgs.dev.azure.com/ledgerscope/_packaging/LSFeed/nuget/v3/index.json" --name LSFeed -u ledgerscope --password ${{ secrets.LEDGERSCOPEDEVOPS }} --store-password-in-clear-text
 
     - name: generate csharp Accounting
-      uses: docker://openapitools/openapi-generator-cli:latest-release
+      uses: docker://openapitools/openapi-generator-cli:latest
       with:
         args: generate -t ./generator/modules/csharp-netcore -i ./xero_accounting.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/config.yml
     - name: generate csharp Assets
       if: false
-      uses: docker://openapitools/openapi-generator-cli:latest-release
+      uses: docker://openapitools/openapi-generator-cli:latest
       with:
         args: generate -t ./generator/modules/csharp-netcore -i ./xero_assets.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/config.yml
     - name: generate csharp Bankfeeds
       if: false
-      uses: docker://openapitools/openapi-generator-cli:latest-release
+      uses: docker://openapitools/openapi-generator-cli:latest
       with:
         args: generate -t ./generator/modules/csharp-netcore -i ./xero_bankfeeds.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/config.yml
     - name: generate csharp Files
       if: false
-      uses: docker://openapitools/openapi-generator-cli:latest-release
+      uses: docker://openapitools/openapi-generator-cli:latest
       with:
         args: generate -t ./generator/modules/csharp-netcore -i ./xero_files.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/config.yml
     - name: generate csharp Identity
       if: false
-      uses: docker://openapitools/openapi-generator-cli:latest-release
+      uses: docker://openapitools/openapi-generator-cli:latest
       with:
         args: generate -t ./generator/modules/csharp-netcore -i ./xero-identity.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/config.yml
     - name: generate csharp Projects
       if: false
-      uses: docker://openapitools/openapi-generator-cli:latest-release
+      uses: docker://openapitools/openapi-generator-cli:latest
       with:
         args: generate -t ./generator/modules/csharp-netcore -i ./xero-projects.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/config.yml
     
