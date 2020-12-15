@@ -96,6 +96,18 @@ namespace {{packageName}}.{{apiPackage}}
 
         public TimeLimiter RateLimiter { get; set; }
 
+        private void populateRateLimiterIfNeeded(IApiResponse response)
+        {
+            if (RateLimiter == null)
+            {
+                if (response.Headers.TryGetValue("X-MinLimit-Remaining", out var rateLimitRemaining))
+                {
+                    if (rateLimitRemaining.Any(a => int.Parse(a) < 60))
+                        RateLimiter = TimeLimiter.GetFromMaxCountByInterval(59, TimeSpan.FromSeconds(61));
+                }
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="{{classname}}"/> class
         /// using Configuration object
@@ -317,14 +329,7 @@ namespace {{packageName}}.{{apiPackage}}
 
             var response = await this.AsynchronousClient.{{#lambda.titlecase}}{{#lambda.lowercase}}{{httpMethod}}{{/lambda.lowercase}}{{/lambda.titlecase}}Async<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}>("{{{path}}}", requestOptions, this.Configuration);
 
-            if (RateLimiter == null)
-            {
-                if (response.Headers.TryGetValue("X-MinLimit-Remaining", out var rateLimitRemaining))
-                {
-                    if (rateLimitRemaining.Any(a => int.Parse(a) < 60))
-                        RateLimiter = TimeLimiter.GetFromMaxCountByInterval(59, TimeSpan.FromSeconds(61));
-                }
-            }
+            populateRateLimiterIfNeeded(response);
 
             if (this.ExceptionFactory != null)
             {
