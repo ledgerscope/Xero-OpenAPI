@@ -4,4 +4,4 @@ targetFramework: "netstandard2.0"
 optionalAssemblyInfo: false
 netCoreProjectFile: true
 returnICollection: true
-useCollection: true
+useCollection: false #This is not ICollection
