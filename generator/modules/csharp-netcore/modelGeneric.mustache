@@ -278,3 +278,13 @@
         }
 {{/validatable}}
     }
+
+        {{#vendorExtensions.x-isObjectArray}}{{#vars}}{{#isListContainer}}
+        {{>visibility}} partial class {{classname}} : IXeroCollection<{{{dataType}}}>
+        {
+            {{{dataType}}} IXeroCollection<{{{dataType}}}>.Collection => {{{name}}};
+        }
+
+        {{/isListContainer}}
+        {{/vars}}{{/vendorExtensions.x-isObjectArray}}
+    
