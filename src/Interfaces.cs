@@ -13,9 +13,9 @@ namespace Xero.NetStandard.OAuth2.Model
         public DateTime UpdatedDateUTC { get; }
     }
     
-    public interface IXeroCollection<T>
+    public interface IXeroCollection<T, V>
     {
-        public T Collection { get; }
+        public V Collection { get; set; }
     }
 
     public interface IHasLineItems

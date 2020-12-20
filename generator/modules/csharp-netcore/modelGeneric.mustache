@@ -280,9 +280,13 @@
     }
 
         {{#vendorExtensions.x-isObjectArray}}{{#vars}}{{#isListContainer}}
-        {{>visibility}} partial class {{classname}} : IXeroCollection<{{{dataType}}}>
+        {{>visibility}} partial class {{classname}} : IXeroCollection<{{classname}}, {{{dataType}}}>
         {
-            {{{dataType}}} IXeroCollection<{{{dataType}}}>.Collection => {{{name}}};
+            {{{dataType}}} IXeroCollection<{{classname}}, {{{dataType}}}>.Collection 
+            {
+                get => {{{name}}};
+                set => {{{name}}} = value;
+            }
         }
 
         {{/isListContainer}}
