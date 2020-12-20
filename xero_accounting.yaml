@@ -23223,6 +23223,7 @@ components:
           $ref: '#/components/schemas/Contact'
         LineItems:
           description: See LineItems
+          x-is-lineitem: true
           type: array
           items:
             $ref: '#/components/schemas/LineItem'
@@ -24163,6 +24164,7 @@ components:
           type: string
         LineItems:
           description: See Invoice Line Items
+          x-is-lineitem: true
           type: array
           items:
             $ref: '#/components/schemas/LineItem'
@@ -24849,6 +24851,7 @@ components:
         Contact:
           $ref: '#/components/schemas/Contact'
         LineItems:
+          x-is-lineitem: true
           description: See LineItems
           type: array
           items:
@@ -26170,6 +26173,7 @@ components:
           type: string
         LineItems:
           description: See Overpayment Line Items
+          x-is-lineitem: true
           type: array
           items:
             $ref: '#/components/schemas/LineItem'
@@ -26409,6 +26413,7 @@ components:
           type: string
         LineItems:
           description: See Prepayment Line Items
+          x-is-lineitem: true
           type: array
           items:
             $ref: '#/components/schemas/LineItem'
@@ -26496,6 +26501,7 @@ components:
           $ref: '#/components/schemas/Contact'
         LineItems:
           description: See LineItems
+          x-is-lineitem: true
           type: array
           items:
             $ref: '#/components/schemas/LineItem'
@@ -26647,6 +26653,7 @@ components:
           type: string
         LineItems:
           description: See LineItems
+          x-is-lineitem: true
           type: array
           items:
             $ref: '#/components/schemas/LineItem'
@@ -26762,6 +26769,7 @@ components:
           $ref: '#/components/schemas/Contact'
         LineItems:
           type: array
+          x-is-lineitem: true
           items:
             $ref: '#/components/schemas/LineItem'
         User:
@@ -26857,6 +26865,7 @@ components:
           $ref: '#/components/schemas/Schedule'
         LineItems:
           description: See LineItems
+          x-is-lineitem: true
           type: array
           items:
             $ref: '#/components/schemas/LineItem'

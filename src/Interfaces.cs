@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Xero.NetStandard.OAuth2.Model
 {
@@ -17,4 +18,8 @@ namespace Xero.NetStandard.OAuth2.Model
         public T Collection { get; }
     }
 
+    public interface IHasLineItems
+    {
+        ICollection<LineItem> LineItems { get; }
+    }
 }

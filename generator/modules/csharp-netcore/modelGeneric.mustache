@@ -288,3 +288,11 @@
         {{/isListContainer}}
         {{/vars}}{{/vendorExtensions.x-isObjectArray}}
     
+        {{#vars}}{{#vendorExtensions.x-is-lineitem}}
+        {{>visibility}} partial class {{classname}} : IHasLineItems
+        {
+            ICollection<LineItem> IHasLineItems.LineItems => LineItems;
+        }
+
+        {{/vendorExtensions.x-is-lineitem}}
+        {{/vars}}
