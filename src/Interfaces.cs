@@ -12,14 +12,9 @@ namespace Xero.NetStandard.OAuth2.Model
         public DateTime UpdatedDateUTC { get; }
     }
     
-    public interface IXeroEntity
+    public interface IXeroCollection<T>
     {
-
+        public T Collection { get; }
     }
 
-    public partial class Account : IXeroEntity {}
-
-    public partial class Attachment : IXeroEntity {}
-    
-    public partial class Contact : IXeroEntity {}
 }
