@@ -196,7 +196,6 @@
         }
 
 {{#validatable}}
-{{#discriminator}}
         /// <summary>
         /// To validate all properties of the instance
         /// </summary>
@@ -212,22 +211,12 @@
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        protected IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> BaseValidate(ValidationContext validationContext)
+        protected {{#parent}}override{{/parent}} {{^parent}}virtual{{/parent}} IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> BaseValidate(ValidationContext validationContext)
         {
-{{/discriminator}}
-{{^discriminator}}
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-        {
-{{/discriminator}}
             {{#parent}}
             {{^isArrayModel}}
             {{^isMapModel}}
-            foreach(var x in BaseValidate(validationContext)) yield return x;
+            foreach(var x in base.BaseValidate(validationContext)) yield return x;
             {{/isMapModel}}
             {{/isArrayModel}}
             {{/parent}}
