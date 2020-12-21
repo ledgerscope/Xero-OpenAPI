@@ -22902,6 +22902,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ValidationError'
+    LastUpdatedDate:
+      type: object
+      properties:
+        UpdatedDateUTC:
+          description: Last modified date UTC format
+          type: string
+          x-is-msdate-time: true
+          example: "/Date(1573755038314)/"
+          x-is-updated-date: true
     AddressForOrganisation:
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/types'
@@ -23033,6 +23042,7 @@ components:
     Account:
       allOf:
       - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
       type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/accounts/'
@@ -23143,12 +23153,6 @@ components:
           type: boolean
           default: "false"
           example: "false"
-        UpdatedDateUTC:
-          description: Last modified date UTC format
-          type: string
-          x-is-msdate-time: true
-          example: "/Date(1573755038314)/"
-          x-is-updated-date: true
         AddToWatchlist:
           description: Boolean – describes whether the account is shown in the watchlist widget on the dashboard
           type: boolean
@@ -23225,6 +23229,7 @@ components:
     BankTransaction:
       allOf:
       - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/banktransactions/'
       properties:
@@ -23317,12 +23322,6 @@ components:
           type: string
           format: uuid
           example: "00000000-0000-0000-0000-000000000000"
-        UpdatedDateUTC:
-          description: Last modified date UTC format
-          type: string
-          x-is-msdate-time: true
-          example: "/Date(1573755038314)/"
-          x-is-updated-date: true
         HasAttachments:
           description: Boolean to indicate if a bank transaction has an attachment
           type: boolean
@@ -23539,6 +23538,8 @@ components:
           items:
             $ref: '#/components/schemas/BatchPayment'
     BatchPayment:
+      allOf:
+        - $ref: '#/components/schemas/LastUpdatedDate'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/BatchPayments/'
       properties:
@@ -23601,12 +23602,6 @@ components:
         TotalAmount:
           description: The total of the payments that make up the batch (read-only)
           type: string
-        UpdatedDateUTC:
-          description: UTC timestamp of last update to the payment
-          type: string
-          x-is-msdate-time: true
-          example: "/Date(1573755038314)/"
-          x-is-updated-date: true
         IsReconciled:
           description: Booelan that tells you if the batch payment has been reconciled (read-only)
           type: string
@@ -23720,6 +23715,7 @@ components:
     Contact:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
+        - $ref: '#/components/schemas/LastUpdatedDate'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/contacts/'
       properties:
@@ -23864,12 +23860,6 @@ components:
           type: string
         PaymentTerms:
           $ref: '#/components/schemas/PaymentTerm'
-        UpdatedDateUTC:
-          description: UTC timestamp of last update to contact
-          type: string
-          x-is-msdate-time: true
-          example: "/Date(1573755038314)/"
-          x-is-updated-date: true
         ContactGroups:
           description: Displays which contact groups a contact is included in
           type: array
@@ -24127,6 +24117,7 @@ components:
     CreditNote:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
+        - $ref: '#/components/schemas/LastUpdatedDate'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/credit-notes/'
       properties:
@@ -24193,12 +24184,6 @@ components:
           format: double
           readOnly: true
           x-is-money: true 
-        UpdatedDateUTC:
-          description: UTC timestamp of last update to the credit note
-          type: string
-          x-is-msdate-time: true
-          example: "/Date(1573755038314)/"
-          x-is-updated-date: true
         CurrencyCode:
           description: The specified currency code
           $ref: '#/components/schemas/CurrencyCode'
@@ -24663,6 +24648,7 @@ components:
     Employee:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
+        - $ref: '#/components/schemas/LastUpdatedDate'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/employees/'
       properties:
@@ -24688,11 +24674,6 @@ components:
           type: string
         ExternalLink:
           $ref: '#/components/schemas/ExternalLink'
-        UpdatedDateUTC:
-          type: string
-          x-is-msdate-time: true
-          example: "/Date(1573755038314)/"
-          x-is-updated-date: true
       type: object
     ExpenseClaims:
       type: object
@@ -24703,6 +24684,8 @@ components:
           items:
             $ref: '#/components/schemas/ExpenseClaim'
     ExpenseClaim:
+      allOf:
+        - $ref: '#/components/schemas/LastUpdatedDate'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/expense-claims/'
       properties:
@@ -24730,12 +24713,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Receipt'
-        UpdatedDateUTC:
-          description: Last modified date UTC format
-          type: string
-          x-is-msdate-time: true
-          example: "/Date(1573755038314)/"
-          x-is-updated-date: true
         Total:
           description: The total of an expense claim being paid
           type: number
@@ -24802,6 +24779,7 @@ components:
     Invoice:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
+        - $ref: '#/components/schemas/LastUpdatedDate'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/invoices/'
       properties:
@@ -24968,12 +24946,6 @@ components:
           type: number
           format: double
           x-is-money: true
-        UpdatedDateUTC:
-          description: Last modified date UTC format
-          type: string
-          x-is-msdate-time: true
-          example: "/Date(1573755038314)/"
-          x-is-updated-date: true
         CreditNotes:
           description: Details of credit notes that have been applied to an invoice
           type: array
@@ -25028,6 +25000,7 @@ components:
     Item:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
+        - $ref: '#/components/schemas/LastUpdatedDate'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/items/'
       properties:
@@ -25084,12 +25057,6 @@ components:
           type: number
           format: double
           x-is-money: true
-        UpdatedDateUTC:
-          description: Last modified date in UTC format
-          type: string
-          x-is-msdate-time: true
-          example: "/Date(1573755038314)/"
-          x-is-updated-date: true
         ItemID:
           description: The Xero identifier for an Item
           type: string
@@ -25261,6 +25228,7 @@ components:
     LinkedTransaction:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
+        - $ref: '#/components/schemas/LastUpdatedDate'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/linked-transactions/'
       properties:
@@ -25309,12 +25277,6 @@ components:
           type: string
           enum:
           - BILLABLEEXPENSE
-        UpdatedDateUTC:
-          description: The last modified date in UTC format
-          type: string
-          x-is-msdate-time: true
-          example: "/Date(1573755038314)/"
-          x-is-updated-date: true
         SourceTransactionTypeCode:
           description:  The Type of the source tranasction. This will be ACCPAY if the
             linked transaction was created from an invoice and SPEND if it was
@@ -25335,6 +25297,7 @@ components:
     ManualJournal:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
+        - $ref: '#/components/schemas/LastUpdatedDate'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/manual-journals/'
       properties:
@@ -25374,12 +25337,6 @@ components:
           type: boolean
           default: "false"
           example: "false"
-        UpdatedDateUTC:
-          description: Last modified date UTC format
-          type: string
-          x-is-msdate-time: true
-          example: "/Date(1573755038314)/"
-          x-is-updated-date: true
         ManualJournalID:
           description: The Xero identifier for a Manual Journal
           type: string
@@ -26075,6 +26032,8 @@ components:
           items:
             $ref: '#/components/schemas/Overpayment'
     Overpayment:
+      allOf:
+        - $ref: '#/components/schemas/LastUpdatedDate'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/overpayments/'
       properties:
@@ -26122,12 +26081,6 @@ components:
           type: number
           format: double
           x-is-money: true
-        UpdatedDateUTC:
-          description: UTC timestamp of last update to the overpayment
-          type: string
-          x-is-msdate-time: true
-          example: "/Date(1573755038314)/"
-          x-is-updated-date: true
         CurrencyCode:
           $ref: '#/components/schemas/CurrencyCode'
           type: string
@@ -26195,6 +26148,7 @@ components:
     Payment:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
+        - $ref: '#/components/schemas/LastUpdatedDate'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/payments/'
       properties:
@@ -26262,12 +26216,6 @@ components:
             - ARPREPAYMENTPAYMENT
             - APPREPAYMENTPAYMENT
             - APOVERPAYMENTPAYMENT
-        UpdatedDateUTC:
-          description: UTC timestamp of last update to the payment
-          type: string
-          x-is-msdate-time: true
-          example: "/Date(1573755038314)/"
-          x-is-updated-date: true
         PaymentID:
           description: The Xero identifier for an Payment e.g. 297c2dc5-cc47-4afd-8ec8-74990b8761e9
           type: string
@@ -26303,6 +26251,8 @@ components:
           items:
             $ref: '#/components/schemas/Prepayment'
     Prepayment:
+      allOf:
+        - $ref: '#/components/schemas/LastUpdatedDate'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/prepayments/'
       properties:
@@ -26354,12 +26304,6 @@ components:
         Reference:
           description: Returns Invoice number field. Reference field isn't available.
           type: string
-        UpdatedDateUTC:
-          description: UTC timestamp of last update to the prepayment
-          type: string
-          x-is-msdate-time: true
-          example: "/Date(1573755038314)/"
-          x-is-updated-date: true
         CurrencyCode:
           $ref: '#/components/schemas/CurrencyCode'
           type: string
@@ -26415,6 +26359,7 @@ components:
     PurchaseOrder:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
+        - $ref: '#/components/schemas/LastUpdatedDate'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/purchase-orders/'
       properties:
@@ -26516,12 +26461,6 @@ components:
           type: boolean
           default: "false"
           example: "false"
-        UpdatedDateUTC:
-          description: Last modified date UTC format
-          type: string
-          x-is-msdate-time: true
-          example: "/Date(1573755038314)/"
-          x-is-updated-date: true
         Attachments: 
           description: Displays array of attachments from the API
           type: array
@@ -26539,6 +26478,7 @@ components:
     Quote:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
+        - $ref: '#/components/schemas/LastUpdatedDate'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/Quotes/'
       properties:
@@ -26623,12 +26563,6 @@ components:
           description: See BrandingThemes
           type: string
           format: uuid
-        UpdatedDateUTC:
-          description: Last modified date UTC format
-          type: string
-          x-is-msdate-time: true
-          example: "/Date(1573755038314)/"
-          x-is-updated-date: true
         LineAmountTypes:
           $ref: '#/components/schemas/QuoteLineAmountTypes'
           type: string
@@ -26662,6 +26596,7 @@ components:
     Receipt:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
+        - $ref: '#/components/schemas/LastUpdatedDate'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/receipts/'
       properties:
@@ -26715,12 +26650,6 @@ components:
         ReceiptNumber:
           description: Xero generated sequence number for receipt in current claim for a given user
           type: string
-        UpdatedDateUTC:
-          description: Last modified date UTC format
-          type: string
-          x-is-msdate-time: true
-          example: "/Date(1573755038314)/"
-          x-is-updated-date: true
         HasAttachments:
           description: boolean to indicate if a receipt has an attachment
           type: boolean
@@ -26826,6 +26755,8 @@ components:
           items:
             $ref: '#/components/schemas/ReportWithRow'
     ReportWithRow:
+      allOf:
+        - $ref: '#/components/schemas/LastUpdatedDate'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/reports/'
       properties:
@@ -26853,12 +26784,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ReportRows'
-        UpdatedDateUTC:
-          description: Updated Date
-          type: string
-          x-is-msdate-time: true
-          example: "/Date(1573755038314)/"
-          x-is-updated-date: true
         Fields:
           type: array
           items:
@@ -26931,6 +26856,8 @@ components:
           items:
             $ref: '#/components/schemas/Report'
     Report:
+      allOf:
+        - $ref: '#/components/schemas/LastUpdatedDate'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/reports/'
       properties:
@@ -26948,12 +26875,6 @@ components:
         ReportDate:
           description: Date of report
           type: string
-        UpdatedDateUTC:
-          description: Updated Date
-          type: string
-          x-is-msdate-time: true
-          example: "/Date(1573755038314)/"
-          x-is-updated-date: true
         Contacts:
           type: array
           items:
@@ -27543,6 +27464,8 @@ components:
           items:
             $ref: '#/components/schemas/User'
     User:
+      allOf:
+        - $ref: '#/components/schemas/LastUpdatedDate'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/users/'
       properties:
@@ -27559,12 +27482,6 @@ components:
         LastName:
           description: Last name of user
           type: string
-        UpdatedDateUTC:
-          description: Timestamp of last change to user
-          type: string
-          x-is-msdate-time: true
-          example: "/Date(1573755038314)/"
-          x-is-updated-date: true
         IsSubscriber:
           description: Boolean to indicate if user is the subscriber
           type: boolean
