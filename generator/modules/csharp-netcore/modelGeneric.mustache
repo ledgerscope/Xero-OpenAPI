@@ -79,7 +79,11 @@
 
         {{#vendorExtensions.x-entity-identifier}}
         
-        public Guid Id => {{name}};
+        public Guid Id
+        {
+            get => {{name}};
+            set => {{name}} = value;
+        }
 
         {{/vendorExtensions.x-entity-identifier}}
         {{/vendorExtensions.x-is-money}}
