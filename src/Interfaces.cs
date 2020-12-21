@@ -5,7 +5,7 @@ namespace Xero.NetStandard.OAuth2.Model
 {
     public interface IHasId
     {
-        public Guid Id { get; }
+        public Guid Id { get; set; }
     }
 
     public interface IHasUpdatedDate
