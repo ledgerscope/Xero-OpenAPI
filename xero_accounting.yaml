@@ -22880,6 +22880,28 @@ components:
                       ]
                     }'
   schemas:
+    ValidationResponses:
+      type: object
+      properties:
+        StatusAttributeString:
+          description: A string to indicate status
+          type: string
+          example: ERROR, OK
+        HasErrors:
+          description: A boolean to indicate if an entity has an validation errors
+          type: boolean
+          default: "false"
+          example: "false"
+        Warnings: 
+          description: Displays array of warning messages from the API
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+        ValidationErrors: 
+          description: Displays array of validation error messages from the API
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
     AddressForOrganisation:
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/types'
@@ -23009,6 +23031,8 @@ components:
           items:
             $ref: '#/components/schemas/Account'
     Account:
+      allOf:
+      - $ref: '#/components/schemas/ValidationResponses'
       type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/accounts/'
@@ -23128,11 +23152,6 @@ components:
         AddToWatchlist:
           description: Boolean – describes whether the account is shown in the watchlist widget on the dashboard
           type: boolean
-        ValidationErrors: 
-          description: Displays array of validation error messages from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
     AccountType:
       description: See Account Types
       type: string
@@ -23204,6 +23223,8 @@ components:
           items:
             $ref: '#/components/schemas/BankTransaction'
     BankTransaction:
+      allOf:
+      - $ref: '#/components/schemas/ValidationResponses'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/banktransactions/'
       properties:
@@ -23307,14 +23328,6 @@ components:
           type: boolean
           default: "false"
           example: "false"
-        StatusAttributeString:
-          description: A string to indicate if a invoice status
-          type: string
-        ValidationErrors: 
-          description: Displays array of validation error messages from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
       required:
         - Type
         - LineItems
@@ -23453,6 +23466,8 @@ components:
           items:
             $ref: '#/components/schemas/BankTransfer'
     BankTransfer:
+      allOf:
+        - $ref: '#/components/schemas/ValidationResponses'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/bank-transfers/'
       properties:
@@ -23510,11 +23525,6 @@ components:
           type: string
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
-        ValidationErrors: 
-          description: Displays array of validation error messages from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
       required:
         - FromBankAccount
         - ToBankAccount
@@ -23678,6 +23688,8 @@ components:
           items:
             $ref: '#/components/schemas/PaymentService'
     PaymentService:
+      allOf:
+      - $ref: '#/components/schemas/ValidationResponses'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/branding-themes/'
       properties:
@@ -23697,11 +23709,6 @@ components:
         PaymentServiceType:
           description: This will always be CUSTOM for payment services created via the API.
           type: string
-        ValidationErrors: 
-          description: Displays array of validation error messages from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
     Contacts:
       type: object
       x-isObjectArray: true
@@ -23711,6 +23718,8 @@ components:
           items:
             $ref: '#/components/schemas/Contact'
     Contact:
+      allOf:
+        - $ref: '#/components/schemas/ValidationResponses'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/contacts/'
       properties:
@@ -23890,19 +23899,6 @@ components:
           type: boolean
           default: "false"
           example: "false"
-        ValidationErrors:
-          description: Displays validation errors returned from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-        HasValidationErrors:
-          description: A boolean to indicate if a contact has an validation errors
-          type: boolean
-          default: "false"
-          example: "false"
-        StatusAttributeString:
-          description: Status of object
-          type: string
       type: object
     Budgets:
       type: object
@@ -24129,6 +24125,8 @@ components:
           items:
             $ref: '#/components/schemas/CreditNote'
     CreditNote:
+      allOf:
+        - $ref: '#/components/schemas/ValidationResponses'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/credit-notes/'
       properties:
@@ -24256,29 +24254,11 @@ components:
           description: See BrandingThemes
           type: string
           format: uuid
-        StatusAttributeString:
-          description: A string to indicate if a invoice status
-          type: string
         HasAttachments:
           description: boolean to indicate if a credit note has an attachment
           type: boolean
           default: "false"
           example: "false"
-        HasErrors:
-          description: A boolean to indicate if a credit note has an validation errors
-          type: boolean
-          default: "false"
-          example: "false"
-        ValidationErrors: 
-          description: Displays array of validation error messages from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-        Warnings: 
-          description: Displays array of warning messages from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
       type: object
     Allocations:
       type: object
@@ -24289,6 +24269,8 @@ components:
           items:
             $ref: '#/components/schemas/Allocation'
     Allocation:
+      allOf:
+        - $ref: '#/components/schemas/ValidationResponses'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/prepayments/'
       properties:
@@ -24309,14 +24291,6 @@ components:
           description:   the date the allocation is applied YYYY-MM-DD. 
           type: string
           x-is-msdate: true
-        StatusAttributeString:
-          description: A string to indicate if a invoice status
-          type: string
-        ValidationErrors: 
-          description: Displays array of validation error messages from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
       required:
         - Amount
         - Invoice
@@ -24687,6 +24661,8 @@ components:
           items:
             $ref: '#/components/schemas/Employee'
     Employee:
+      allOf:
+        - $ref: '#/components/schemas/ValidationResponses'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/employees/'
       properties:
@@ -24717,15 +24693,6 @@ components:
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
           x-is-updated-date: true
-        StatusAttributeString:
-          description: A string to indicate if a invoice status
-          type: string
-          example: ERROR
-        ValidationErrors: 
-          description: Displays array of validation error messages from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
       type: object
     ExpenseClaims:
       type: object
@@ -24833,6 +24800,8 @@ components:
           items:
             $ref: '#/components/schemas/Invoice'
     Invoice:
+      allOf:
+        - $ref: '#/components/schemas/ValidationResponses'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/invoices/'
       properties:
@@ -25015,24 +24984,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Attachment'
-        HasErrors:
-          description: A boolean to indicate if a invoice has an validation errors
-          type: boolean
-          default: "false"
-          example: "false"
-        StatusAttributeString:
-          description: A string to indicate if a invoice status
-          type: string
-        ValidationErrors: 
-          description: Displays array of validation error messages from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-        Warnings: 
-          description: Displays array of warning messages from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
       type: object
     OnlineInvoices:
       type: object
@@ -25075,6 +25026,8 @@ components:
           items:
             $ref: '#/components/schemas/Item'
     Item:
+      allOf:
+        - $ref: '#/components/schemas/ValidationResponses'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/items/'
       properties:
@@ -25141,14 +25094,6 @@ components:
           description: The Xero identifier for an Item
           type: string
           format: uuid
-        StatusAttributeString:
-          description: Status of object
-          type: string  
-        ValidationErrors: 
-          description: Displays array of validation error messages from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
       required:
         - Code
       type: object
@@ -25314,6 +25259,8 @@ components:
           items:
             $ref: '#/components/schemas/LinkedTransaction'
     LinkedTransaction:
+      allOf:
+        - $ref: '#/components/schemas/ValidationResponses'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/linked-transactions/'
       properties:
@@ -25376,11 +25323,6 @@ components:
           enum:
           - ACCPAY
           - SPEND
-        ValidationErrors: 
-          description: Displays array of validation error messages from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
       type: object
     ManualJournals:
       type: object
@@ -25391,6 +25333,8 @@ components:
           items:
             $ref: '#/components/schemas/ManualJournal'
     ManualJournal:
+      allOf:
+        - $ref: '#/components/schemas/ValidationResponses'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/manual-journals/'
       properties:
@@ -25441,20 +25385,6 @@ components:
           type: string
           format: uuid
           x-entity-identifier: true
-        StatusAttributeString:
-          description: A string to indicate if a invoice status
-          type: string
-          example: ERROR
-        Warnings: 
-          description: Displays array of warning messages from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-        ValidationErrors: 
-          description: Displays array of validation error messages from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
         Attachments: 
           description: Displays array of attachments from the API
           type: array
@@ -26263,6 +26193,8 @@ components:
         - Status
       type: object 
     Payment:
+      allOf:
+        - $ref: '#/components/schemas/ValidationResponses'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/payments/'
       properties:
@@ -26361,19 +26293,6 @@ components:
           type: boolean
           default: "false"
           example: "false"
-        HasValidationErrors:
-          description: A boolean to indicate if a contact has an validation errors
-          type: boolean
-          default: "false"
-          example: "false"
-        StatusAttributeString:
-          description: A string to indicate if a invoice status
-          type: string
-        ValidationErrors: 
-          description: Displays array of validation error messages from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
       type: object
     Prepayments:
       type: object
@@ -26494,6 +26413,8 @@ components:
           items:
             $ref: '#/components/schemas/PurchaseOrder'
     PurchaseOrder:
+      allOf:
+        - $ref: '#/components/schemas/ValidationResponses'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/purchase-orders/'
       properties:
@@ -26601,19 +26522,6 @@ components:
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
           x-is-updated-date: true
-        StatusAttributeString:
-          description: A string to indicate if a invoice status
-          type: string
-        ValidationErrors: 
-          description: Displays array of validation error messages from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-        Warnings: 
-          description: Displays array of warning messages from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
         Attachments: 
           description: Displays array of attachments from the API
           type: array
@@ -26629,6 +26537,8 @@ components:
           items:
             $ref: '#/components/schemas/Quote'
     Quote:
+      allOf:
+        - $ref: '#/components/schemas/ValidationResponses'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/Quotes/'
       properties:
@@ -26723,14 +26633,6 @@ components:
           $ref: '#/components/schemas/QuoteLineAmountTypes'
           type: string
           description: See Quote Line Amount Types
-        StatusAttributeString:
-          description: A string to indicate if a invoice status
-          type: string
-        ValidationErrors: 
-          description: Displays array of validation error messages from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
       type: object
     QuoteLineAmountTypes:
       description: Line amounts are exclusive of tax by default if you don’t specify this element. See Line Amount Types
@@ -26758,6 +26660,8 @@ components:
           items:
             $ref: '#/components/schemas/Receipt'
     Receipt:
+      allOf:
+        - $ref: '#/components/schemas/ValidationResponses'
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/receipts/'
       properties:
@@ -26825,16 +26729,6 @@ components:
         Url:
           description: URL link to a source document – shown as “Go to [appName]” in the Xero app
           type: string
-        ValidationErrors: 
-          description: Displays array of validation error messages from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-        Warnings: 
-          description: Displays array of warning messages from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
         Attachments: 
           description: Displays array of attachments from the API
           type: array
