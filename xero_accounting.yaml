@@ -23961,7 +23961,7 @@ components:
             format: double
             x-is-money: true
           UnitAmount:
-            description: Budgeted amount
+            description: Budgeted amount  
             type: number
             format: double
             x-is-money: true
