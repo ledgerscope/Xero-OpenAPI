@@ -1,9 +1,38 @@
     
     {{>visibility}} partial interface {{interfacePrefix}}{{classname}}
     {
+{{#vars}}
+        {{^isInherited}}
+        {{^isEnum}}
+        /// <summary>
+        /// {{^description}}Gets or Sets {{{name}}}{{/description}}{{#description}}{{description}}{{/description}}
+        /// </summary>{{#description}}
+        /// <value>{{description}}</value>{{/description}}
+        {{#vendorExtensions.x-is-msdate-time}}
+        public DateTime {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
 
+        {{/vendorExtensions.x-is-msdate-time}}
+        {{#vendorExtensions.x-is-msdate}}
+        public DateTime {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
+
+        {{/vendorExtensions.x-is-msdate}}
+        {{#vendorExtensions.x-is-money}}
+        public decimal? {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
+
+        {{/vendorExtensions.x-is-money}}
+        {{^vendorExtensions.x-is-msdate-time}}
+        {{^vendorExtensions.x-is-msdate}}
+        {{^vendorExtensions.x-is-money}}
+        public {{{dataType}}}{{#isPrimitiveType}}{{^isString}}{{^isContainer}}{{^isByteArray}}?{{/isByteArray}}{{/isContainer}}{{/isString}}{{is}}{{/isPrimitiveType}} {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
+
+        {{/vendorExtensions.x-is-money}}
+        {{/vendorExtensions.x-is-msdate}}
+        {{/vendorExtensions.x-is-msdate-time}}
+        {{/isEnum}}
+        {{/isInherited}}
+        {{/vars}}
     }
-    
+
     /// <summary>
     /// {{#description}}{{.}}{{/description}}{{^description}}{{classname}}{{/description}}
     /// </summary>
