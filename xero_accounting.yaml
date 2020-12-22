@@ -23043,7 +23043,7 @@ components:
       allOf:
       - $ref: '#/components/schemas/ValidationResponses'
       - $ref: '#/components/schemas/LastUpdatedDate'
-      type: object
+        - type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/accounts/'
       properties:
@@ -23230,6 +23230,7 @@ components:
       allOf:
       - $ref: '#/components/schemas/ValidationResponses'
       - $ref: '#/components/schemas/LastUpdatedDate'
+        - type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/banktransactions/'
       properties:
@@ -23331,7 +23332,6 @@ components:
         - Type
         - LineItems
         - BankAccount
-      type: object
     LineAmountTypes:
       description: Line amounts are exclusive of tax by default if you don’t specify this element. See Line Amount Types
       type: string
@@ -23467,6 +23467,7 @@ components:
     BankTransfer:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
+        - type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/bank-transfers/'
       properties:
@@ -23528,7 +23529,6 @@ components:
         - FromBankAccount
         - ToBankAccount
         - Amount
-      type: object
     BatchPayments:
       type: object
       x-isObjectArray: true
@@ -23540,6 +23540,7 @@ components:
     BatchPayment:
       allOf:
         - $ref: '#/components/schemas/LastUpdatedDate'
+        - type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/BatchPayments/'
       properties:
@@ -23685,6 +23686,7 @@ components:
     PaymentService:
       allOf:
       - $ref: '#/components/schemas/ValidationResponses'
+        - type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/branding-themes/'
       properties:
@@ -23716,6 +23718,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
         - $ref: '#/components/schemas/LastUpdatedDate'
+        - type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/contacts/'
       properties:
@@ -23723,7 +23726,7 @@ components:
           description: Xero identifier
           type: string
           format: uuid
-		  x-entity-identifier: true
+          x-entity-identifier: true
         MergedToContactID:
           description: ID for the destination of a merged contact. 
             Only returned when using paging or when fetching a contact by ContactId or ContactNumber.
@@ -23889,7 +23892,6 @@ components:
           type: boolean
           default: "false"
           example: "false"
-      type: object
     Budgets:
       type: object
       x-isObjectArray: true
@@ -23969,6 +23971,7 @@ components:
             description: Any footnotes associated with this balance
             maxLength: 255
             type: string
+          type: object
     Balances:
       type: object
       description:  The raw AccountsReceivable(sales invoices) and
@@ -24118,6 +24121,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
         - $ref: '#/components/schemas/LastUpdatedDate'
+        - type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/credit-notes/'
       properties:
@@ -24244,7 +24248,6 @@ components:
           type: boolean
           default: "false"
           example: "false"
-      type: object
     Allocations:
       type: object
       x-isObjectArray: true
@@ -24256,6 +24259,7 @@ components:
     Allocation:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
+        - type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/prepayments/'
       properties:
@@ -24280,7 +24284,6 @@ components:
         - Amount
         - Invoice
         - Date
-      type: object
     Currencies:
       type: object
       x-isObjectArray: true
@@ -24649,6 +24652,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
         - $ref: '#/components/schemas/LastUpdatedDate'
+        - type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/employees/'
       properties:
@@ -24674,7 +24678,6 @@ components:
           type: string
         ExternalLink:
           $ref: '#/components/schemas/ExternalLink'
-      type: object
     ExpenseClaims:
       type: object
       x-isObjectArray: true
@@ -24686,6 +24689,7 @@ components:
     ExpenseClaim:
       allOf:
         - $ref: '#/components/schemas/LastUpdatedDate'
+        - type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/expense-claims/'
       properties:
@@ -24740,7 +24744,6 @@ components:
           description: The Xero identifier for the Receipt e.g. e59a2c7f-1306-4078-a0f3-73537afcbba9
           type: string
           format: uuid
-      type: object
     HistoryRecords:
       type: object
       x-isObjectArray: true
@@ -24780,6 +24783,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
         - $ref: '#/components/schemas/LastUpdatedDate'
+        - type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/invoices/'
       properties:
@@ -24956,7 +24960,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Attachment'
-      type: object
     OnlineInvoices:
       type: object
       x-isObjectArray: true
@@ -25001,6 +25004,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
         - $ref: '#/components/schemas/LastUpdatedDate'
+        - type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/items/'
       properties:
@@ -25063,7 +25067,6 @@ components:
           format: uuid
       required:
         - Code
-      type: object
     Purchase:
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/items/'
@@ -25229,6 +25232,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
         - $ref: '#/components/schemas/LastUpdatedDate'
+        - type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/linked-transactions/'
       properties:
@@ -25285,7 +25289,6 @@ components:
           enum:
           - ACCPAY
           - SPEND
-      type: object
     ManualJournals:
       type: object
       x-isObjectArray: true
@@ -25298,6 +25301,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
         - $ref: '#/components/schemas/LastUpdatedDate'
+        - type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/manual-journals/'
       properties:
@@ -25349,7 +25353,6 @@ components:
             $ref: '#/components/schemas/Attachment'
       required:
         - Narration
-      type: object
     ManualJournalLine:
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/manual-journals/'
@@ -26034,6 +26037,7 @@ components:
     Overpayment:
       allOf:
         - $ref: '#/components/schemas/LastUpdatedDate'
+        - type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/overpayments/'
       properties:
@@ -26125,7 +26129,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Attachment'
-      type: object
     Payments:
       type: object
       x-isObjectArray: true
@@ -26149,6 +26152,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
         - $ref: '#/components/schemas/LastUpdatedDate'
+        - type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/payments/'
       properties:
@@ -26241,7 +26245,6 @@ components:
           type: boolean
           default: "false"
           example: "false"
-      type: object
     Prepayments:
       type: object
       x-isObjectArray: true
@@ -26253,6 +26256,7 @@ components:
     Prepayment:
       allOf:
         - $ref: '#/components/schemas/LastUpdatedDate'
+        - type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/prepayments/'
       properties:
@@ -26347,7 +26351,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Attachment'
-      type: object
     PurchaseOrders:
       type: object
       x-isObjectArray: true
@@ -26360,6 +26363,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
         - $ref: '#/components/schemas/LastUpdatedDate'
+        - type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/purchase-orders/'
       properties:
@@ -26466,7 +26470,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Attachment'
-      type: object
     Quotes:
       type: object
       x-isObjectArray: true
@@ -26479,6 +26482,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
         - $ref: '#/components/schemas/LastUpdatedDate'
+        - type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/Quotes/'
       properties:
@@ -26567,7 +26571,6 @@ components:
           $ref: '#/components/schemas/QuoteLineAmountTypes'
           type: string
           description: See Quote Line Amount Types
-      type: object
     QuoteLineAmountTypes:
       description: Line amounts are exclusive of tax by default if you don’t specify this element. See Line Amount Types
       type: string
@@ -26597,6 +26600,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
         - $ref: '#/components/schemas/LastUpdatedDate'
+        - type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/receipts/'
       properties:
@@ -26663,7 +26667,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Attachment'
-      type: object
     RepeatingInvoices:
       type: object
       x-isObjectArray: true
@@ -26757,6 +26760,7 @@ components:
     ReportWithRow:
       allOf:
         - $ref: '#/components/schemas/LastUpdatedDate'
+        - type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/reports/'
       properties:
@@ -26858,6 +26862,7 @@ components:
     Report:
       allOf:
         - $ref: '#/components/schemas/LastUpdatedDate'
+        - type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/reports/'
       properties:
@@ -27466,6 +27471,7 @@ components:
     User:
       allOf:
         - $ref: '#/components/schemas/LastUpdatedDate'
+        - type: object
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/users/'
       properties:
@@ -27496,7 +27502,6 @@ components:
           - MANAGEDCLIENT
           - CASHBOOKCLIENT
           - UNKNOWN
-      type: object
     Error:
       externalDocs:
         url: 'https://developer.xero.com/documentation/api/http-response-codes'
