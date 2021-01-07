@@ -25029,7 +25029,7 @@ components:
           description: Optional Tracking Category – see Tracking. Any JournalLine can have a maximum of 2 <TrackingCategory> elements.
           type: array
           items:
-            $ref: '#/components/schemas/TrackingCategory'
+            $ref: '#/components/schemas/LineItemTracking'
       type: object
     LinkedTransactions:
       type: object
@@ -25190,10 +25190,10 @@ components:
           description: The tax type from TaxRates
           type: string
         Tracking:
-          description: Optional Tracking Category – see Tracking. Any JournalLine can have a maximum of 2 <TrackingCategory> elements.
+          description: Optional Tracking Category – see Tracking. Any JournalLine can have a maximum of 2 <LineItemTracking> elements.
           type: array
           items:
-            $ref: '#/components/schemas/TrackingCategory'
+            $ref: '#/components/schemas/LineItemTracking'
         TaxAmount:
           description: The calculated tax amount based on the TaxType and LineAmount
           type: number
