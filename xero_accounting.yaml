@@ -23541,77 +23541,77 @@ components:
       allOf:
         - $ref: '#/components/schemas/LastUpdatedDate'
         - type: object
-      externalDocs:
-        url: 'http://developer.xero.com/documentation/api/BatchPayments/'
-      properties:
-        Account:
-          $ref: '#/components/schemas/Account'
-        Reference:
-          description: (NZ Only) Optional references for the batch payment transaction. It will also show with the batch payment transaction in the bank reconciliation Find & Match screen. Depending on your individual bank, the detail may also show on the bank statement you import into Xero. 
-          type: string
-          maxLength: 255
-        Particulars:
-          description: (NZ Only) Optional references for the batch payment transaction. It will also show with the batch payment transaction in the bank reconciliation Find & Match screen. Depending on your individual bank, the detail may also show on the bank statement you import into Xero. 
-          type: string
-          maxLength: 12
-        Code:
-          description: (NZ Only) Optional references for the batch payment transaction. It will also show with the batch payment transaction in the bank reconciliation Find & Match screen. Depending on your individual bank, the detail may also show on the bank statement you import into Xero. 
-          type: string
-          maxLength: 12
-        Details:
-          description: (Non-NZ Only) These details are sent to the org’s bank as a reference for the batch payment transaction. They will also show with the batch payment transaction in the bank reconciliation Find & Match screen. Depending on your individual bank, the detail may also show on the bank statement imported into Xero. Maximum field length = 18
-          type: string
-        Narrative:
-          description: (UK Only) Only shows on the statement line in Xero. Max length =18
-          type: string
-          maxLength: 18
-        BatchPaymentID:
-          description: The Xero generated unique identifier for the bank transaction (read-only)
-          type: string
-          format: uuid
-          x-entity-identifier: true
-        DateString:
-          description: Date the payment is being made (YYYY-MM-DD) e.g. 2009-09-06
-          type: string
-        Date:
-          description: Date the payment is being made (YYYY-MM-DD) e.g. 2009-09-06
-          type: string
-          x-is-msdate: true
-        Amount:
-          description: The amount of the payment. Must be less than or equal to the
-            outstanding amount owing on the invoice e.g. 200.00
-          type: number
-          format: double
-          x-is-money: true
-        Payments:
-          description: An array of payments
-          type: array
-          items:
-            $ref: '#/components/schemas/Payment'
-        Type:
-          description: PAYBATCH for bill payments or RECBATCH for sales invoice payments (read-only)
-          type: string
-          enum:
-          - PAYBATCH
-          - RECBATCH
-        Status:
-          description: AUTHORISED or DELETED (read-only). New batch payments will have a status of AUTHORISED. It is not possible to delete batch payments via the API.
-          type: string
-          enum:
-          - AUTHORISED
-          - DELETED
-        TotalAmount:
-          description: The total of the payments that make up the batch (read-only)
-          type: string
-        IsReconciled:
-          description: Booelan that tells you if the batch payment has been reconciled (read-only)
-          type: string
-        ValidationErrors: 
-          description: Displays array of validation error messages from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-      type: object
+          externalDocs:
+            url: 'http://developer.xero.com/documentation/api/BatchPayments/'
+          properties:
+            Account:
+              $ref: '#/components/schemas/Account'
+            Reference:
+              description: (NZ Only) Optional references for the batch payment transaction. It will also show with the batch payment transaction in the bank reconciliation Find & Match screen. Depending on your individual bank, the detail may also show on the bank statement you import into Xero. 
+              type: string
+              maxLength: 255
+            Particulars:
+              description: (NZ Only) Optional references for the batch payment transaction. It will also show with the batch payment transaction in the bank reconciliation Find & Match screen. Depending on your individual bank, the detail may also show on the bank statement you import into Xero. 
+              type: string
+              maxLength: 12
+            Code:
+              description: (NZ Only) Optional references for the batch payment transaction. It will also show with the batch payment transaction in the bank reconciliation Find & Match screen. Depending on your individual bank, the detail may also show on the bank statement you import into Xero. 
+              type: string
+              maxLength: 12
+            Details:
+              description: (Non-NZ Only) These details are sent to the org’s bank as a reference for the batch payment transaction. They will also show with the batch payment transaction in the bank reconciliation Find & Match screen. Depending on your individual bank, the detail may also show on the bank statement imported into Xero. Maximum field length = 18
+              type: string
+            Narrative:
+              description: (UK Only) Only shows on the statement line in Xero. Max length =18
+              type: string
+              maxLength: 18
+            BatchPaymentID:
+              description: The Xero generated unique identifier for the bank transaction (read-only)
+              type: string
+              format: uuid
+              x-entity-identifier: true
+            DateString:
+              description: Date the payment is being made (YYYY-MM-DD) e.g. 2009-09-06
+              type: string
+            Date:
+              description: Date the payment is being made (YYYY-MM-DD) e.g. 2009-09-06
+              type: string
+              x-is-msdate: true
+            Amount:
+              description: The amount of the payment. Must be less than or equal to the
+                outstanding amount owing on the invoice e.g. 200.00
+              type: number
+              format: double
+              x-is-money: true
+            Payments:
+              description: An array of payments
+              type: array
+              items:
+                $ref: '#/components/schemas/Payment'
+            Type:
+              description: PAYBATCH for bill payments or RECBATCH for sales invoice payments (read-only)
+              type: string
+              enum:
+              - PAYBATCH
+              - RECBATCH
+            Status:
+              description: AUTHORISED or DELETED (read-only). New batch payments will have a status of AUTHORISED. It is not possible to delete batch payments via the API.
+              type: string
+              enum:
+              - AUTHORISED
+              - DELETED
+            TotalAmount:
+              description: The total of the payments that make up the batch (read-only)
+              type: string
+            IsReconciled:
+              description: Booelan that tells you if the batch payment has been reconciled (read-only)
+              type: string
+			ValidationErrors: 
+              description: Displays array of validation error messages from the API
+              type: array
+              items:
+                $ref: '#/components/schemas/ValidationError'
+          type: object
     BatchPaymentDetails:
       description: Bank details for use on a batch payment stored with each contact
       externalDocs:
@@ -24690,60 +24690,60 @@ components:
       allOf:
         - $ref: '#/components/schemas/LastUpdatedDate'
         - type: object
-      externalDocs:
-        url: 'http://developer.xero.com/documentation/api/expense-claims/'
-      properties:
-        ExpenseClaimID:
-          description: Xero generated unique identifier for an expense claim
-          type: string
-          format: uuid
-        Status:
-          description: Current status of an expense claim – see status types
-          type: string
-          enum:
-          - SUBMITTED  
-          - AUTHORISED
-          - PAID
-          - VOIDED
-          - DELETED
-        Payments:
-          description: See Payments
-          type: array
-          items:
-            $ref: '#/components/schemas/Payment'
-        User:
-          $ref: '#/components/schemas/User'
-        Receipts:
-          type: array
-          items:
-            $ref: '#/components/schemas/Receipt'
-        Total:
-          description: The total of an expense claim being paid
-          type: number
-          format: double
-          x-is-money: true
-        AmountDue:
-          description: The amount due to be paid for an expense claim
-          type: number
-          format: double
-          x-is-money: true
-        AmountPaid:
-          description: The amount still to pay for an expense claim
-          type: number
-          format: double
-          x-is-money: true
-        PaymentDueDate:
-          description: The date when the expense claim is due to be paid YYYY-MM-DD
-          type: string
-          x-is-msdate: true
-        ReportingDate:
-          description: The date the expense claim will be reported in Xero YYYY-MM-DD
-          type: string
-          x-is-msdate: true
-        ReceiptID:
-          description: The Xero identifier for the Receipt e.g. e59a2c7f-1306-4078-a0f3-73537afcbba9
-          type: string
-          format: uuid
+          externalDocs:
+            url: 'http://developer.xero.com/documentation/api/expense-claims/'
+          properties:
+            ExpenseClaimID:
+              description: Xero generated unique identifier for an expense claim
+              type: string
+              format: uuid
+            Status:
+              description: Current status of an expense claim – see status types
+              type: string
+              enum:
+              - SUBMITTED  
+              - AUTHORISED
+              - PAID
+              - VOIDED
+              - DELETED
+            Payments:
+              description: See Payments
+              type: array
+              items:
+                $ref: '#/components/schemas/Payment'
+            User:
+              $ref: '#/components/schemas/User'
+            Receipts:
+              type: array
+              items:
+                $ref: '#/components/schemas/Receipt'
+            Total:
+              description: The total of an expense claim being paid
+              type: number
+              format: double
+              x-is-money: true
+            AmountDue:
+              description: The amount due to be paid for an expense claim
+              type: number
+              format: double
+              x-is-money: true
+            AmountPaid:
+              description: The amount still to pay for an expense claim
+              type: number
+              format: double
+              x-is-money: true
+            PaymentDueDate:
+              description: The date when the expense claim is due to be paid YYYY-MM-DD
+              type: string
+              x-is-msdate: true
+            ReportingDate:
+              description: The date the expense claim will be reported in Xero YYYY-MM-DD
+              type: string
+              x-is-msdate: true
+            ReceiptID:
+              description: The Xero identifier for the Receipt e.g. e59a2c7f-1306-4078-a0f3-73537afcbba9
+              type: string
+              format: uuid
     HistoryRecords:
       type: object
       x-isObjectArray: true
@@ -26038,97 +26038,97 @@ components:
       allOf:
         - $ref: '#/components/schemas/LastUpdatedDate'
         - type: object
-      externalDocs:
-        url: 'http://developer.xero.com/documentation/api/overpayments/'
-      properties:
-        Type:
-          description: See Overpayment Types
-          type: string
-          enum:
-          - RECEIVE-OVERPAYMENT  
-          - SPEND-OVERPAYMENT
-          - AROVERPAYMENT
-        Contact:
-          $ref: '#/components/schemas/Contact'
-        Date:
-          description: The date the overpayment is created YYYY-MM-DD
-          type: string
-          x-is-msdate: true
-        Status:
-          description: See Overpayment Status Codes
-          type: string
-          enum:
-            - AUTHORISED
-            - PAID
-            - VOIDED
-        LineAmountTypes:
-          $ref: '#/components/schemas/LineAmountTypes'
-          type: string
-        LineItems:
-          description: See Overpayment Line Items
-          x-is-lineitem: true
-          type: array
-          items:
-            $ref: '#/components/schemas/LineItem'
-        SubTotal:
-          description: The subtotal of the overpayment excluding taxes
-          type: number
-          format: double
-          x-is-money: true
-        TotalTax:
-          description: The total tax on the overpayment
-          type: number
-          format: double
-          x-is-money: true
-        Total:
-          description: The total of the overpayment (subtotal + total tax)
-          type: number
-          format: double
-          x-is-money: true
-        CurrencyCode:
-          $ref: '#/components/schemas/CurrencyCode'
-          type: string
-        OverpaymentID:
-          description: Xero generated unique identifier
-          type: string
-          format: uuid
-          x-entity-identifier: true
-        CurrencyRate:
-          description: The currency rate for a multicurrency overpayment. If no rate is
-            specified, the XE.com day rate is used
-          type: number
-          format: double
-          x-is-money: true
-        RemainingCredit:
-          description: The remaining credit balance on the overpayment
-          type: number
-          format: double
-          x-is-money: true
-        Allocations:
-          description: See Allocations
-          type: array
-          items:
-            $ref: '#/components/schemas/Allocation'
-        AppliedAmount: 
-          description: The amount of applied to an invoice
-          type: number
-          format: double 
-          example: 2.00
-        Payments:
-          description: See Payments
-          type: array
-          items:
-            $ref: '#/components/schemas/Payment'
-        HasAttachments:
-          description: boolean to indicate if a overpayment has an attachment
-          type: boolean
-          default: "false"
-          example: "false"
-        Attachments:
-          description: See Attachments
-          type: array
-          items:
-            $ref: '#/components/schemas/Attachment'
+          externalDocs:
+            url: 'http://developer.xero.com/documentation/api/overpayments/'
+          properties:
+            Type:
+              description: See Overpayment Types
+              type: string
+              enum:
+              - RECEIVE-OVERPAYMENT  
+              - SPEND-OVERPAYMENT
+              - AROVERPAYMENT
+            Contact:
+              $ref: '#/components/schemas/Contact'
+            Date:
+              description: The date the overpayment is created YYYY-MM-DD
+              type: string
+              x-is-msdate: true
+            Status:
+              description: See Overpayment Status Codes
+              type: string
+              enum:
+                - AUTHORISED
+                - PAID
+                - VOIDED
+            LineAmountTypes:
+              $ref: '#/components/schemas/LineAmountTypes'
+              type: string
+            LineItems:
+              description: See Overpayment Line Items
+              x-is-lineitem: true
+              type: array
+              items:
+                $ref: '#/components/schemas/LineItem'
+            SubTotal:
+              description: The subtotal of the overpayment excluding taxes
+              type: number
+              format: double
+              x-is-money: true
+            TotalTax:
+              description: The total tax on the overpayment
+              type: number
+              format: double
+              x-is-money: true
+            Total:
+              description: The total of the overpayment (subtotal + total tax)
+              type: number
+              format: double
+              x-is-money: true
+            CurrencyCode:
+              $ref: '#/components/schemas/CurrencyCode'
+              type: string
+            OverpaymentID:
+              description: Xero generated unique identifier
+              type: string
+              format: uuid
+              x-entity-identifier: true
+            CurrencyRate:
+              description: The currency rate for a multicurrency overpayment. If no rate is
+                specified, the XE.com day rate is used
+              type: number
+              format: double
+              x-is-money: true
+            RemainingCredit:
+              description: The remaining credit balance on the overpayment
+              type: number
+              format: double
+              x-is-money: true
+            Allocations:
+              description: See Allocations
+              type: array
+              items:
+                $ref: '#/components/schemas/Allocation'
+            AppliedAmount: 
+              description: The amount of applied to an invoice
+              type: number
+              format: double 
+              example: 2.00
+            Payments:
+              description: See Payments
+              type: array
+              items:
+                $ref: '#/components/schemas/Payment'
+            HasAttachments:
+              description: boolean to indicate if a overpayment has an attachment
+              type: boolean
+              default: "false"
+              example: "false"
+            Attachments:
+              description: See Attachments
+              type: array
+              items:
+                $ref: '#/components/schemas/Attachment'
     Payments:
       type: object
       x-isObjectArray: true
@@ -26257,100 +26257,100 @@ components:
       allOf:
         - $ref: '#/components/schemas/LastUpdatedDate'
         - type: object
-      externalDocs:
-        url: 'http://developer.xero.com/documentation/api/prepayments/'
-      properties:
-        Type:
-          description: See Prepayment Types
-          type: string
-          enum:
-            - RECEIVE-PREPAYMENT
-            - SPEND-PREPAYMENT
-            - ARPREPAYMENT
-            - APPREPAYMENT
-        Contact:
-          $ref: '#/components/schemas/Contact'
-        Date:
-          description: The date the prepayment is created YYYY-MM-DD
-          type: string
-          x-is-msdate: true
-        Status:
-          description: See Prepayment Status Codes
-          type: string
-          enum:
-            - AUTHORISED
-            - PAID
-            - VOIDED
-        LineAmountTypes:
-          $ref: '#/components/schemas/LineAmountTypes'
-          type: string
-        LineItems:
-          description: See Prepayment Line Items
-          x-is-lineitem: true
-          type: array
-          items:
-            $ref: '#/components/schemas/LineItem'
-        SubTotal:
-          description: The subtotal of the prepayment excluding taxes
-          type: number
-          format: double
-          x-is-money: true
-        TotalTax:
-          description: The total tax on the prepayment
-          type: number
-          format: double
-          x-is-money: true
-        Total:
-          description: The total of the prepayment(subtotal + total tax)
-          type: number
-          format: double
-          x-is-money: true
-        Reference:
-          description: Returns Invoice number field. Reference field isn't available.
-          type: string
-        CurrencyCode:
-          $ref: '#/components/schemas/CurrencyCode'
-          type: string
-        PrepaymentID:
-          description: Xero generated unique identifier
-          type: string
-          format: uuid
-        CurrencyRate:
-          description: The currency rate for a multicurrency prepayment. If no rate is
-            specified, the XE.com day rate is used
-          type: number
-          format: double
-          x-is-money: true
-        RemainingCredit:
-          description: The remaining credit balance on the prepayment
-          type: number
-          format: double
-          x-is-money: true
-        Allocations:
-          description: See Allocations
-          type: array
-          items:
-            $ref: '#/components/schemas/Allocation'
-        Payments:
-          description: See Payments
-          type: array
-          items:
-            $ref: '#/components/schemas/Payment'
-        AppliedAmount: 
-          description: The amount of applied to an invoice
-          type: number
-          format: double 
-          example: 2.00
-        HasAttachments:
-          description: boolean to indicate if a prepayment has an attachment
-          type: boolean
-          default: "false"
-          example: "false"
-        Attachments:
-          description: See Attachments
-          type: array
-          items:
-            $ref: '#/components/schemas/Attachment'
+          externalDocs:
+            url: 'http://developer.xero.com/documentation/api/prepayments/'
+          properties:
+            Type:
+              description: See Prepayment Types
+              type: string
+              enum:
+                - RECEIVE-PREPAYMENT
+                - SPEND-PREPAYMENT
+                - ARPREPAYMENT
+                - APPREPAYMENT
+            Contact:
+              $ref: '#/components/schemas/Contact'
+            Date:
+              description: The date the prepayment is created YYYY-MM-DD
+              type: string
+              x-is-msdate: true
+            Status:
+              description: See Prepayment Status Codes
+              type: string
+              enum:
+                - AUTHORISED
+                - PAID
+                - VOIDED
+            LineAmountTypes:
+              $ref: '#/components/schemas/LineAmountTypes'
+              type: string
+            LineItems:
+              description: See Prepayment Line Items
+              x-is-lineitem: true
+              type: array
+              items:
+                $ref: '#/components/schemas/LineItem'
+            SubTotal:
+              description: The subtotal of the prepayment excluding taxes
+              type: number
+              format: double
+              x-is-money: true
+            TotalTax:
+              description: The total tax on the prepayment
+              type: number
+              format: double
+              x-is-money: true
+            Total:
+              description: The total of the prepayment(subtotal + total tax)
+              type: number
+              format: double
+              x-is-money: true
+            Reference:
+              description: Returns Invoice number field. Reference field isn't available.
+              type: string
+            CurrencyCode:
+              $ref: '#/components/schemas/CurrencyCode'
+              type: string
+            PrepaymentID:
+              description: Xero generated unique identifier
+              type: string
+              format: uuid
+            CurrencyRate:
+              description: The currency rate for a multicurrency prepayment. If no rate is
+                specified, the XE.com day rate is used
+              type: number
+              format: double
+              x-is-money: true
+            RemainingCredit:
+              description: The remaining credit balance on the prepayment
+              type: number
+              format: double
+              x-is-money: true
+            Allocations:
+              description: See Allocations
+              type: array
+              items:
+                $ref: '#/components/schemas/Allocation'
+		    Payments:
+              description: See Payments
+              type: array
+              items:
+                $ref: '#/components/schemas/Payment'
+            AppliedAmount: 
+              description: The amount of applied to an invoice
+              type: number
+              format: double 
+              example: 2.00
+            HasAttachments:
+              description: boolean to indicate if a prepayment has an attachment
+              type: boolean
+              default: "false"
+              example: "false"
+            Attachments:
+              description: See Attachments
+              type: array
+              items:
+                $ref: '#/components/schemas/Attachment'
     PurchaseOrders:
       type: object
       x-isObjectArray: true
@@ -26761,37 +26761,37 @@ components:
       allOf:
         - $ref: '#/components/schemas/LastUpdatedDate'
         - type: object
-      externalDocs:
-        url: 'http://developer.xero.com/documentation/api/reports/'
-      properties:
-        ReportID:
+          externalDocs:
+            url: 'http://developer.xero.com/documentation/api/reports/'
+          properties:
+            ReportID:
           description: ID of the Report
-          type: string
-        ReportName:
-          description: Name of the report
-          type: string
-        ReportTitle:
-          description: Title of the report
-          type: string
-        ReportType:
-          description: The type of report (BalanceSheet,ProfitLoss, etc)
-          type: string
-        ReportTitles:
-          description: Report titles array (3 to 4 strings with the report name, orgnisation name and time frame of report)
-          type: array
-          items:
-            type: string
-        ReportDate:
-          description: Date of report
-          type: string
-        Rows:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReportRows'
-        Fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReportFields'
+              type: string
+            ReportName:
+              description: Name of the report
+              type: string
+            ReportTitle:
+              description: Title of the report
+              type: string
+            ReportType:
+              description: The type of report (BalanceSheet,ProfitLoss, etc)
+              type: string
+            ReportTitles:
+              description: Report titles array (3 to 4 strings with the report name, orgnisation name and time frame of report)
+              type: array
+              items:
+                type: string
+            ReportDate:
+              description: Date of report
+              type: string
+            Rows:
+              type: array
+              items:
+                $ref: '#/components/schemas/ReportRows'
+            Fields:
+              type: array
+              items:
+                $ref: '#/components/schemas/ReportFields'
     ReportRows:
       type: object
       properties:
@@ -26863,27 +26863,36 @@ components:
       allOf:
         - $ref: '#/components/schemas/LastUpdatedDate'
         - type: object
-      externalDocs:
-        url: 'http://developer.xero.com/documentation/api/reports/'
-      properties:
-        ReportName:
-          description: See Prepayment Types
-          type: string
-        ReportType:
-          description: See Prepayment Types
-          type: string
-          enum:
-            - AgedPayablesByContact
-        ReportTitle:
-          description: See Prepayment Types
-          type: string
-        ReportDate:
-          description: Date of report
-          type: string
-        Contacts:
-          type: array
-          items:
-            $ref: '#/components/schemas/TenNinetyNineContact'
+          externalDocs:
+            url: 'http://developer.xero.com/documentation/api/reports/'
+          properties:
+            ReportName:
+              description: See Prepayment Types
+              type: string
+            ReportType:
+              description: See Prepayment Types
+              type: string
+              enum:
+                - AgedPayablesByContact
+                - AgedReceivablesByContact,
+                - BalanceSheet,
+                - BankSummary,
+                - BankStatement,
+                - BudgetSummary,
+                - ExecutiveSummary,
+                - ProfitAndLoss,
+                - TenNinetyNine,
+                - TrialBalance
+            ReportTitle:
+              description: See Prepayment Types
+              type: string
+            ReportDate:
+              description: Date of report
+              type: string
+            Contacts:
+              type: array
+              items:
+                $ref: '#/components/schemas/TenNinetyNineContact'
     TenNinetyNineContact:
       properties:
         Box1: 
@@ -27472,36 +27481,36 @@ components:
       allOf:
         - $ref: '#/components/schemas/LastUpdatedDate'
         - type: object
-      externalDocs:
-        url: 'http://developer.xero.com/documentation/api/users/'
-      properties:
-        UserID:
-          description: Xero identifier
-          type: string
-          format: uuid
-        EmailAddress:
-          description: Email address of user
-          type: string
-        FirstName:
-          description: First name of user
-          type: string
-        LastName:
-          description: Last name of user
-          type: string
-        IsSubscriber:
-          description: Boolean to indicate if user is the subscriber
-          type: boolean
-        OrganisationRole:
-          description: User role that defines permissions in Xero and via API (READONLY, INVOICEONLY, STANDARD, FINANCIALADVISER, etc)
-          type: string
-          enum:
-          - READONLY
-          - INVOICEONLY
-          - STANDARD
-          - FINANCIALADVISER
-          - MANAGEDCLIENT
-          - CASHBOOKCLIENT
-          - UNKNOWN
+          externalDocs:
+            url: 'http://developer.xero.com/documentation/api/users/'
+          properties:
+            UserID:
+              description: Xero identifier
+              type: string
+              format: uuid
+            EmailAddress:
+              description: Email address of user
+              type: string
+            FirstName:
+              description: First name of user
+              type: string
+            LastName:
+              description: Last name of user
+              type: string
+            IsSubscriber:
+              description: Boolean to indicate if user is the subscriber
+              type: boolean
+            OrganisationRole:
+              description: User role that defines permissions in Xero and via API (READONLY, INVOICEONLY, STANDARD, FINANCIALADVISER, etc)
+              type: string
+              enum:
+              - READONLY
+              - INVOICEONLY
+              - STANDARD
+              - FINANCIALADVISER
+              - MANAGEDCLIENT
+              - CASHBOOKCLIENT
+              - UNKNOWN
     Error:
       externalDocs:
         url: 'https://developer.xero.com/documentation/api/http-response-codes'
