@@ -26192,7 +26192,7 @@ components:
             PurchaseOrderNumber:
               description: Unique alpha numeric code identifying purchase order (when missing
                 will auto-generate from your Organisation Invoice Settings)
-            type: string
+              type: string
             Reference:
               description: Additional reference number
               type: string
@@ -26577,6 +26577,7 @@ components:
               type: string
             ReportType:
               description: The type of report (BalanceSheet,ProfitLoss, etc)
+              $ref: '#/components/schemas/ReportType'
               type: string
             ReportTitles:
               description: Report titles array (3 to 4 strings with the report name, orgnisation name and time frame of report)
@@ -26669,24 +26670,12 @@ components:
             url: 'http://developer.xero.com/documentation/api/reports/'
           properties:
             ReportName:
-              description: See Prepayment Types
               type: string
             ReportType:
-              description: See Prepayment Types
+              description: See Report Types
+              $ref: '#/components/schemas/ReportType'
               type: string
-              enum:
-                - AgedPayablesByContact
-                - AgedReceivablesByContact,
-                - BalanceSheet,
-                - BankSummary,
-                - BankStatement,
-                - BudgetSummary,
-                - ExecutiveSummary,
-                - ProfitAndLoss,
-                - TenNinetyNine,
-                - TrialBalance
             ReportTitle:
-              description: See Prepayment Types
               type: string
             ReportDate:
               description: Date of report
@@ -26901,6 +26890,20 @@ components:
       - DRCHARGE20
       - DRCHARGESUPPLY5
       - DRCHARGE5
+    ReportType:
+      description: See Prepayment Types
+      type: string
+      enum:
+        - AgedPayablesByContact
+        - AgedReceivablesByContact,
+        - BalanceSheet,
+        - BankSummary,
+        - BankStatement,
+        - BudgetSummary,
+        - ExecutiveSummary,
+        - ProfitAndLoss,
+        - TenNinetyNine,
+        - TrialBalance
     Setup:
       externalDocs:
         url: 'https://developer.xero.com/documentation/api-guides/conversions'
