@@ -23044,118 +23044,118 @@ components:
       - $ref: '#/components/schemas/ValidationResponses'
       - $ref: '#/components/schemas/LastUpdatedDate'
         - type: object
-      externalDocs:
-        url: 'http://developer.xero.com/documentation/api/accounts/'
-      properties:
-        Code:
-          description: 
-            Customer defined alpha numeric account code e.g 200 or SALES (max
-            length = 10)
-          type: string
-          example: 4400
-          maxLength: 10
-        Name:
-          description: Name of account (max length = 150)
-          maxLength: 150
-          type: string
-          example: Food Sales
-        AccountID:
-          description: The Xero identifier for an account – specified as a string following  the endpoint name   e.g. /297c2dc5-cc47-4afd-8ec8-74990b8761e9
-          type: string
-          format: uuid
-          example: 00000000-0000-0000-0000-000000000000
-          x-entity-identifier: true
-        Type:
-          $ref: '#/components/schemas/AccountType'
-          type: string
-        BankAccountNumber:
-          description: For bank accounts only (Account Type BANK)
-          type: string
-        Status:
-          description:
-            Accounts with a status of ACTIVE can be updated to ARCHIVED. See
-            Account Status Codes
-          type: string
-          enum:
-          - ACTIVE
-          - ARCHIVED
-          - DELETED
-        Description:
-          description: Description of the Account. Valid for all types of accounts except bank accounts (max length = 4000)
-          type: string
-        BankAccountType:
-          description: For bank accounts only. See Bank Account types
-          type: string
-          enum:
-          - BANK
-          - CREDITCARD
-          - PAYPAL
-          - NONE
-          - ''
-        CurrencyCode:
-          $ref: '#/components/schemas/CurrencyCode'
-          type: string
-        TaxType:
-          description: The tax type from TaxRates
-          type: string
-        EnablePaymentsToAccount:
-          description: Boolean – describes whether account can have payments applied to it
-          type: boolean
-        ShowInExpenseClaims:
-          description: Boolean – describes whether account code is available for use with
-            expense claims
-          type: boolean
-        Class:
-          description: See Account Class Types
-          type: string
-          enum:
-            - ASSET
-            - EQUITY
-            - EXPENSE
-            - LIABILITY
-            - REVENUE
-        SystemAccount:
-          description: 
-            If this is a system account then this element is returned. See
-            System Account types. Note that non-system accounts may have this
-            element set as either “” or null.
-          type: string
-          enum:
-            - DEBTORS
-            - CREDITORS
-            - BANKCURRENCYGAIN
-            - GST
-            - GSTONIMPORTS
-            - HISTORICAL
-            - REALISEDCURRENCYGAIN
-            - RETAINEDEARNINGS
-            - ROUNDING
-            - TRACKINGTRANSFERS
-            - UNPAIDEXPCLM
-            - UNREALISEDCURRENCYGAIN
-            - WAGEPAYABLES
-            - CISASSETS
-            - CISASSET
-            - CISLABOUR
-            - CISLABOUREXPENSE
-            - CISLABOURINCOME
-            - CISLIABILITY
-            - CISMATERIALS
+        externalDocs:
+          url: 'http://developer.xero.com/documentation/api/accounts/'
+        properties:
+          Code:
+            description: 
+              Customer defined alpha numeric account code e.g 200 or SALES (max
+              length = 10)
+            type: string
+            example: 4400
+            maxLength: 10
+          Name:
+            description: Name of account (max length = 150)
+            maxLength: 150
+            type: string
+            example: Food Sales
+          AccountID:
+            description: The Xero identifier for an account – specified as a string following  the endpoint name   e.g. /297c2dc5-cc47-4afd-8ec8-74990b8761e9
+            type: string
+            format: uuid
+            example: 00000000-0000-0000-0000-000000000000
+            x-entity-identifier: true
+          Type:
+            $ref: '#/components/schemas/AccountType'
+            type: string
+          BankAccountNumber:
+            description: For bank accounts only (Account Type BANK)
+            type: string
+          Status:
+            description:
+              Accounts with a status of ACTIVE can be updated to ARCHIVED. See
+              Account Status Codes
+            type: string
+            enum:
+            - ACTIVE
+            - ARCHIVED
+            - DELETED
+          Description:
+            description: Description of the Account. Valid for all types of accounts except bank accounts (max length = 4000)
+            type: string
+          BankAccountType:
+            description: For bank accounts only. See Bank Account types
+            type: string
+            enum:
+            - BANK
+            - CREDITCARD
+            - PAYPAL
+            - NONE
             - ''
-        ReportingCode:
-          description: Shown if set
-          type: string
-        ReportingCodeName:
-          description: Shown if set
-          type: string
-        HasAttachments:
-          description: boolean to indicate if an account has an attachment (read only)
-          type: boolean
-          default: "false"
-          example: "false"
-        AddToWatchlist:
-          description: Boolean – describes whether the account is shown in the watchlist widget on the dashboard
-          type: boolean
+          CurrencyCode:
+            $ref: '#/components/schemas/CurrencyCode'
+            type: string
+          TaxType:
+            description: The tax type from TaxRates
+            type: string
+          EnablePaymentsToAccount:
+            description: Boolean – describes whether account can have payments applied to it
+            type: boolean
+          ShowInExpenseClaims:
+            description: Boolean – describes whether account code is available for use with
+              expense claims
+            type: boolean
+          Class:
+            description: See Account Class Types
+            type: string
+            enum:
+              - ASSET
+              - EQUITY
+              - EXPENSE
+              - LIABILITY
+              - REVENUE
+          SystemAccount:
+            description: 
+              If this is a system account then this element is returned. See
+              System Account types. Note that non-system accounts may have this
+              element set as either “” or null.
+            type: string
+            enum:
+              - DEBTORS
+              - CREDITORS
+              - BANKCURRENCYGAIN
+              - GST
+              - GSTONIMPORTS
+              - HISTORICAL
+              - REALISEDCURRENCYGAIN
+              - RETAINEDEARNINGS
+              - ROUNDING
+              - TRACKINGTRANSFERS
+              - UNPAIDEXPCLM
+              - UNREALISEDCURRENCYGAIN
+              - WAGEPAYABLES
+              - CISASSETS
+              - CISASSET
+              - CISLABOUR
+              - CISLABOUREXPENSE
+              - CISLABOURINCOME
+              - CISLIABILITY
+              - CISMATERIALS
+              - ''
+          ReportingCode:
+            description: Shown if set
+            type: string
+          ReportingCodeName:
+            description: Shown if set
+            type: string
+          HasAttachments:
+            description: boolean to indicate if an account has an attachment (read only)
+            type: boolean
+            default: "false"
+            example: "false"
+          AddToWatchlist:
+            description: Boolean – describes whether the account is shown in the watchlist widget on the dashboard
+            type: boolean
     AccountType:
       description: See Account Types
       type: string
@@ -23231,107 +23231,108 @@ components:
       - $ref: '#/components/schemas/ValidationResponses'
       - $ref: '#/components/schemas/LastUpdatedDate'
         - type: object
-      externalDocs:
-        url: 'http://developer.xero.com/documentation/api/banktransactions/'
-      properties:
-        Type:
-          description: See Bank Transaction Types
-          type: string
-          enum:
-          - RECEIVE 
-          - RECEIVE-OVERPAYMENT 
-          - RECEIVE-PREPAYMENT  
-          - SPEND 
-          - SPEND-OVERPAYMENT 
-          - SPEND-PREPAYMENT  
-          - RECEIVE-TRANSFER  
-          - SPEND-TRANSFER
-        Contact:
-          $ref: '#/components/schemas/Contact'
-        LineItems:
-          description: See LineItems
-          x-is-lineitem: true
-          type: array
-          items:
-            $ref: '#/components/schemas/LineItem'
-        BankAccount:
-          $ref: '#/components/schemas/Account'
-        IsReconciled:
-          description: Boolean to show if transaction is reconciled
-          type: boolean
-        Date:
-          description: Date of transaction – YYYY-MM-DD
-          type: string
-          x-is-msdate: true
-        Reference:
-          description: 
-            Reference for the transaction. Only supported for SPEND and RECEIVE
-            transactions.
-          type: string
-          maxLength: 250
-        CurrencyCode:
-          $ref: '#/components/schemas/CurrencyCode'
-          type: string
-        CurrencyRate:
-          description: Exchange rate to base currency when money is spent or received. e.g.0.7500 Only used for bank transactions in non base currency. If this
-            isn’t specified for non base currency accounts then either the
-            user-defined rate (preference) or the XE.com day rate will be used.
-            Setting currency is only supported on overpayments.
-          type: number
-          format: double
-          x-is-money: true
-        Url:
-          description: URL link to a source document – shown as “Go to App Name”
-          type: string
-        Status:
-          description: See Bank Transaction Status Codes
-          type: string
-          enum:
-            - AUTHORISED
-            - DELETED
-            - VOIDED
-        LineAmountTypes:
-          $ref: '#/components/schemas/LineAmountTypes'
-          type: string
-        SubTotal:
-          description: Total of bank transaction excluding taxes
-          type: number
-          format: double
-          x-is-money: true
-        TotalTax:
-          description: Total tax on bank transaction
-          type: number
-          format: double
-          x-is-money: true
-        Total:
-          description: Total of bank transaction tax inclusive
-          type: number
-          format: double
-          x-is-money: true
-        BankTransactionID:
-          description: Xero generated unique identifier for bank transaction
-          type: string
-          format: uuid
-          example: "00000000-0000-0000-0000-000000000000"
-        PrepaymentID:
-          description: Xero generated unique identifier for a Prepayment. This will be returned on BankTransactions with a Type of SPEND-PREPAYMENT or RECEIVE-PREPAYMENT
-          type: string
-          format: uuid
-          example: "00000000-0000-0000-0000-000000000000"
-        OverpaymentID:
-          description: Xero generated unique identifier for an Overpayment. This will be returned on BankTransactions with a Type of SPEND-OVERPAYMENT or RECEIVE-OVERPAYMENT
-          type: string
-          format: uuid
-          example: "00000000-0000-0000-0000-000000000000"
-        HasAttachments:
-          description: Boolean to indicate if a bank transaction has an attachment
-          type: boolean
-          default: "false"
-          example: "false"
-      required:
-        - Type
-        - LineItems
-        - BankAccount
+        externalDocs:
+          url: 'http://developer.xero.com/documentation/api/banktransactions/'
+        properties:
+          Type:
+            description: See Bank Transaction Types
+            type: string
+            enum:
+            - RECEIVE 
+            - RECEIVE-OVERPAYMENT 
+            - RECEIVE-PREPAYMENT  
+            - SPEND 
+            - SPEND-OVERPAYMENT 
+            - SPEND-PREPAYMENT  
+            - RECEIVE-TRANSFER  
+            - SPEND-TRANSFER
+          Contact:
+            $ref: '#/components/schemas/Contact'
+          LineItems:
+            description: See LineItems
+            x-is-lineitem: true
+            type: array
+            items:
+              $ref: '#/components/schemas/LineItem'
+          BankAccount:
+            $ref: '#/components/schemas/Account'
+          IsReconciled:
+            description: Boolean to show if transaction is reconciled
+            type: boolean
+          Date:
+            description: Date of transaction – YYYY-MM-DD
+            type: string
+            x-is-msdate: true
+          Reference:
+            description: 
+              Reference for the transaction. Only supported for SPEND and RECEIVE
+              transactions.
+            type: string
+            maxLength: 250
+          CurrencyCode:
+            $ref: '#/components/schemas/CurrencyCode'
+            type: string
+          CurrencyRate:
+            description: Exchange rate to base currency when money is spent or received. e.g.0.7500 Only used for bank transactions in non base currency. If this
+              isn’t specified for non base currency accounts then either the
+              user-defined rate (preference) or the XE.com day rate will be used.
+              Setting currency is only supported on overpayments.
+            type: number
+            format: double
+            x-is-money: true
+          Url:
+            description: URL link to a source document – shown as “Go to App Name”
+            type: string
+          Status:
+            description: See Bank Transaction Status Codes
+            type: string
+            enum:
+              - AUTHORISED
+              - DELETED
+              - VOIDED
+          LineAmountTypes:
+            $ref: '#/components/schemas/LineAmountTypes'
+            type: string
+          SubTotal:
+            description: Total of bank transaction excluding taxes
+            type: number
+            format: double
+            x-is-money: true
+          TotalTax:
+            description: Total tax on bank transaction
+            type: number
+            format: double
+            x-is-money: true
+          Total:
+            description: Total of bank transaction tax inclusive
+            type: number
+            format: double
+            x-is-money: true
+          BankTransactionID:
+            description: Xero generated unique identifier for bank transaction
+            type: string
+            format: uuid
+            example: "00000000-0000-0000-0000-000000000000"
+              x-entity-identifier: true
+          PrepaymentID:
+            description: Xero generated unique identifier for a Prepayment. This will be returned on BankTransactions with a Type of SPEND-PREPAYMENT or RECEIVE-PREPAYMENT
+            type: string
+            format: uuid
+            example: "00000000-0000-0000-0000-000000000000"
+          OverpaymentID:
+            description: Xero generated unique identifier for an Overpayment. This will be returned on BankTransactions with a Type of SPEND-OVERPAYMENT or RECEIVE-OVERPAYMENT
+            type: string
+            format: uuid
+            example: "00000000-0000-0000-0000-000000000000"
+          HasAttachments:
+            description: Boolean to indicate if a bank transaction has an attachment
+            type: boolean
+            default: "false"
+            example: "false"
+        required:
+          - Type
+          - LineItems
+          - BankAccount
     LineAmountTypes:
       description: Line amounts are exclusive of tax by default if you don’t specify this element. See Line Amount Types
       type: string
@@ -23468,40 +23469,40 @@ components:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
         - type: object
-      externalDocs:
-        url: 'http://developer.xero.com/documentation/api/bank-transfers/'
-      properties:
-        FromBankAccount:
-          $ref: '#/components/schemas/Account'
-        ToBankAccount:
-          $ref: '#/components/schemas/Account'
-        Amount:
-          description: 'amount of the transaction'
-          type: number
-          format: double
-          x-is-money: true
-        Date:
-          description: The date of the Transfer YYYY-MM-DD
-          type: string
-          x-is-msdate: true
-        BankTransferID:
-          description: The identifier of the Bank Transfer
-          type: string
-          format: uuid
-          x-entity-identifier: true
-        CurrencyRate:
-          description: The currency rate
-          type: number
-          format: double
-          x-is-money: true
-        FromBankTransactionID:
-          description: The Bank Transaction ID for the source account
-          type: string
-          format: uuid
-        ToBankTransactionID:
-          description: The Bank Transaction ID for the destination account
-          type: string
-          format: uuid
+          externalDocs:
+            url: 'http://developer.xero.com/documentation/api/bank-transfers/'
+          properties:
+            FromBankAccount:
+              $ref: '#/components/schemas/Account'
+            ToBankAccount:
+              $ref: '#/components/schemas/Account'
+            Amount:
+              description: 'amount of the transaction'
+              type: number
+              format: double
+              x-is-money: true
+            Date:
+              description: The date of the Transfer YYYY-MM-DD
+              type: string
+              x-is-msdate: true
+            BankTransferID:
+              description: The identifier of the Bank Transfer
+              type: string
+              format: uuid
+              x-entity-identifier: true
+            CurrencyRate:
+              description: The currency rate
+              type: number
+              format: double
+              x-is-money: true
+            FromBankTransactionID:
+              description: The Bank Transaction ID for the source account
+              type: string
+              format: uuid
+            ToBankTransactionID:
+              description: The Bank Transaction ID for the destination account
+              type: string
+              format: uuid
         FromIsReconciled:
           description: The Bank Transaction boolean to show if it is reconciled for the source account
           type: boolean
@@ -23515,20 +23516,20 @@ components:
         Reference:
           description: Reference for the transactions.
           type: string
-        HasAttachments:
-          description: Boolean to indicate if a Bank Transfer has an attachment
-          type: boolean
-          default: "false"
-          example: "false"
-        CreatedDateUTC:
-          description: UTC timestamp of creation date of bank transfer
-          type: string
-          x-is-msdate-time: true
-          example: "/Date(1573755038314)/"
-      required:
-        - FromBankAccount
-        - ToBankAccount
-        - Amount
+            HasAttachments:
+              description: Boolean to indicate if a Bank Transfer has an attachment
+              type: boolean
+              default: "false"
+              example: "false"
+            CreatedDateUTC:
+              description: UTC timestamp of creation date of bank transfer
+              type: string
+              x-is-msdate-time: true
+              example: "/Date(1573755038314)/"
+          required:
+            - FromBankAccount
+            - ToBankAccount
+            - Amount
     BatchPayments:
       type: object
       x-isObjectArray: true
@@ -23687,25 +23688,25 @@ components:
       allOf:
       - $ref: '#/components/schemas/ValidationResponses'
         - type: object
-      externalDocs:
-        url: 'http://developer.xero.com/documentation/api/branding-themes/'
-      properties:
-        PaymentServiceID:
-          description: Xero identifier
-          type: string
-          format: uuid
-        PaymentServiceName:
-          description: Name of payment service
-          type: string
-        PaymentServiceUrl:
-          description: The custom payment URL
-          type: string
-        PayNowText:
-          description: The text displayed on the Pay Now button in Xero Online Invoicing. If this is not set it will default to Pay by credit card
-          type: string
-        PaymentServiceType:
-          description: This will always be CUSTOM for payment services created via the API.
-          type: string
+        externalDocs:
+          url: 'http://developer.xero.com/documentation/api/branding-themes/'
+        properties:
+          PaymentServiceID:
+            description: Xero identifier
+            type: string
+            format: uuid
+          PaymentServiceName:
+            description: Name of payment service
+            type: string
+          PaymentServiceUrl:
+            description: The custom payment URL
+            type: string
+          PayNowText:
+            description: The text displayed on the Pay Now button in Xero Online Invoicing. If this is not set it will default to Pay by credit card
+            type: string
+          PaymentServiceType:
+            description: This will always be CUSTOM for payment services created via the API.
+            type: string
     Contacts:
       type: object
       x-isObjectArray: true
@@ -23719,102 +23720,102 @@ components:
         - $ref: '#/components/schemas/ValidationResponses'
         - $ref: '#/components/schemas/LastUpdatedDate'
         - type: object
-      externalDocs:
-        url: 'http://developer.xero.com/documentation/api/contacts/'
-      properties:
-        ContactID:
-          description: Xero identifier
-          type: string
-          format: uuid
-          x-entity-identifier: true
+          externalDocs:
+            url: 'http://developer.xero.com/documentation/api/contacts/'
+          properties:
+            ContactID:
+              description: Xero identifier
+              type: string
+              format: uuid
+              x-entity-identifier: true
         MergedToContactID:
           description: ID for the destination of a merged contact. 
             Only returned when using paging or when fetching a contact by ContactId or ContactNumber.
           type: string
           format: uuid
-        ContactNumber:
-          description: This can be updated via the API only i.e. This field is read only on the Xero contact screen, used to identify contacts in external
-            systems (max length = 50). If the Contact Number is used, this is
-            displayed as Contact Code in the Contacts UI in Xero.
-          maxLength: 50
-          type: string
-        AccountNumber:
-          description: A user defined account number. This can be updated via the API and
-            the Xero UI (max length = 50)
-          maxLength: 50
-          type: string
-        ContactStatus:
-          description: Current status of a contact – see contact status types
-          type: string
-          enum:
-          - ACTIVE
-          - ARCHIVED
-          - GDPRREQUEST
-        Name:
-          description: Full name of contact/organisation (max length = 255)
-          maxLength: 255
-          type: string
-        FirstName:
-          description: First name of contact person (max length = 255)
-          maxLength: 255
-          type: string
-        LastName:
-          description: Last name of contact person (max length = 255)
-          maxLength: 255
-          type: string
+            ContactNumber:
+              description: This can be updated via the API only i.e. This field is read only on the Xero contact screen, used to identify contacts in external
+                systems (max length = 50). If the Contact Number is used, this is
+                displayed as Contact Code in the Contacts UI in Xero.
+              maxLength: 50
+              type: string
+            AccountNumber:
+              description: A user defined account number. This can be updated via the API and
+                the Xero UI (max length = 50)
+              maxLength: 50
+              type: string
+            ContactStatus:
+              description: Current status of a contact – see contact status types
+              type: string
+              enum:
+              - ACTIVE
+              - ARCHIVED
+              - GDPRREQUEST
+            Name:
+              description: Full name of contact/organisation (max length = 255)
+              maxLength: 255
+              type: string
+            FirstName:
+              description: First name of contact person (max length = 255)
+              maxLength: 255
+              type: string
+            LastName:
+              description: Last name of contact person (max length = 255)
+              maxLength: 255
+              type: string
         CompanyNumber:
           description: Company registration number (max length = 50)
           maxLength: 50
           type: string
-        EmailAddress:
-          description: Email address of contact person (umlauts not supported) (max length  = 255)
-          maxLength: 255
-          type: string
-        SkypeUserName:
-          description: Skype user name of contact
-          type: string
-        ContactPersons:
-          description: See contact persons
-          type: array
-          items:
-            $ref: '#/components/schemas/ContactPerson'
-        BankAccountDetails:
-          description: Bank account number of contact
-          type: string
-        TaxNumber:
-          description: Tax number of contact – this is also known as the ABN (Australia),
-            GST Number (New Zealand), VAT Number (UK) or Tax ID Number (US and
-            global) in the Xero UI depending on which regionalized version of
-            Xero you are using (max length = 50)
-          maxLength: 50
-          type: string
-        AccountsReceivableTaxType:
-          description: The tax type from TaxRates
-          type: string
-        AccountsPayableTaxType:
-          description: The tax type from TaxRates
-          type: string
-        Addresses:
-          description: Store certain address types for a contact – see address types
-          type: array
-          items:
-            $ref: '#/components/schemas/Address'
-        Phones:
-          description: Store certain phone types for a contact – see phone types
-          type: array
-          items:
-            $ref: '#/components/schemas/Phone'
-        IsSupplier:
-          description: true or false – Boolean that describes if a contact that has any AP  invoices entered against them. Cannot be set via PUT or POST – it is
-            automatically set when an accounts payable invoice is generated
-            against this contact.
-          type: boolean
-        IsCustomer:
-          description: true or false – Boolean that describes if a contact has any AR
-            invoices entered against them. Cannot be set via PUT or POST – it is
-            automatically set when an accounts receivable invoice is generated
-            against this contact.
-          type: boolean
+            EmailAddress:
+              description: Email address of contact person (umlauts not supported) (max length  = 255)
+              maxLength: 255
+              type: string
+            SkypeUserName:
+              description: Skype user name of contact
+              type: string
+            ContactPersons:
+              description: See contact persons
+              type: array
+              items:
+                $ref: '#/components/schemas/ContactPerson'
+            BankAccountDetails:
+              description: Bank account number of contact
+              type: string
+            TaxNumber:
+              description: Tax number of contact – this is also known as the ABN (Australia),
+                GST Number (New Zealand), VAT Number (UK) or Tax ID Number (US and
+                global) in the Xero UI depending on which regionalized version of
+                Xero you are using (max length = 50)
+              maxLength: 50
+              type: string
+            AccountsReceivableTaxType:
+              description: The tax type from TaxRates
+              type: string
+            AccountsPayableTaxType:
+              description: The tax type from TaxRates
+              type: string
+            Addresses:
+              description: Store certain address types for a contact – see address types
+              type: array
+              items:
+                $ref: '#/components/schemas/Address'
+            Phones:
+              description: Store certain phone types for a contact – see phone types
+              type: array
+              items:
+                $ref: '#/components/schemas/Phone'
+            IsSupplier:
+              description: true or false – Boolean that describes if a contact that has any AP  invoices entered against them. Cannot be set via PUT or POST – it is
+                automatically set when an accounts payable invoice is generated
+                against this contact.
+              type: boolean
+            IsCustomer:
+              description: true or false – Boolean that describes if a contact has any AR
+                invoices entered against them. Cannot be set via PUT or POST – it is
+                automatically set when an accounts receivable invoice is generated
+                against this contact.
+              type: boolean
         SalesDefaultLineAmountType:
           description: The default sales line amount type for a contact.
             Only available when summaryOnly parameter or paging is used, or when fetch by ContactId or ContactNumber.
@@ -23831,67 +23832,67 @@ components:
           - INCLUSIVE
           - EXCLUSIVE
           - NONE
-        DefaultCurrency:
-          $ref: '#/components/schemas/CurrencyCode'
-          type: string
-        XeroNetworkKey:
-          description: Store XeroNetworkKey for contacts.
-          type: string
-        SalesDefaultAccountCode:
-          description: The default sales account code for contacts
-          type: string
-        PurchasesDefaultAccountCode:
-          description: The default purchases account code for contacts
-          type: string
-        SalesTrackingCategories:
-          description: The default sales tracking categories for contacts
-          type: array
-          items:
-            $ref: '#/components/schemas/SalesTrackingCategory'
-        PurchasesTrackingCategories:
-          description: The default purchases tracking categories for contacts
-          type: array
-          items:
-            $ref: '#/components/schemas/SalesTrackingCategory'
-        TrackingCategoryName:
-          description: The name of the Tracking Category assigned to the contact under
-            SalesTrackingCategories and PurchasesTrackingCategories
-          type: string
-        TrackingCategoryOption:
-          description: The name of the Tracking Option assigned to the contact under
-            SalesTrackingCategories and PurchasesTrackingCategories
-          type: string
-        PaymentTerms:
-          $ref: '#/components/schemas/PaymentTerm'
-        ContactGroups:
-          description: Displays which contact groups a contact is included in
-          type: array
-          items:
-            $ref: '#/components/schemas/ContactGroup'
-        Website:
-          description: Website address for contact (read only)
-          type: string
-        BrandingTheme:
-          $ref: '#/components/schemas/BrandingTheme'
-        BatchPayments:
-          $ref: '#/components/schemas/BatchPaymentDetails'
-        Discount:
-          description: The default discount rate for the contact (read only)
-          type: number
-          format: double
-          x-is-money: true
-        Balances:
-          $ref: '#/components/schemas/Balances'
-        Attachments: 
-          description: Displays array of attachments from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/Attachment'
-        HasAttachments:
-          description: A boolean to indicate if a contact has an attachment
-          type: boolean
-          default: "false"
-          example: "false"
+            DefaultCurrency:
+              $ref: '#/components/schemas/CurrencyCode'
+              type: string
+            XeroNetworkKey:
+              description: Store XeroNetworkKey for contacts.
+              type: string
+            SalesDefaultAccountCode:
+              description: The default sales account code for contacts
+              type: string
+            PurchasesDefaultAccountCode:
+              description: The default purchases account code for contacts
+              type: string
+            SalesTrackingCategories:
+              description: The default sales tracking categories for contacts
+              type: array
+              items:
+                $ref: '#/components/schemas/SalesTrackingCategory'
+            PurchasesTrackingCategories:
+              description: The default purchases tracking categories for contacts
+              type: array
+              items:
+                $ref: '#/components/schemas/SalesTrackingCategory'
+            TrackingCategoryName:
+              description: The name of the Tracking Category assigned to the contact under
+                SalesTrackingCategories and PurchasesTrackingCategories
+              type: string
+            TrackingCategoryOption:
+              description: The name of the Tracking Option assigned to the contact under
+                SalesTrackingCategories and PurchasesTrackingCategories
+              type: string
+            PaymentTerms:
+              $ref: '#/components/schemas/PaymentTerm'
+            ContactGroups:
+              description: Displays which contact groups a contact is included in
+              type: array
+              items:
+                $ref: '#/components/schemas/ContactGroup'
+            Website:
+              description: Website address for contact (read only)
+              type: string
+            BrandingTheme:
+              $ref: '#/components/schemas/BrandingTheme'
+            BatchPayments:
+              $ref: '#/components/schemas/BatchPaymentDetails'
+            Discount:
+              description: The default discount rate for the contact (read only)
+              type: number
+              format: double
+              x-is-money: true
+            Balances:
+              $ref: '#/components/schemas/Balances'
+            Attachments: 
+              description: Displays array of attachments from the API
+              type: array
+              items:
+                $ref: '#/components/schemas/Attachment'
+            HasAttachments:
+              description: A boolean to indicate if a contact has an attachment
+              type: boolean
+              default: "false"
+              example: "false"
     Budgets:
       type: object
       x-isObjectArray: true
@@ -24122,132 +24123,132 @@ components:
         - $ref: '#/components/schemas/ValidationResponses'
         - $ref: '#/components/schemas/LastUpdatedDate'
         - type: object
-      externalDocs:
-        url: 'http://developer.xero.com/documentation/api/credit-notes/'
-      properties:
-        Type:
-          description: See Credit Note Types
-          type: string
-          enum:
-          - ACCPAYCREDIT  
-          - ACCRECCREDIT
-        Contact:
-          $ref: '#/components/schemas/Contact'
-        Date:
-          description: The date the credit note is issued YYYY-MM-DD. If the Date element is not specified then it will default to the current date based on
-            the timezone setting of the organisation
-          type: string
-          x-is-msdate: true
-        DueDate:
-          description: Date invoice is due – YYYY-MM-DD
-          type: string
-          x-is-msdate: true
-        Status:
-          description: See Credit Note Status Codes
-          type: string
-          enum:
-          - DRAFT  
-          - SUBMITTED
-          - DELETED
-          - AUTHORISED
-          - PAID  
-          - VOIDED
-        LineAmountTypes:
-          $ref: '#/components/schemas/LineAmountTypes'
-          type: string
-        LineItems:
-          description: See Invoice Line Items
-          x-is-lineitem: true
-          type: array
-          items:
-            $ref: '#/components/schemas/LineItem'
-        SubTotal:
-          description: The subtotal of the credit note excluding taxes
-          type: number
-          format: double
-          x-is-money: true
-        TotalTax:
-          description: The total tax on the credit note
-          type: number
-          format: double
-          x-is-money: true
-        Total:
-          description: The total of the Credit Note(subtotal + total tax)
-          type: number
-          format: double
-          x-is-money: true
-        CISDeduction:
-          description: CIS deduction for UK contractors
-          readOnly: true
-          type: number
-          format: double
-          x-is-money: true
-        CISRate:
-          description: CIS Deduction rate for the organisation
-          type: number
-          format: double
-          readOnly: true
-          x-is-money: true 
-        CurrencyCode:
-          description: The specified currency code
-          $ref: '#/components/schemas/CurrencyCode'
-          type: string
-        FullyPaidOnDate:
-          description: Date when credit note was fully paid(UTC format)
-          type: string
-          x-is-msdate: true
-        CreditNoteID:
-          description: Xero generated unique identifier
-          type: string
-          format: uuid
-          x-entity-identifier: true
-        CreditNoteNumber:
-          description: ACCRECCREDIT – Unique alpha numeric code identifying credit note
-            (when missing will auto-generate from your Organisation Invoice
-            Settings)
-          type: string
-        Reference:
-          description: ACCRECCREDIT only – additional reference number
-          type: string
-        SentToContact:
-          description: boolean to indicate if a credit note has been sent to a contact via  the Xero app (currently read only)
-          type: boolean
-        CurrencyRate:
-          description: The currency rate for a multicurrency invoice. If no rate is
-            specified, the XE.com day rate is used
-          type: number
-          format: double
-          x-is-money: true
-        RemainingCredit:
-          description: The remaining credit balance on the Credit Note
-          type: number
-          format: double
-          x-is-money: true
-        Allocations:
-          description: See Allocations
-          type: array
-          items:
-            $ref: '#/components/schemas/Allocation'
-        AppliedAmount: 
-          description: The amount of applied to an invoice
-          type: number
-          format: double 
-          example: 2.00
-          x-is-money: true
-        Payments:
-          description: See Payments 
-          type: array
-          items:
-            $ref: '#/components/schemas/Payment'
-        BrandingThemeID:
-          description: See BrandingThemes
-          type: string
-          format: uuid
-        HasAttachments:
-          description: boolean to indicate if a credit note has an attachment
-          type: boolean
-          default: "false"
-          example: "false"
+          externalDocs:
+            url: 'http://developer.xero.com/documentation/api/credit-notes/'
+          properties:
+            Type:
+              description: See Credit Note Types
+              type: string
+              enum:
+              - ACCPAYCREDIT  
+              - ACCRECCREDIT
+            Contact:
+              $ref: '#/components/schemas/Contact'
+            Date:
+              description: The date the credit note is issued YYYY-MM-DD. If the Date element is not specified then it will default to the current date based on
+                the timezone setting of the organisation
+              type: string
+              x-is-msdate: true
+            DueDate:
+              description: Date invoice is due – YYYY-MM-DD
+              type: string
+              x-is-msdate: true
+            Status:
+              description: See Credit Note Status Codes
+              type: string
+              enum:
+              - DRAFT  
+              - SUBMITTED
+              - DELETED
+              - AUTHORISED
+              - PAID  
+              - VOIDED
+            LineAmountTypes:
+              $ref: '#/components/schemas/LineAmountTypes'
+              type: string
+            LineItems:
+              description: See Invoice Line Items
+              x-is-lineitem: true
+              type: array
+              items:
+                $ref: '#/components/schemas/LineItem'
+            SubTotal:
+              description: The subtotal of the credit note excluding taxes
+              type: number
+              format: double
+              x-is-money: true
+            TotalTax:
+              description: The total tax on the credit note
+              type: number
+              format: double
+              x-is-money: true
+            Total:
+              description: The total of the Credit Note(subtotal + total tax)
+              type: number
+              format: double
+              x-is-money: true
+            CISDeduction:
+              description: CIS deduction for UK contractors
+              readOnly: true
+              type: number
+              format: double
+              x-is-money: true
+            CISRate:
+              description: CIS Deduction rate for the organisation
+              type: number
+              format: double
+              readOnly: true
+              x-is-money: true 
+            CurrencyCode:
+              description: The specified currency code
+              $ref: '#/components/schemas/CurrencyCode'
+              type: string
+            FullyPaidOnDate:
+              description: Date when credit note was fully paid(UTC format)
+              type: string
+              x-is-msdate: true
+            CreditNoteID:
+              description: Xero generated unique identifier
+              type: string
+              format: uuid
+              x-entity-identifier: true
+            CreditNoteNumber:
+              description: ACCRECCREDIT – Unique alpha numeric code identifying credit note
+                (when missing will auto-generate from your Organisation Invoice
+                Settings)
+              type: string
+            Reference:
+              description: ACCRECCREDIT only – additional reference number
+              type: string
+            SentToContact:
+              description: boolean to indicate if a credit note has been sent to a contact via  the Xero app (currently read only)
+              type: boolean
+            CurrencyRate:
+              description: The currency rate for a multicurrency invoice. If no rate is
+                specified, the XE.com day rate is used
+              type: number
+              format: double
+              x-is-money: true
+            RemainingCredit:
+              description: The remaining credit balance on the Credit Note
+              type: number
+              format: double
+              x-is-money: true
+            Allocations:
+              description: See Allocations
+              type: array
+              items:
+                $ref: '#/components/schemas/Allocation'
+            AppliedAmount: 
+              description: The amount of applied to an invoice
+              type: number
+              format: double 
+              example: 2.00
+			  x-is-money: true
+            Payments:
+              description: See Payments 
+              type: array
+              items:
+                $ref: '#/components/schemas/Payment'
+            BrandingThemeID:
+              description: See BrandingThemes
+              type: string
+              format: uuid
+            HasAttachments:
+              description: boolean to indicate if a credit note has an attachment
+              type: boolean
+              default: "false"
+              example: "false"
     Allocations:
       type: object
       x-isObjectArray: true
@@ -24260,30 +24261,30 @@ components:
       allOf:
         - $ref: '#/components/schemas/ValidationResponses'
         - type: object
-      externalDocs:
-        url: 'http://developer.xero.com/documentation/api/prepayments/'
-      properties:
-        Invoice:
-          $ref: '#/components/schemas/Invoice'
-        Overpayment:
-          $ref: '#/components/schemas/Overpayment'
-        Prepayment:
-          $ref: '#/components/schemas/Prepayment'
-        CreditNote:
-          $ref: '#/components/schemas/CreditNote'
-        Amount:
-          description: the amount being applied to the invoice
-          type: number
-          format: double
-          x-is-money: true
-        Date:
-          description:   the date the allocation is applied YYYY-MM-DD. 
-          type: string
-          x-is-msdate: true
-      required:
-        - Amount
-        - Invoice
-        - Date
+          externalDocs:
+            url: 'http://developer.xero.com/documentation/api/prepayments/'
+          properties:
+            Invoice:
+              $ref: '#/components/schemas/Invoice'
+            Overpayment:
+              $ref: '#/components/schemas/Overpayment'
+            Prepayment:
+              $ref: '#/components/schemas/Prepayment'
+            CreditNote:
+              $ref: '#/components/schemas/CreditNote'
+            Amount:
+              description: the amount being applied to the invoice
+              type: number
+              format: double
+              x-is-money: true
+            Date:
+              description:   the date the allocation is applied YYYY-MM-DD. 
+              type: string
+              x-is-msdate: true
+          required:
+            - Amount
+            - Invoice
+            - Date
     Currencies:
       type: object
       x-isObjectArray: true
@@ -24653,31 +24654,31 @@ components:
         - $ref: '#/components/schemas/ValidationResponses'
         - $ref: '#/components/schemas/LastUpdatedDate'
         - type: object
-      externalDocs:
-        url: 'http://developer.xero.com/documentation/api/employees/'
-      properties:
-        EmployeeID:
-          description: The Xero identifier for an employee e.g. 297c2dc5-cc47-4afd-8ec8-74990b8761e9
-          type: string
-          format: uuid
-        Status:
-          description: Current status of an employee – see contact status types
-          type: string
-          enum:
-          - ACTIVE
-          - ARCHIVED
-          - GDPRREQUEST
-          - DELETED
-        FirstName:
-          description: First name of an employee (max length = 255)
-          maxLength: 255
-          type: string
-        LastName:
-          description: Last name of an employee (max length = 255)
-          maxLength: 255
-          type: string
-        ExternalLink:
-          $ref: '#/components/schemas/ExternalLink'
+          externalDocs:
+            url: 'http://developer.xero.com/documentation/api/employees/'
+          properties:
+            EmployeeID:
+              description: The Xero identifier for an employee e.g. 297c2dc5-cc47-4afd-8ec8-74990b8761e9
+              type: string
+              format: uuid
+            Status:
+              description: Current status of an employee – see contact status types
+              type: string
+              enum:
+              - ACTIVE
+              - ARCHIVED
+              - GDPRREQUEST
+              - DELETED
+            FirstName:
+              description: First name of an employee (max length = 255)
+              maxLength: 255
+              type: string
+            LastName:
+              description: Last name of an employee (max length = 255)
+              maxLength: 255
+              type: string
+            ExternalLink:
+              $ref: '#/components/schemas/ExternalLink'
     ExpenseClaims:
       type: object
       x-isObjectArray: true
@@ -24784,182 +24785,182 @@ components:
         - $ref: '#/components/schemas/ValidationResponses'
         - $ref: '#/components/schemas/LastUpdatedDate'
         - type: object
-      externalDocs:
-        url: 'http://developer.xero.com/documentation/api/invoices/'
-      properties:
-        Type:
-          description: See Invoice Types
-          type: string
-          enum:
-          - ACCPAY
-          - ACCPAYCREDIT
-          - APOVERPAYMENT
-          - APPREPAYMENT
-          - ACCREC
-          - ACCRECCREDIT
-          - AROVERPAYMENT
-          - ARPREPAYMENT
-        Contact:
-          $ref: '#/components/schemas/Contact'
-        LineItems:
-          x-is-lineitem: true
-          description: See LineItems
-          type: array
-          items:
-            $ref: '#/components/schemas/LineItem'
-        Date:
-          description: Date invoice was issued – YYYY-MM-DD. If the Date element is not
-            specified it will default to the current date based on the timezone
-            setting of the organisation
-          type: string
-          x-is-msdate: true
-        DueDate:
-          description: Date invoice is due – YYYY-MM-DD
-          type: string
-          x-is-msdate: true
-        LineAmountTypes:
-          $ref: '#/components/schemas/LineAmountTypes'
-          type: string
-        InvoiceNumber:
-          description: ACCREC – Unique alpha numeric code identifying invoice (when missing will auto-generate from your Organisation Invoice Settings) (max
-            length = 255)
-          maxLength: 255
-          type: string
-        Reference:
-          description: ACCREC only – additional reference number
-          type: string
-        BrandingThemeID:
-          description: See BrandingThemes
-          type: string
-          format: uuid
-        Url:
-          description:  URL link to a source document – shown as “Go to [appName]” in the
-            Xero app
-          type: string
-        CurrencyCode:
-          $ref: '#/components/schemas/CurrencyCode'
-          type: string
-        CurrencyRate:
-          description: The currency rate for a multicurrency invoice. If no rate is
-            specified, the XE.com day rate is used. (max length = [18].[6])
-          type: number
-          format: double
-          x-is-money: true
-        Status:
-          description: See Invoice Status Codes
-          type: string
-          enum:
-            - DRAFT
-            - SUBMITTED
-            - DELETED
-            - AUTHORISED
-            - PAID
-            - VOIDED
-        SentToContact:
-          description: Boolean to set whether the invoice in the Xero app should be marked
-            as “sent”. This can be set only on invoices that have been approved
-          type: boolean
-        ExpectedPaymentDate:
-          description: Shown on sales invoices (Accounts Receivable) when this has been set
-          type: string
-          x-is-msdate: true
-        PlannedPaymentDate:
-          description: Shown on bills (Accounts Payable) when this has been set
-          type: string         
-          x-is-msdate: true
-        CISDeduction:
-          description: CIS deduction for UK contractors
-          type: number
-          format: double
-          x-is-money: true
-        CISRate:
-          description: CIS Deduction rate for the organisation
-          type: number
-          format: double
-          readOnly: true
-          x-is-money: true 
-        SubTotal:
-          description: Total of invoice excluding taxes
-          type: number
-          format: double
-          x-is-money: true
-        TotalTax:
-          description: Total tax on invoice
-          type: number
-          format: double
-          x-is-money: true
-        Total:
-          description: Total of Invoice tax inclusive (i.e. SubTotal + TotalTax). This will be ignored if it doesn’t equal the sum of the LineAmounts
-          type: number
-          format: double
-          x-is-money: true
-        TotalDiscount:
-          description: Total of discounts applied on the invoice line items
-          type: number
-          format: double
-          x-is-money: true
-        InvoiceID:
-          description: Xero generated unique identifier for invoice
-          type: string
-          format: uuid
-          x-entity-identifier: true
-        RepeatingInvoiceID:
-          description: Xero generated unique identifier for repeating invoices
-          type: string
-          format: uuid
-        HasAttachments:
-          description: boolean to indicate if an invoice has an attachment
-          type: boolean
-          default: "false"
-          example: "false"
-        IsDiscounted:
-          description: boolean to indicate if an invoice has a discount
-          type: boolean
-        Payments:
-          description: See Payments
-          type: array
-          items:
-            $ref: '#/components/schemas/Payment'
-        Prepayments:
-          description: See Prepayments
-          type: array
-          items:
-            $ref: '#/components/schemas/Prepayment'
-        Overpayments:
-          description: See Overpayments
-          type: array
-          items:
-            $ref: '#/components/schemas/Overpayment'
-        AmountDue:
-          description: Amount remaining to be paid on invoice
-          type: number
-          format: double
-          x-is-money: true
-        AmountPaid:
-          description: Sum of payments received for invoice
-          type: number
-          format: double
-          x-is-money: true
-        FullyPaidOnDate:
+          externalDocs:
+            url: 'http://developer.xero.com/documentation/api/invoices/'
+          properties:
+            Type:
+              description: See Invoice Types
+              type: string
+              enum:
+              - ACCPAY
+              - ACCPAYCREDIT
+              - APOVERPAYMENT
+              - APPREPAYMENT
+              - ACCREC
+              - ACCRECCREDIT
+              - AROVERPAYMENT
+              - ARPREPAYMENT
+            Contact:
+              $ref: '#/components/schemas/Contact'
+            LineItems:
+              x-is-lineitem: true
+              description: See LineItems
+              type: array
+              items:
+                $ref: '#/components/schemas/LineItem'
+            Date:
+              description: Date invoice was issued – YYYY-MM-DD. If the Date element is not
+                specified it will default to the current date based on the timezone
+                setting of the organisation
+              type: string
+              x-is-msdate: true
+            DueDate:
+              description: Date invoice is due – YYYY-MM-DD
+              type: string
+              x-is-msdate: true
+            LineAmountTypes:
+              $ref: '#/components/schemas/LineAmountTypes'
+              type: string
+            InvoiceNumber:
+              description: ACCREC – Unique alpha numeric code identifying invoice (when missing will auto-generate from your Organisation Invoice Settings) (max
+                length = 255)
+              maxLength: 255
+              type: string
+            Reference:
+              description: ACCREC only – additional reference number
+              type: string
+            BrandingThemeID:
+              description: See BrandingThemes
+              type: string
+              format: uuid
+            Url:
+              description:  URL link to a source document – shown as “Go to [appName]” in the
+                Xero app
+              type: string
+            CurrencyCode:
+              $ref: '#/components/schemas/CurrencyCode'
+              type: string
+            CurrencyRate:
+              description: The currency rate for a multicurrency invoice. If no rate is
+                specified, the XE.com day rate is used. (max length = [18].[6])
+              type: number
+              format: double
+              x-is-money: true
+            Status:
+              description: See Invoice Status Codes
+              type: string
+              enum:
+                - DRAFT
+                - SUBMITTED
+                - DELETED
+                - AUTHORISED
+                - PAID
+                - VOIDED
+            SentToContact:
+              description: Boolean to set whether the invoice in the Xero app should be marked
+                as “sent”. This can be set only on invoices that have been approved
+              type: boolean
+            ExpectedPaymentDate:
+              description: Shown on sales invoices (Accounts Receivable) when this has been set
+              type: string
+              x-is-msdate: true
+            PlannedPaymentDate:
+              description: Shown on bills (Accounts Payable) when this has been set
+              type: string         
+              x-is-msdate: true
+            CISDeduction:
+              description: CIS deduction for UK contractors
+              type: number
+              format: double
+              x-is-money: true
+            CISRate:
+              description: CIS Deduction rate for the organisation
+              type: number
+              format: double
+              readOnly: true
+              x-is-money: true 
+            SubTotal:
+              description: Total of invoice excluding taxes
+              type: number
+              format: double
+              x-is-money: true
+            TotalTax:
+              description: Total tax on invoice
+              type: number
+              format: double
+              x-is-money: true
+            Total:
+              description: Total of Invoice tax inclusive (i.e. SubTotal + TotalTax). This will be ignored if it doesn’t equal the sum of the LineAmounts
+              type: number
+              format: double
+              x-is-money: true
+            TotalDiscount:
+              description: Total of discounts applied on the invoice line items
+              type: number
+              format: double
+              x-is-money: true
+            InvoiceID:
+              description: Xero generated unique identifier for invoice
+              type: string
+              format: uuid
+              x-entity-identifier: true
+            RepeatingInvoiceID:
+              description: Xero generated unique identifier for repeating invoices
+              type: string
+              format: uuid
+            HasAttachments:
+              description: boolean to indicate if an invoice has an attachment
+              type: boolean
+              default: "false"
+              example: "false"
+            IsDiscounted:
+              description: boolean to indicate if an invoice has a discount
+              type: boolean
+            Payments:
+              description: See Payments
+              type: array
+              items:
+                $ref: '#/components/schemas/Payment'
+            Prepayments:
+              description: See Prepayments
+              type: array
+              items:
+                $ref: '#/components/schemas/Prepayment'
+            Overpayments:
+              description: See Overpayments
+              type: array
+              items:
+                $ref: '#/components/schemas/Overpayment'
+            AmountDue:
+              description: Amount remaining to be paid on invoice
+              type: number
+              format: double
+              x-is-money: true
+            AmountPaid:
+              description: Sum of payments received for invoice
+              type: number
+              format: double
+              x-is-money: true
+            FullyPaidOnDate:
           description: The date the invoice was fully paid. Only returned on fully paid invoices
-          type: string
-          x-is-msdate: true
-        AmountCredited:
-          description: Sum of all credit notes, over-payments and pre-payments applied to
-            invoice
-          type: number
-          format: double
-          x-is-money: true
-        CreditNotes:
-          description: Details of credit notes that have been applied to an invoice
-          type: array
-          items:
-            $ref: '#/components/schemas/CreditNote'
-        Attachments: 
-          description: Displays array of attachments from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/Attachment'
+              type: string
+              x-is-msdate: true
+            AmountCredited:
+              description: Sum of all credit notes, over-payments and pre-payments applied to
+                invoice
+              type: number
+              format: double
+              x-is-money: true
+            CreditNotes:
+              description: Details of credit notes that have been applied to an invoice
+              type: array
+              items:
+                $ref: '#/components/schemas/CreditNote'
+            Attachments: 
+              description: Displays array of attachments from the API
+              type: array
+              items:
+                $ref: '#/components/schemas/Attachment'
     OnlineInvoices:
       type: object
       x-isObjectArray: true
@@ -25005,68 +25006,68 @@ components:
         - $ref: '#/components/schemas/ValidationResponses'
         - $ref: '#/components/schemas/LastUpdatedDate'
         - type: object
-      externalDocs:
-        url: 'http://developer.xero.com/documentation/api/items/'
-      properties:
-        Code:
-          description: User defined item code (max length = 30)
-          maxLength: 30
-          type: string
-        InventoryAssetAccountCode:
-          description: The inventory asset account for the item. The account must be of
-            type INVENTORY. The  COGSAccountCode in PurchaseDetails is also
-            required to create a tracked item
-          type: string
-        Name:
-          description: The name of the item (max length = 50)
-          maxLength: 50
-          type: string
-        IsSold:
-          description: Boolean value, defaults to true. When IsSold is true the item will
-            be available on sales transactions in the Xero UI. If IsSold is
-            updated to false then Description and SalesDetails values will be
-            nulled.
-          type: boolean
-        IsPurchased:
-          description: Boolean value, defaults to true. When IsPurchased is true the item
-            is available for purchase transactions in the Xero UI. If
-            IsPurchased is updated to false then PurchaseDescription and
-            PurchaseDetails values will be nulled.
-          type: boolean
-        Description:
-          description: The sales description of the item (max length = 4000)
-          maxLength: 4000
-          type: string
-        PurchaseDescription:
-          description: The purchase description of the item (max length = 4000)
-          maxLength: 4000
-          type: string
-        PurchaseDetails:
-          $ref: '#/components/schemas/Purchase'
-        SalesDetails:
-          $ref: '#/components/schemas/Purchase'
-        IsTrackedAsInventory:
-          description: True for items that are tracked as inventory. An item will be
-            tracked as inventory if the InventoryAssetAccountCode and
-            COGSAccountCode are set.
-          type: boolean
-        TotalCostPool:
-          description: The value of the item on hand. Calculated using average cost
-            accounting.
-          type: number
-          format: double
-          x-is-money: true
-        QuantityOnHand:
-          description: The quantity of the item on hand
-          type: number
-          format: double
-          x-is-money: true
-        ItemID:
-          description: The Xero identifier for an Item
-          type: string
-          format: uuid
-      required:
-        - Code
+          externalDocs:
+            url: 'http://developer.xero.com/documentation/api/items/'
+          properties:
+            Code:
+              description: User defined item code (max length = 30)
+              maxLength: 30
+              type: string
+            InventoryAssetAccountCode:
+              description: The inventory asset account for the item. The account must be of
+                type INVENTORY. The  COGSAccountCode in PurchaseDetails is also
+                required to create a tracked item
+              type: string
+            Name:
+              description: The name of the item (max length = 50)
+              maxLength: 50
+              type: string
+            IsSold:
+              description: Boolean value, defaults to true. When IsSold is true the item will
+                be available on sales transactions in the Xero UI. If IsSold is
+                updated to false then Description and SalesDetails values will be
+                nulled.
+              type: boolean
+            IsPurchased:
+              description: Boolean value, defaults to true. When IsPurchased is true the item
+                is available for purchase transactions in the Xero UI. If
+                IsPurchased is updated to false then PurchaseDescription and
+                PurchaseDetails values will be nulled.
+              type: boolean
+            Description:
+              description: The sales description of the item (max length = 4000)
+              maxLength: 4000
+              type: string
+            PurchaseDescription:
+              description: The purchase description of the item (max length = 4000)
+              maxLength: 4000
+              type: string
+            PurchaseDetails:
+              $ref: '#/components/schemas/Purchase'
+            SalesDetails:
+              $ref: '#/components/schemas/Purchase'
+            IsTrackedAsInventory:
+              description: True for items that are tracked as inventory. An item will be
+                tracked as inventory if the InventoryAssetAccountCode and
+                COGSAccountCode are set.
+              type: boolean
+            TotalCostPool:
+              description: The value of the item on hand. Calculated using average cost
+                accounting.
+              type: number
+              format: double
+              x-is-money: true
+            QuantityOnHand:
+              description: The quantity of the item on hand
+              type: number
+              format: double
+              x-is-money: true
+            ItemID:
+              description: The Xero identifier for an Item
+              type: string
+              format: uuid
+          required:
+            - Code
     Purchase:
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/items/'
@@ -25233,62 +25234,62 @@ components:
         - $ref: '#/components/schemas/ValidationResponses'
         - $ref: '#/components/schemas/LastUpdatedDate'
         - type: object
-      externalDocs:
-        url: 'http://developer.xero.com/documentation/api/linked-transactions/'
-      properties:
-        SourceTransactionID:
-          description:  Filter by the SourceTransactionID. Get all the linked transactions created from a particular ACCPAY invoice
-          type: string
-          format: uuid
-        SourceLineItemID:
-          description: The line item identifier from the source transaction.
-          type: string
-          format: uuid
-        ContactID:
-          description:  Filter by the combination of ContactID and Status. Get all the
-            linked transactions that have been assigned to a particular customer
-            and have a particular status e.g. GET
-            /LinkedTransactions?ContactID=4bb34b03-3378-4bb2-a0ed-6345abf3224e&Status=APPROVED.
-          type: string
-          format: uuid
-        TargetTransactionID:
-          description:  Filter by the TargetTransactionID. Get all the linked transactions  allocated to a particular ACCREC invoice
-          type: string
-          format: uuid
-        TargetLineItemID:
-          description: The line item identifier from the target transaction. It is possible  to link multiple billable expenses to the same TargetLineItemID.
-          type: string
-          format: uuid
-        LinkedTransactionID:
-          description:  The Xero identifier for an Linked Transaction e.g./LinkedTransactions/297c2dc5-cc47-4afd-8ec8-74990b8761e9
-          type: string
-          format: uuid
-        Status:
-          description:   Filter by the combination of ContactID and Status. Get all the
-            linked transactions that have been assigned to a particular customer
-            and have a particular status e.g. GET
-            /LinkedTransactions?ContactID=4bb34b03-3378-4bb2-a0ed-6345abf3224e&Status=APPROVED.
-          type: string
-          enum:
-          - APPROVED
-          - DRAFT
-          - ONDRAFT
-          - BILLED
-          - VOIDED
-        Type:
-          description:  This will always be BILLABLEEXPENSE. More types may be added in
-            future.
-          type: string
-          enum:
-          - BILLABLEEXPENSE
-        SourceTransactionTypeCode:
-          description:  The Type of the source tranasction. This will be ACCPAY if the
-            linked transaction was created from an invoice and SPEND if it was
-            created from a bank transaction.
-          type: string
-          enum:
-          - ACCPAY
-          - SPEND
+          externalDocs:
+            url: 'http://developer.xero.com/documentation/api/linked-transactions/'
+          properties:
+            SourceTransactionID:
+              description:  Filter by the SourceTransactionID. Get all the linked transactions created from a particular ACCPAY invoice
+              type: string
+              format: uuid
+            SourceLineItemID:
+              description: The line item identifier from the source transaction.
+              type: string
+              format: uuid
+            ContactID:
+              description:  Filter by the combination of ContactID and Status. Get all the
+                linked transactions that have been assigned to a particular customer
+                and have a particular status e.g. GET
+                /LinkedTransactions?ContactID=4bb34b03-3378-4bb2-a0ed-6345abf3224e&Status=APPROVED.
+              type: string
+              format: uuid
+            TargetTransactionID:
+              description:  Filter by the TargetTransactionID. Get all the linked transactions  allocated to a particular ACCREC invoice
+              type: string
+              format: uuid
+            TargetLineItemID:
+              description: The line item identifier from the target transaction. It is possible  to link multiple billable expenses to the same TargetLineItemID.
+              type: string
+              format: uuid
+            LinkedTransactionID:
+              description:  The Xero identifier for an Linked Transaction e.g./LinkedTransactions/297c2dc5-cc47-4afd-8ec8-74990b8761e9
+              type: string
+              format: uuid
+            Status:
+              description:   Filter by the combination of ContactID and Status. Get all the
+                linked transactions that have been assigned to a particular customer
+                and have a particular status e.g. GET
+                /LinkedTransactions?ContactID=4bb34b03-3378-4bb2-a0ed-6345abf3224e&Status=APPROVED.
+              type: string
+              enum:
+              - APPROVED
+              - DRAFT
+              - ONDRAFT
+              - BILLED
+              - VOIDED
+            Type:
+              description:  This will always be BILLABLEEXPENSE. More types may be added in
+                future.
+              type: string
+              enum:
+              - BILLABLEEXPENSE
+            SourceTransactionTypeCode:
+              description:  The Type of the source tranasction. This will be ACCPAY if the
+                linked transaction was created from an invoice and SPEND if it was
+                created from a bank transaction.
+              type: string
+              enum:
+              - ACCPAY
+              - SPEND
     ManualJournals:
       type: object
       x-isObjectArray: true
@@ -25302,57 +25303,57 @@ components:
         - $ref: '#/components/schemas/ValidationResponses'
         - $ref: '#/components/schemas/LastUpdatedDate'
         - type: object
-      externalDocs:
-        url: 'http://developer.xero.com/documentation/api/manual-journals/'
-      properties:
-        Narration:
-          description: Description of journal being posted
-          type: string
-        JournalLines:
-          description: See JournalLines
-          type: array
-          items:
-            $ref: '#/components/schemas/ManualJournalLine'
-        Date:
-          description: Date journal was posted – YYYY-MM-DD
-          type: string
-          x-is-msdate: true
-        LineAmountTypes:
-          $ref: '#/components/schemas/LineAmountTypes'
-          type: string
-        Status:
-          description: See Manual Journal Status Codes
-          type: string
-          enum:
-          - DRAFT
-          - POSTED
-          - DELETED
-          - VOIDED
-          - ARCHIVED
-        Url:
-          description:  Url link to a source document – shown as “Go to [appName]” in the
-            Xero app
-          type: string
-        ShowOnCashBasisReports:
-          description: Boolean – default is true if not specified
-          type: boolean
-        HasAttachments:
-          description: Boolean to indicate if a manual journal has an attachment
-          type: boolean
-          default: "false"
-          example: "false"
-        ManualJournalID:
-          description: The Xero identifier for a Manual Journal
-          type: string
-          format: uuid
-          x-entity-identifier: true
-        Attachments: 
-          description: Displays array of attachments from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/Attachment'
-      required:
-        - Narration
+          externalDocs:
+            url: 'http://developer.xero.com/documentation/api/manual-journals/'
+          properties:
+            Narration:
+              description: Description of journal being posted
+              type: string
+            JournalLines:
+              description: See JournalLines
+              type: array
+              items:
+                $ref: '#/components/schemas/ManualJournalLine'
+            Date:
+              description: Date journal was posted – YYYY-MM-DD
+              type: string
+              x-is-msdate: true
+            LineAmountTypes:
+              $ref: '#/components/schemas/LineAmountTypes'
+              type: string
+            Status:
+              description: See Manual Journal Status Codes
+              type: string
+              enum:
+              - DRAFT
+              - POSTED
+              - DELETED
+              - VOIDED
+              - ARCHIVED
+            Url:
+              description:  Url link to a source document – shown as “Go to [appName]” in the
+                Xero app
+              type: string
+            ShowOnCashBasisReports:
+              description: Boolean – default is true if not specified
+              type: boolean
+            HasAttachments:
+              description: Boolean to indicate if a manual journal has an attachment
+              type: boolean
+              default: "false"
+              example: "false"
+            ManualJournalID:
+              description: The Xero identifier for a Manual Journal
+              type: string
+              format: uuid
+              x-entity-identifier: true
+            Attachments: 
+              description: Displays array of attachments from the API
+              type: array
+              items:
+                $ref: '#/components/schemas/Attachment'
+          required:
+            - Narration
     ManualJournalLine:
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/manual-journals/'
@@ -26153,98 +26154,98 @@ components:
         - $ref: '#/components/schemas/ValidationResponses'
         - $ref: '#/components/schemas/LastUpdatedDate'
         - type: object
-      externalDocs:
-        url: 'http://developer.xero.com/documentation/api/payments/'
-      properties:
-        Invoice:
-          $ref: '#/components/schemas/Invoice'
-        CreditNote:
-          $ref: '#/components/schemas/CreditNote'
-        Prepayment:
-          $ref: '#/components/schemas/Prepayment'
-        Overpayment:
-          $ref: '#/components/schemas/Overpayment'
-        InvoiceNumber:
-          description: Number of invoice or credit note you are applying payment to e.g.INV-4003
-          type: string
-        CreditNoteNumber:
-          description: Number of invoice or credit note you are applying payment to e.g. INV-4003
-          type: string
-        Account:
-          $ref: '#/components/schemas/Account'
-        Code:
-          description: Code of account you are using to make the payment e.g. 001 (note- not all accounts have a code value)
-          type: string
-        Date:
-          description: Date the payment is being made (YYYY-MM-DD) e.g. 2009-09-06
-          type: string
-          x-is-msdate: true
-        CurrencyRate:
+          externalDocs:
+            url: 'http://developer.xero.com/documentation/api/payments/'
+          properties:
+            Invoice:
+              $ref: '#/components/schemas/Invoice'
+            CreditNote:
+              $ref: '#/components/schemas/CreditNote'
+            Prepayment:
+              $ref: '#/components/schemas/Prepayment'
+            Overpayment:
+              $ref: '#/components/schemas/Overpayment'
+            InvoiceNumber:
+              description: Number of invoice or credit note you are applying payment to e.g.INV-4003
+              type: string
+            CreditNoteNumber:
+              description: Number of invoice or credit note you are applying payment to e.g. INV-4003
+              type: string
+            Account:
+              $ref: '#/components/schemas/Account'
+            Code:
+              description: Code of account you are using to make the payment e.g. 001 (note- not all accounts have a code value)
+              type: string
+            Date:
+              description: Date the payment is being made (YYYY-MM-DD) e.g. 2009-09-06
+              type: string
+              x-is-msdate: true
+            CurrencyRate:
           description: Exchange rate when payment is received. Only used for non base currency invoices and credit notes e.g. 0.7500
-          type: number
-          format: double
-          x-is-money: true
-        Amount:
-          description: The amount of the payment. Must be less than or equal to the
-            outstanding amount owing on the invoice e.g. 200.00
-          type: number
-          format: double
-          x-is-money: true
+              type: number
+              format: double
+              x-is-money: true
+            Amount:
+              description: The amount of the payment. Must be less than or equal to the
+                outstanding amount owing on the invoice e.g. 200.00
+              type: number
+              format: double
+              x-is-money: true
         BankAmount:
           description: The amount of the payment in the currency of the bank account. 
           type: number
           format: double
           x-is-money: true  
-        Reference:
-          description: An optional description for the payment e.g. Direct Debit
-          type: string
-        IsReconciled:
-          description: An optional parameter for the payment. A boolean indicating whether you would like the payment to be created as reconciled when using
-            PUT, or whether a payment has been reconciled when using GET
-          type: boolean
-        Status:
-          description: The status of the payment.
-          type: string
-          enum:
-            - AUTHORISED
-            - DELETED
-        PaymentType:
-          description: See Payment Types.
-          type: string
-          enum:
-            - ACCRECPAYMENT
-            - ACCPAYPAYMENT
-            - ARCREDITPAYMENT
-            - APCREDITPAYMENT
-            - AROVERPAYMENTPAYMENT
-            - ARPREPAYMENTPAYMENT
-            - APPREPAYMENTPAYMENT
-            - APOVERPAYMENTPAYMENT
-        PaymentID:
-          description: The Xero identifier for an Payment e.g. 297c2dc5-cc47-4afd-8ec8-74990b8761e9
-          type: string
-          format: uuid
-          x-entity-identifier: true
-          example: 00000000-0000-0000-0000-000000000000
-        BatchPaymentID:
-          description: Present if the payment was created as part of a batch.
-          type: string
-          format: uuid
-          example: 00000000-0000-0000-0000-000000000000
-        BankAccountNumber:
-          description: The suppliers bank account number the payment is being made to
-          type: string
-        Particulars:
-          description: The suppliers bank account number the payment is being made to
-          type: string
-        Details:
-          description: The information to appear on the supplier's bank account
-          type: string
-        HasAccount:
-          description: A boolean to indicate if a contact has an validation errors
-          type: boolean
-          default: "false"
-          example: "false"
+            Reference:
+              description: An optional description for the payment e.g. Direct Debit
+              type: string
+            IsReconciled:
+              description: An optional parameter for the payment. A boolean indicating whether you would like the payment to be created as reconciled when using
+                PUT, or whether a payment has been reconciled when using GET
+              type: boolean
+            Status:
+              description: The status of the payment.
+              type: string
+              enum:
+                - AUTHORISED
+                - DELETED
+            PaymentType:
+              description: See Payment Types.
+              type: string
+              enum:
+                - ACCRECPAYMENT
+                - ACCPAYPAYMENT
+                - ARCREDITPAYMENT
+                - APCREDITPAYMENT
+                - AROVERPAYMENTPAYMENT
+                - ARPREPAYMENTPAYMENT
+                - APPREPAYMENTPAYMENT
+                - APOVERPAYMENTPAYMENT
+            PaymentID:
+              description: The Xero identifier for an Payment e.g. 297c2dc5-cc47-4afd-8ec8-74990b8761e9
+              type: string
+              format: uuid
+              x-entity-identifier: true
+			  example: 00000000-0000-0000-0000-000000000000
+	        BatchPaymentID:
+	          description: Present if the payment was created as part of a batch.
+	          type: string
+	          format: uuid
+	          example: 00000000-0000-0000-0000-000000000000
+            BankAccountNumber:
+              description: The suppliers bank account number the payment is being made to
+              type: string
+            Particulars:
+              description: The suppliers bank account number the payment is being made to
+              type: string
+            Details:
+              description: The information to appear on the supplier's bank account
+              type: string
+            HasAccount:
+              description: A boolean to indicate if a contact has an validation errors
+              type: boolean
+              default: "false"
+              example: "false"
     Prepayments:
       type: object
       x-isObjectArray: true
@@ -26364,112 +26365,113 @@ components:
         - $ref: '#/components/schemas/ValidationResponses'
         - $ref: '#/components/schemas/LastUpdatedDate'
         - type: object
-      externalDocs:
-        url: 'http://developer.xero.com/documentation/api/purchase-orders/'
-      properties:
-        Contact:
-          $ref: '#/components/schemas/Contact'
-        LineItems:
-          description: See LineItems
-          x-is-lineitem: true
-          type: array
-          items:
-            $ref: '#/components/schemas/LineItem'
-        Date:
-          description: Date purchase order was issued – YYYY-MM-DD. If the Date element is not specified then it will default to the current date based on the
-            timezone setting of the organisation
-          type: string
-          x-is-msdate: true
-        DeliveryDate:
-          description: Date the goods are to be delivered – YYYY-MM-DD
-          type: string
-          x-is-msdate: true
-        LineAmountTypes:
-          $ref: '#/components/schemas/LineAmountTypes'
-          type: string
-        PurchaseOrderNumber:
-          description: Unique alpha numeric code identifying purchase order (when missing
-            will auto-generate from your Organisation Invoice Settings)
-          type: string
-        Reference:
-          description: Additional reference number
-          type: string
-        BrandingThemeID:
-          description: See BrandingThemes
-          type: string
-          format: uuid
-        CurrencyCode:
-          $ref: '#/components/schemas/CurrencyCode'
-          type: string
-        Status:
-          description: See Purchase Order Status Codes
-          type: string
-          enum:
-          - DRAFT    
-          - SUBMITTED  
-          - AUTHORISED  
-          - BILLED
-          - DELETED
-        SentToContact:
-          description: Boolean to set whether the purchase order should be marked as
-            “sent”. This can be set only on purchase orders that have been
-            approved or billed
-          type: boolean
-        DeliveryAddress:
-          description: The address the goods are to be delivered to
-          type: string
-        AttentionTo:
-          description: The person that the delivery is going to
-          type: string
-        Telephone:
-          description: The phone number for the person accepting the delivery
-          type: string
-        DeliveryInstructions:
-          description: A free text feild for instructions (500 characters max)
-          type: string
-        ExpectedArrivalDate:
-          description: The date the goods are expected to arrive.
-          type: string
-          x-is-msdate: true
-        PurchaseOrderID:
-          description: Xero generated unique identifier for purchase order
-          type: string
-          format: uuid
-        CurrencyRate:
-          description: The currency rate for a multicurrency purchase order. If no rate is specified, the XE.com day rate is used.
-          type: number
-          format: double
-          x-is-money: true
-        SubTotal:
-          description: Total of purchase order excluding taxes
-          type: number
-          format: double
-          x-is-money: true
-        TotalTax:
-          description: Total tax on purchase order
-          type: number
-          format: double
-          x-is-money: true
-        Total:
-          description: Total of Purchase Order tax inclusive (i.e. SubTotal + TotalTax)
-          type: number
-          format: double
-          x-is-money: true
-        TotalDiscount:
-          description: Total of discounts applied on the purchase order line items
-          type: number
-          format: double
-          x-is-money: true
-        HasAttachments:
-          description: boolean to indicate if a purchase order has an attachment
-          type: boolean
-          default: "false"
-          example: "false"
-        Attachments: 
-          description: Displays array of attachments from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/Attachment'
+          externalDocs:
+            url: 'http://developer.xero.com/documentation/api/purchase-orders/'
+          properties:
+            Contact:
+              $ref: '#/components/schemas/Contact'
+            LineItems:
+              description: See LineItems
+              x-is-lineitem: true
+              type: array
+              items:
+                $ref: '#/components/schemas/LineItem'
+            Date:
+              description: Date purchase order was issued – YYYY-MM-DD. If the Date element is not specified then it will default to the current date based on the
+                timezone setting of the organisation
+              type: string
+              x-is-msdate: true
+            DeliveryDate:
+              description: Date the goods are to be delivered – YYYY-MM-DD
+              type: string
+              x-is-msdate: true
+            LineAmountTypes:
+              $ref: '#/components/schemas/LineAmountTypes'
+              type: string
+            PurchaseOrderNumber:
+              description: Unique alpha numeric code identifying purchase order (when missing
+                will auto-generate from your Organisation Invoice Settings)
+            type: string
+            Reference:
+              description: Additional reference number
+              type: string
+            BrandingThemeID:
+              description: See BrandingThemes
+              type: string
+              format: uuid
+            CurrencyCode:
+              $ref: '#/components/schemas/CurrencyCode'
+              type: string
+            Status:
+              description: See Purchase Order Status Codes
+              type: string
+              enum:
+              - DRAFT    
+              - SUBMITTED  
+              - AUTHORISED  
+              - BILLED
+              - DELETED
+            SentToContact:
+              description: Boolean to set whether the purchase order should be marked as
+                “sent”. This can be set only on purchase orders that have been
+                approved or billed
+              type: boolean
+            DeliveryAddress:
+              description: The address the goods are to be delivered to
+              type: string
+            AttentionTo:
+              description: The person that the delivery is going to
+              type: string
+            Telephone:
+              description: The phone number for the person accepting the delivery
+              type: string
+            DeliveryInstructions:
+              description: A free text feild for instructions (500 characters max)
+              type: string
+            ExpectedArrivalDate:
+              description: The date the goods are expected to arrive.
+              type: string
+              x-is-msdate: true
+            PurchaseOrderID:
+              description: Xero generated unique identifier for purchase order
+              type: string
+              format: uuid
+              x-entity-identifier: true
+            CurrencyRate:
+              description: The currency rate for a multicurrency purchase order. If no rate is specified, the XE.com day rate is used.
+              type: number
+              format: double
+              x-is-money: true
+            SubTotal:
+              description: Total of purchase order excluding taxes
+              type: number
+              format: double
+              x-is-money: true
+            TotalTax:
+              description: Total tax on purchase order
+              type: number
+              format: double
+              x-is-money: true
+            Total:
+              description: Total of Purchase Order tax inclusive (i.e. SubTotal + TotalTax)
+              type: number
+              format: double
+              x-is-money: true
+            TotalDiscount:
+              description: Total of discounts applied on the purchase order line items
+              type: number
+              format: double
+              x-is-money: true
+            HasAttachments:
+              description: boolean to indicate if a purchase order has an attachment
+              type: boolean
+              default: "false"
+              example: "false"
+            Attachments: 
+              description: Displays array of attachments from the API
+              type: array
+              items:
+                $ref: '#/components/schemas/Attachment'
     Quotes:
       type: object
       x-isObjectArray: true
@@ -26483,94 +26485,94 @@ components:
         - $ref: '#/components/schemas/ValidationResponses'
         - $ref: '#/components/schemas/LastUpdatedDate'
         - type: object
-      externalDocs:
-        url: 'http://developer.xero.com/documentation/api/Quotes/'
-      properties:
-        QuoteID:
-          description: QuoteID GUID is automatically generated and is returned after create or GET.
-          type: string
-          format: uuid
-        QuoteNumber:
-          description: Unique alpha numeric code identifying a quote (Max Length = 255)
-          maxLength: 255
-          type: string
-        Reference:
-          description: Additional reference number
-          maxLength: 4000
-          type: string
-        Terms:
-          description: Terms of the quote
-          maxLength: 4000
-          type: string
-        Contact:
-          $ref: '#/components/schemas/Contact'
-          type: string
-        LineItems:
-          description: See LineItems
-          x-is-lineitem: true
-          type: array
-          items:
-            $ref: '#/components/schemas/LineItem'
-        Date:
-          description: Date quote was issued – YYYY-MM-DD. If the Date element is not specified it will default to the current date based on the timezone setting of the organisation
-          type: string
-          x-is-msdate: true
-        DateString:
-          description: Date the quote was issued (YYYY-MM-DD)
-          type: string
-        ExpiryDate:
-          description: Date the quote expires – YYYY-MM-DD.
-          type: string
-          x-is-msdate: true
-        ExpiryDateString:
-          description: Date the quote expires – YYYY-MM-DD.
-          type: string
-        Status:
-          $ref: '#/components/schemas/QuoteStatusCodes'
-          type: string
-        CurrencyCode:
-          $ref: '#/components/schemas/CurrencyCode'
-          type: string
-        CurrencyRate:
-          description: The currency rate for a multicurrency quote
-          type: number
-          format: double 
-        SubTotal:
-          description: Total of quote excluding taxes.
-          type: number
-          format: double
-          x-is-money: true
-        TotalTax:
-          description: Total tax on quote
-          type: number
-          format: double
-          x-is-money: true
-        Total:
-          description: Total of Quote tax inclusive (i.e. SubTotal + TotalTax). This will be ignored if it doesn’t equal the sum of the LineAmounts
-          type: number
-          format: double
-          x-is-money: true
-        TotalDiscount:
-          description: Total of discounts applied on the quote line items
-          type: number
-          format: double
-          x-is-money: true
-        Title:
-          description: Title text for the quote
-          type: string
-          maxLength: 100
-        Summary:
-          description: Summary text for the quote
-          type: string
-          maxLength: 3000
-        BrandingThemeID:
-          description: See BrandingThemes
-          type: string
-          format: uuid
-        LineAmountTypes:
-          $ref: '#/components/schemas/QuoteLineAmountTypes'
-          type: string
-          description: See Quote Line Amount Types
+          externalDocs:
+            url: 'http://developer.xero.com/documentation/api/Quotes/'
+          properties:
+            QuoteID:
+              description: QuoteID GUID is automatically generated and is returned after create or GET.
+              type: string
+              format: uuid
+            QuoteNumber:
+              description: Unique alpha numeric code identifying a quote (Max Length = 255)
+              maxLength: 255
+              type: string
+            Reference:
+              description: Additional reference number
+              maxLength: 4000
+              type: string
+            Terms:
+              description: Terms of the quote
+              maxLength: 4000
+              type: string
+            Contact:
+              $ref: '#/components/schemas/Contact'
+              type: string
+            LineItems:
+              description: See LineItems
+              x-is-lineitem: true
+              type: array
+              items:
+                $ref: '#/components/schemas/LineItem'
+            Date:
+              description: Date quote was issued – YYYY-MM-DD. If the Date element is not specified it will default to the current date based on the timezone setting of the organisation
+              type: string
+              x-is-msdate: true
+            DateString:
+              description: Date the quote was issued (YYYY-MM-DD)
+              type: string
+            ExpiryDate:
+              description: Date the quote expires – YYYY-MM-DD.
+              type: string
+              x-is-msdate: true
+            ExpiryDateString:
+              description: Date the quote expires – YYYY-MM-DD.
+              type: string
+            Status:
+              $ref: '#/components/schemas/QuoteStatusCodes'
+              type: string
+            CurrencyCode:
+              $ref: '#/components/schemas/CurrencyCode'
+              type: string
+            CurrencyRate:
+              description: The currency rate for a multicurrency quote
+              type: number
+              format: double 
+            SubTotal:
+              description: Total of quote excluding taxes.
+              type: number
+              format: double
+              x-is-money: true
+            TotalTax:
+              description: Total tax on quote
+              type: number
+              format: double
+              x-is-money: true
+            Total:
+              description: Total of Quote tax inclusive (i.e. SubTotal + TotalTax). This will be ignored if it doesn’t equal the sum of the LineAmounts
+              type: number
+              format: double
+              x-is-money: true
+            TotalDiscount:
+              description: Total of discounts applied on the quote line items
+              type: number
+              format: double
+              x-is-money: true
+            Title:
+              description: Title text for the quote
+              type: string
+              maxLength: 100
+            Summary:
+              description: Summary text for the quote
+              type: string
+              maxLength: 3000
+            BrandingThemeID:
+              description: See BrandingThemes
+              type: string
+              format: uuid
+            LineAmountTypes:
+              $ref: '#/components/schemas/QuoteLineAmountTypes'
+              type: string
+              description: See Quote Line Amount Types
     QuoteLineAmountTypes:
       description: Line amounts are exclusive of tax by default if you don’t specify this element. See Line Amount Types
       type: string
@@ -26601,72 +26603,72 @@ components:
         - $ref: '#/components/schemas/ValidationResponses'
         - $ref: '#/components/schemas/LastUpdatedDate'
         - type: object
-      externalDocs:
-        url: 'http://developer.xero.com/documentation/api/receipts/'
-      properties:
-        Date:
-          description: Date of receipt – YYYY-MM-DD
-          type: string
-          x-is-msdate: true
-        Contact:
-          $ref: '#/components/schemas/Contact'
-        LineItems:
-          type: array
-          x-is-lineitem: true
-          items:
-            $ref: '#/components/schemas/LineItem'
-        User:
-          $ref: '#/components/schemas/User'
-        Reference:
-          description: Additional reference number
-          type: string
-        LineAmountTypes:
-          $ref: '#/components/schemas/LineAmountTypes'
-          type: string
-        SubTotal:
-          description: Total of receipt excluding taxes
-          type: number
-          format: double
-          x-is-money: true
-        TotalTax:
-          description: Total tax on receipt
-          type: number
-          format: double
-          x-is-money: true
-        Total:
-          description: Total of receipt tax inclusive (i.e. SubTotal + TotalTax)
-          type: number
-          format: double
-          x-is-money: true
-        ReceiptID:
-          description: Xero generated unique identifier for receipt
-          type: string
-          format: uuid
-        Status:
-          description: Current status of receipt – see status types
-          type: string
-          enum:
-          - DRAFT
-          - SUBMITTED
-          - AUTHORISED
-          - DECLINED
-          - VOIDED
-        ReceiptNumber:
-          description: Xero generated sequence number for receipt in current claim for a given user
-          type: string
-        HasAttachments:
-          description: boolean to indicate if a receipt has an attachment
-          type: boolean
-          default: "false"
-          example: "false"
-        Url:
-          description: URL link to a source document – shown as “Go to [appName]” in the Xero app
-          type: string
-        Attachments: 
-          description: Displays array of attachments from the API
-          type: array
-          items:
-            $ref: '#/components/schemas/Attachment'
+          externalDocs:
+            url: 'http://developer.xero.com/documentation/api/receipts/'
+          properties:
+            Date:
+              description: Date of receipt – YYYY-MM-DD
+              type: string
+              x-is-msdate: true
+            Contact:
+              $ref: '#/components/schemas/Contact'
+            LineItems:
+              type: array
+              x-is-lineitem: true
+              items:
+                $ref: '#/components/schemas/LineItem'
+            User:
+              $ref: '#/components/schemas/User'
+            Reference:
+              description: Additional reference number
+              type: string
+            LineAmountTypes:
+              $ref: '#/components/schemas/LineAmountTypes'
+              type: string
+            SubTotal:
+              description: Total of receipt excluding taxes
+              type: number
+              format: double
+              x-is-money: true
+            TotalTax:
+              description: Total tax on receipt
+              type: number
+              format: double
+              x-is-money: true
+            Total:
+              description: Total of receipt tax inclusive (i.e. SubTotal + TotalTax)
+              type: number
+              format: double
+              x-is-money: true
+            ReceiptID:
+              description: Xero generated unique identifier for receipt
+              type: string
+              format: uuid
+            Status:
+              description: Current status of receipt – see status types
+              type: string
+              enum:
+              - DRAFT
+              - SUBMITTED
+              - AUTHORISED
+              - DECLINED
+              - VOIDED
+            ReceiptNumber:
+              description: Xero generated sequence number for receipt in current claim for a given user
+              type: string
+            HasAttachments:
+              description: boolean to indicate if a receipt has an attachment
+              type: boolean
+              default: "false"
+              example: "false"
+            Url:
+              description: URL link to a source document – shown as “Go to [appName]” in the Xero app
+              type: string
+            Attachments: 
+              description: Displays array of attachments from the API
+              type: array
+              items:
+                $ref: '#/components/schemas/Attachment'
     RepeatingInvoices:
       type: object
       x-isObjectArray: true
