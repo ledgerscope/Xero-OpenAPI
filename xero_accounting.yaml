@@ -2612,7 +2612,9 @@ paths:
       operationId: createBankTransfer
       summary: Creates a bank transfer
       x-hasAccountingValidationError: true
-      x-example:
+      parameters:
+        - $ref: '#/components/parameters/summarizeErrors'
+	  x-example:
         - fromBankAccount:
           is_object: true
           key: fromBankAccount
