@@ -27101,14 +27101,14 @@ components:
       type: string
       enum:
         - AgedPayablesByContact
-        - AgedReceivablesByContact,
-        - BalanceSheet,
-        - BankSummary,
-        - BankStatement,
-        - BudgetSummary,
-        - ExecutiveSummary,
-        - ProfitAndLoss,
-        - TenNinetyNine,
+        - AgedReceivablesByContact
+        - BalanceSheet
+        - BankSummary
+        - BankStatement
+        - BudgetSummary
+        - ExecutiveSummary
+        - ProfitAndLoss
+        - TenNinetyNine
         - TrialBalance
     Setup:
       externalDocs:
