@@ -23182,6 +23182,7 @@ components:
               type: string
               format: uuid
               example: "00000000-0000-0000-0000-000000000000"
+              x-entity-identifier: true
             PrepaymentID:
               description: Xero generated unique identifier for a Prepayment. This will be returned on BankTransactions with a Type of SPEND-PREPAYMENT or RECEIVE-PREPAYMENT
               type: string
@@ -26237,6 +26238,7 @@ components:
               description: Xero generated unique identifier for purchase order
               type: string
               format: uuid
+              x-entity-identifier: true
             CurrencyRate:
               description: The currency rate for a multicurrency purchase order. If no rate is specified, the XE.com day rate is used.
               type: number
