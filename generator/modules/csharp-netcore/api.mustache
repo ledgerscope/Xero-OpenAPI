@@ -96,15 +96,19 @@ namespace {{packageName}}.{{apiPackage}}
 
         public TimeLimiter RateLimiter { get; set; }
 
-        private void populateRateLimiterIfNeeded(IApiResponse response)
+        private async System.Threading.Tasks.Task populateRateLimiterIfNeeded(IApiResponse response)
         {
             if (RateLimiter == null)
             {
-                if (response.Headers.TryGetValue("X-MinLimit-Remaining", out var rateLimitRemaining))
+                var minuteRateLimitRemaining = response.MinuteRateLimitRemaining;
+                
+                if (minuteRateLimitRemaining < 60)
                 {
-                    if (rateLimitRemaining.Any(a => int.Parse(a) < 60))
-                        RateLimiter = TimeLimiter.GetFromMaxCountByInterval(59, TimeSpan.FromSeconds(61));
+                    RateLimiter = TimeLimiter.GetFromMaxCountByInterval(59, TimeSpan.FromSeconds(61));
+                    while(minuteRateLimitRemaining++ < 60)
+                        await RateLimiter;
                 }
+                
             }
         }
 
@@ -329,7 +333,7 @@ namespace {{packageName}}.{{apiPackage}}
 
             var response = await this.AsynchronousClient.{{#lambda.titlecase}}{{#lambda.lowercase}}{{httpMethod}}{{/lambda.lowercase}}{{/lambda.titlecase}}Async<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}>("{{{path}}}", requestOptions, this.Configuration);
 
-            populateRateLimiterIfNeeded(response);
+            await populateRateLimiterIfNeeded(response);
 
             if (this.ExceptionFactory != null)
             {
