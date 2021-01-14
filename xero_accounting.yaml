@@ -26318,6 +26318,7 @@ components:
               description: Xero generated unique identifier
               type: string
               format: uuid
+              x-entity-identifier: true
             CurrencyRate:
               description: The currency rate for a multicurrency prepayment. If no rate is
                 specified, the XE.com day rate is used
