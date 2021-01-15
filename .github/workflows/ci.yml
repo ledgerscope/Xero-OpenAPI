@@ -40,7 +40,6 @@ jobs:
         args: generate -t ./generator/modules/csharp-netcore -i ./xero_bankfeeds.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/config.yml
 
     - name: generate csharp Files
-      if: false
       uses: docker://openapitools/openapi-generator-cli:v4.3.1
       with:
         args: generate -t ./generator/modules/csharp-netcore -i ./xero_files.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/config.yml
