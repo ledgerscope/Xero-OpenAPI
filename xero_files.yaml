@@ -905,18 +905,23 @@ components:
       - BankTransaction
       - Contact
       - CreditNote
+      - FixedAssets
       - Invoice
       - Item
       - ManualJournal
       - Overpayment
-      - Payment  
+      - Payment
+      - Payrun
       - Prepayment
+      - PurchaseOrder
       - Receipt
+      - Reconciliation
     ObjectType:
       description: The Object Type
       type: string
       enum:
       - Unknown
+      - Account
       - Accpay
       - AccPayCredit
       - AccPayPayment
@@ -940,21 +945,20 @@ components:
       - ArPrepaymentSourcePayment
       - CashPaid
       - CashRec
+      - Contact
       - ExpPayment
+      - FixedAsset
       - ManJournal
+      - PayRun
+      - PriceListItem
       - PurchaseOrder
       - Receipt
       - Transfer
-      - Account
-      - Contact
       - Business
       - Employee
       - Person
       - User
       - Org
-      - FixedAsset
-      - PayRun
-      - PriceListItem
       - Bank
       - Current
       - Equity
