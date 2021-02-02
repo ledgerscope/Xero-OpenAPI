@@ -22,11 +22,6 @@ jobs:
       with:
         args: version
 
-    - name: generate csharp Accounting
-      uses: docker://openapitools/openapi-generator-cli:v4.3.1
-      with:
-        args: generate -t ./generator/modules/csharp-netcore -i ./xero_accounting.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/config.yml
-
     - name: generate csharp Assets
       if: false
       uses: docker://openapitools/openapi-generator-cli:v4.3.1
@@ -55,6 +50,11 @@ jobs:
       uses: docker://openapitools/openapi-generator-cli:v4.3.1
       with:
         args: generate -t ./generator/modules/csharp-netcore -i ./xero-projects.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/config.yml
+
+    - name: generate csharp Accounting
+      uses: docker://openapitools/openapi-generator-cli:v4.3.1
+      with:
+        args: generate -t ./generator/modules/csharp-netcore -i ./xero_accounting.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting -c ./generator/scripts/csharp/config.yml
     
     - name: Update permissions
       run: sudo chmod 777 -R .
