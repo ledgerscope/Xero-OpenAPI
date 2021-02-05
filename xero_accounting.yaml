@@ -2620,7 +2620,7 @@ paths:
       x-hasAccountingValidationError: true
       parameters:
         - $ref: '#/components/parameters/summarizeErrors'
-	  x-example:
+      x-example:
         - fromBankAccount:
           is_object: true
           key: fromBankAccount
@@ -24236,7 +24236,7 @@ components:
               type: number
               format: double 
               example: 2.00
-			  x-is-money: true
+              x-is-money: true
             Payments:
               description: See Payments 
               type: array
