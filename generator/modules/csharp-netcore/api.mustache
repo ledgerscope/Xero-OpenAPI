@@ -51,6 +51,15 @@ namespace {{packageName}}.{{apiPackage}}
         System.Threading.Tasks.Task<ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}>> {{operationId}}AsyncWithHttpInfo ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}, {{/allParams}}CancellationToken ct = default);
         {{/operation}}
         #endregion Asynchronous Operations
+
+        public string AccessToken { get; }
+        public string TenantId { get; }
+
+        public TimeLimiter RateLimiter { get; }
+
+        public int MinuteRateLimitRemaining { get; }
+        public int DailyRateLimitRemaining { get; }
+        public int AppRateLimitRemaining { get; }
     }
     {{/supportsAsync}}
 
@@ -96,8 +105,16 @@ namespace {{packageName}}.{{apiPackage}}
 
         public TimeLimiter RateLimiter { get; set; }
 
+        public int MinuteRateLimitRemaining { get; set; }
+        public int DailyRateLimitRemaining { get; set; }
+        public int AppRateLimitRemaining { get; set; }
+
         private async System.Threading.Tasks.Task populateRateLimiterIfNeeded(IApiResponse response)
         {
+            MinuteRateLimitRemaining = response.MinuteRateLimitRemaining;
+            DailyRateLimitRemaining = response.DailyRateLimitRemaining;
+            AppRateLimitRemaining = response.AppRateLimitRemaining;
+
             if (RateLimiter == null)
             {
                 var minuteRateLimitRemaining = response.MinuteRateLimitRemaining;
