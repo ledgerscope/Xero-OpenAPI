@@ -26228,12 +26228,12 @@ components:
               type: string
               format: uuid
               x-entity-identifier: true
-			  example: 00000000-0000-0000-0000-000000000000
-	        BatchPaymentID:
-	          description: Present if the payment was created as part of a batch.
-	          type: string
-	          format: uuid
-	          example: 00000000-0000-0000-0000-000000000000
+              example: 00000000-0000-0000-0000-000000000000
+            BatchPaymentID:
+              description: Present if the payment was created as part of a batch.
+              type: string
+              format: uuid
+              example: 00000000-0000-0000-0000-000000000000
             BankAccountNumber:
               description: The suppliers bank account number the payment is being made to
               type: string
