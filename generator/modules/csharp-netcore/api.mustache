@@ -57,9 +57,9 @@ namespace {{packageName}}.{{apiPackage}}
 
         public TimeLimiter RateLimiter { get; }
 
-        public int MinuteRateLimitRemaining { get; }
-        public int DailyRateLimitRemaining { get; }
-        public int AppRateLimitRemaining { get; }
+        public int? MinuteRateLimitRemaining { get; }
+        public int? DailyRateLimitRemaining { get; }
+        public int? AppRateLimitRemaining { get; }
     }
     {{/supportsAsync}}
 
@@ -105,9 +105,9 @@ namespace {{packageName}}.{{apiPackage}}
 
         public TimeLimiter RateLimiter { get; set; }
 
-        public int MinuteRateLimitRemaining { get; set; }
-        public int DailyRateLimitRemaining { get; set; }
-        public int AppRateLimitRemaining { get; set; }
+        public int? MinuteRateLimitRemaining { get; set; }
+        public int? DailyRateLimitRemaining { get; set; }
+        public int? AppRateLimitRemaining { get; set; }
 
         private async System.Threading.Tasks.Task populateRateLimiterIfNeeded(IApiResponse response)
         {
