@@ -27118,6 +27118,7 @@ components:
     Setup:
       externalDocs:
         url: 'https://developer.xero.com/documentation/api-guides/conversions'
+      x-emit-default: true
       properties:
         ConversionDate:
           $ref: '#/components/schemas/ConversionDate'
