@@ -54,6 +54,9 @@
         {{#vendorExtensions.x-is-updated-date}}, IHasUpdatedDate{{/vendorExtensions.x-is-updated-date}}
         {{/vars}}
     {
+        {{#vendorExtensions.x-emit-default}}private const bool emitDefault = true;{{/vendorExtensions.x-emit-default}}
+        {{^vendorExtensions.x-emit-default}}private const bool emitDefault = false;{{/vendorExtensions.x-emit-default}}
+
         {{#vars}}
         {{#items.isEnum}}
         {{#items}}
@@ -74,7 +77,7 @@
         {{#description}}
         /// <value>{{description}}</value>
         {{/description}}
-        [DataMember(Name="{{baseName}}", EmitDefaultValue={{#isNullable}}true{{/isNullable}}{{^isNullable}}false{{/isNullable}})]
+        [DataMember(Name="{{baseName}}", EmitDefaultValue={{#isNullable}}true{{/isNullable}}{{^isNullable}}{{#vendorExtensions.x-emit-default}}true{{/vendorExtensions.x-emit-default}}{{^vendorExtensions.x-emit-default}}emitDefault{{/vendorExtensions.x-emit-default}}{{/isNullable}})]
         public {{#complexType}}{{{complexType}}}{{/complexType}}{{^complexType}}{{{datatypeWithEnum}}}{{/complexType}}{{^isContainer}}{{/isContainer}} {{name}} { get; set; }
         {{/isEnum}}
         {{/vars}}
@@ -95,7 +98,7 @@
         /// {{^description}}Gets or Sets {{{name}}}{{/description}}{{#description}}{{description}}{{/description}}
         /// </summary>{{#description}}
         /// <value>{{description}}</value>{{/description}}
-        [DataMember(Name="{{baseName}}", EmitDefaultValue={{#isNullable}}true{{/isNullable}}{{^isNullable}}false{{/isNullable}})]{{#isDate}}
+        [DataMember(Name="{{baseName}}", EmitDefaultValue={{#isNullable}}true{{/isNullable}}{{^isNullable}}{{#vendorExtensions.x-emit-default}}true{{/vendorExtensions.x-emit-default}}{{^vendorExtensions.x-emit-default}}emitDefault{{/vendorExtensions.x-emit-default}}{{/isNullable}})]{{#isDate}}
         [JsonConverter(typeof(OpenAPIDateConverter))]{{/isDate}}
         {{#vendorExtensions.x-is-msdate-time}}
         public DateTime {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
