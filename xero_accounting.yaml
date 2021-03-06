@@ -26051,6 +26051,7 @@ components:
               - RECEIVE-OVERPAYMENT  
               - SPEND-OVERPAYMENT
               - AROVERPAYMENT
+              - APOVERPAYMENT
             Contact:
               $ref: '#/components/schemas/Contact'
             Date:
