@@ -23383,6 +23383,7 @@ components:
     BatchPayment:
       allOf:
         - $ref: '#/components/schemas/LastUpdatedDate'
+        - $ref: '#/components/schemas/ValidationResponses'
         - type: object
           externalDocs:
             url: 'http://developer.xero.com/documentation/api/BatchPayments/'
