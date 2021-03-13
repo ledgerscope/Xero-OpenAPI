@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Xero.NetStandard.OAuth2.Model
+namespace Xero.NetStandard.OAuth2.Shared
 {
     public interface IHasId
     {
@@ -17,7 +17,10 @@ namespace Xero.NetStandard.OAuth2.Model
     {
         public V Collection { get; set; }
     }
+}
 
+namespace Xero.NetStandard.OAuth2.Model.Accounting
+{
     public interface IHasLineItems
     {
         ICollection<LineItem> LineItems { get; }
