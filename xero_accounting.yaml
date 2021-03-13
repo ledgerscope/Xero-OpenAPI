@@ -22452,6 +22452,7 @@ components:
         type: string
       required: true
       x-universal: true
+      x-is-tenant-id: true
     summarizeErrors:
       in: query
       name: summarizeErrors

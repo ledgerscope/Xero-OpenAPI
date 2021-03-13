@@ -234,9 +234,10 @@ namespace {{packageName}}.{{apiPackage}}
         /// <returns>Task of ApiResponse{{#returnType}} ({{returnType}}){{/returnType}}</returns>
         public async System.Threading.Tasks.Task<{{packageName}}.Client.ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}>> {{operationId}}AsyncWithHttpInfo ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}, {{/allParams}}CancellationToken ct = default)
         {
-            xeroTenantId ??= TenantId;
-            
             {{#allParams}}
+            {{#vendorExtensions.x-is-tenant-id}}
+            xeroTenantId ??= TenantId;
+            {{/vendorExtensions.x-is-tenant-id}}
             {{^isNullable}}
             {{#required}}
             // verify the required parameter '{{paramName}}' is set
