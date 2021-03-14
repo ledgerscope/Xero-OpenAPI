@@ -3242,7 +3242,8 @@ components:
       description: Xero identifier for Tenant
       schema:
         type: string
-      required: true 
+      required: true
+      x-is-tenant-id: true
   schemas:
     Employees:
       type: object

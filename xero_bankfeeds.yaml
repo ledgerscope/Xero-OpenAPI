@@ -591,6 +591,7 @@ components:
       schema:
         type: string
       required: true 
+      x-is-tenant-id: true
   schemas:
     FeedConnections:
       externalDocs:

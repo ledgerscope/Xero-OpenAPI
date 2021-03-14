@@ -1050,7 +1050,8 @@ components:
       description: Xero identifier for Tenant
       schema:
         type: string
-      required: true 
+      required: true
+      x-is-tenant-id: true
     chargeType:
       in: query
       name: chargeType
