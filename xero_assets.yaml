@@ -651,6 +651,7 @@ components:
       schema:
         type: string
       required: true
+      x-is-tenant-id: true
   schemas:
     Assets:
       type: object
