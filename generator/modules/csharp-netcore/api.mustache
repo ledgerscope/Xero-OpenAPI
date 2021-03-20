@@ -349,7 +349,7 @@ namespace {{packageName}}.{{apiPackage}}
                 await RateLimiter;
             }      
 
-            var response = await this.AsynchronousClient.{{#lambda.titlecase}}{{#lambda.lowercase}}{{httpMethod}}{{/lambda.lowercase}}{{/lambda.titlecase}}Async<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}>("{{{path}}}", requestOptions, this.Configuration);
+            var response = await this.AsynchronousClient.{{#lambda.titlecase}}{{#lambda.lowercase}}{{httpMethod}}{{/lambda.lowercase}}{{/lambda.titlecase}}Async<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}>("{{#vendorExtensions.x-path}}{{{vendorExtensions.x-path}}}{{/vendorExtensions.x-path}}{{^vendorExtensions.x-path}}{{{path}}}{{/vendorExtensions.x-path}}", requestOptions, this.Configuration);
 
             await populateRateLimiterIfNeeded(response);
 
