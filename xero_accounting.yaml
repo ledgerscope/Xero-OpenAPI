@@ -25524,6 +25524,7 @@ components:
           - FLATRATECASH
           - FLATRATEACCRUAL
           - ACCRUALS
+          - ''
         SalesTaxPeriod:
           description:  The frequency with which tax returns are processed. See Sales Tax
             Period
