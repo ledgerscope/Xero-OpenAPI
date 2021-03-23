@@ -25988,6 +25988,7 @@ components:
       - UTC11
       - DATELINESTANDARDTIME
       - EASTERISLANDSTANDARDTIME
+      - SUDANSTANDARDTIME
     PaymentTerm:
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/organisation/'
