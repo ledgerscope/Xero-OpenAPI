@@ -25795,6 +25795,7 @@ components:
       - HAWAIIANSTANDARDTIME
       - UTC11
       - DATELINESTANDARDTIME
+      - SUDANSTANDARDTIME
     PaymentTerm:
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/organisation/'
