@@ -82,4 +82,29 @@ namespace {{packageName}}.Client
             
         }
     }
+
+        /// <summary>
+    /// API Exception
+    /// </summary>
+    {{>visibility}} class RateLimitExceededException : ApiException
+    {
+        /// <summary>
+        /// How long to wait until trying again
+        /// </summary>
+        public TimeSpan RetryAfter { get; }
+
+        public string RateLimitType{ get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ApiException"/> class.
+        /// </summary>
+        /// <param name="errorCode">HTTP status code.</param>
+        /// <param name="message">Error message.</param>
+        /// <param name="errorContent">Error content.</param>
+        public RateLimitExceededException(string rateLimitType, int retryAfter, object errorContent = null) : base(429, "Rate Limit Exceeded (" + rateLimitType + "). Retry after " + retryAfter + " seconds", errorContent)
+        {
+            RateLimitType = rateLimitType;
+            RetryAfter = TimeSpan.FromSeconds(retryAfter);
+        }
+    }
 }

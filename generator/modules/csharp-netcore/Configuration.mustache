@@ -70,6 +70,11 @@ namespace {{packageName}}.Client
                     return new AuthenticationApiException(
                                         string.Format("Error calling {0}: {1}", methodName, response.Content),
                                         response.Content);
+                case int code when status == 429:
+                    response.Headers.TryGetValue("Retry-After", out var retryAfterList);
+                    response.Headers.TryGetValue("X-Rate-Limit-Problem", out var rateLimitProblemList);
+
+                    return new RateLimitExceededException(rateLimitProblemList.FirstOrDefault(), int.Parse(retryAfterList.FirstOrDefault()));
                 case int code when status > 400:
                     return new ApiException(status,
                                        string.Format("Error calling {0}: {1}", methodName, response.Content),
