@@ -932,6 +932,7 @@ components:
       - PurchaseOrder
       - Receipt
       - Reconciliation
+      - Unknown
     ObjectType:
       description: The Object Type
       type: string
