@@ -27314,6 +27314,7 @@ components:
               - MANAGEDCLIENT
               - CASHBOOKCLIENT
               - UNKNOWN
+              - REMOVED
     Error:
       externalDocs:
         url: 'https://developer.xero.com/documentation/api/http-response-codes'
