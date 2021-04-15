@@ -7,9 +7,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Mime;
 using System.Threading;
-using ComposableAsync;
-using RateLimiter;
-
 using {{packageName}}.Client;
 {{#hasImport}}using {{packageName}}.{{modelPackage}};
 {{/hasImport}}
@@ -55,7 +52,7 @@ namespace {{packageName}}.{{apiPackage}}
         public string AccessToken { get; }
         public string TenantId { get; }
 
-        public TimeLimiter RateLimiter { get; }
+        public DateTime MinuteStart { get; }
 
         public int? MinuteRateLimitRemaining { get; }
         public int? DailyRateLimitRemaining { get; }
@@ -103,7 +100,7 @@ namespace {{packageName}}.{{apiPackage}}
         public string AccessToken { get; set; }
         public string TenantId { get; set; }
 
-        public TimeLimiter RateLimiter { get; set; }
+        public DateTime MinuteStart { get; set; }
 
         public int? MinuteRateLimitRemaining { get; set; }
         public int? DailyRateLimitRemaining { get; set; }
@@ -115,18 +112,8 @@ namespace {{packageName}}.{{apiPackage}}
             DailyRateLimitRemaining = response.DailyRateLimitRemaining;
             AppRateLimitRemaining = response.AppRateLimitRemaining;
 
-            if (RateLimiter == null)
-            {
-                var minuteRateLimitRemaining = response.MinuteRateLimitRemaining;
-                
-                if (minuteRateLimitRemaining < 60)
-                {
-                    RateLimiter = TimeLimiter.GetFromMaxCountByInterval(59, TimeSpan.FromSeconds(61));
-                    while(minuteRateLimitRemaining++ < 60)
-                        await RateLimiter;
-                }
-                
-            }
+            if (MinuteRateLimitRemaining == 59 || MinuteStart == DateTime.MinValue)
+                MinuteStart = DateTime.UtcNow;
         }
 
         /// <summary>
@@ -344,9 +331,11 @@ namespace {{packageName}}.{{apiPackage}}
 
             {{/authMethods}}
 
-            if (RateLimiter != null)
+            if (MinuteRateLimitRemaining == 1)
             {
-                await RateLimiter;
+                var difference = MinuteStart.AddMinutes(1).AddSeconds(1) - DateTime.UtcNow;
+                if (difference.TotalMilliseconds > 0)
+                    await System.Threading.Tasks.Task.Delay(difference);
             }      
 
             var response = await this.AsynchronousClient.{{#lambda.titlecase}}{{#lambda.lowercase}}{{httpMethod}}{{/lambda.lowercase}}{{/lambda.titlecase}}Async<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}>("{{#vendorExtensions.x-path}}{{{vendorExtensions.x-path}}}{{/vendorExtensions.x-path}}{{^vendorExtensions.x-path}}{{{path}}}{{/vendorExtensions.x-path}}", requestOptions, this.Configuration);
