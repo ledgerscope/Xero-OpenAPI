@@ -23611,7 +23611,7 @@ components:
             IsReconciled:
               description: Booelan that tells you if the batch payment has been reconciled (read-only)
               type: string
-			ValidationErrors: 
+            ValidationErrors: 
               description: Displays array of validation error messages from the API
               type: array
               items:
@@ -26341,7 +26341,7 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Allocation'
-		    Payments:
+            Payments:
               description: See Payments
               type: array
               items:
