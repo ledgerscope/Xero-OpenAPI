@@ -23616,7 +23616,6 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/ValidationError'
-          type: object
     BatchPaymentDetails:
       description: Bank details for use on a batch payment stored with each contact
       externalDocs:

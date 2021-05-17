@@ -811,7 +811,7 @@ components:
           format: date
           example: '2020-12-03T19:04:58.6970000'
         User:
-          $ref: '#/components/schemas/FilesUser'
+          $ref: '#/components/schemas/User'
         Id:
           description: File object's UUID
           type: string
