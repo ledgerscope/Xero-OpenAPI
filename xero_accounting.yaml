@@ -23770,23 +23770,22 @@ components:
           items:
             $ref: '#/components/schemas/BudgetBalance'
     BudgetBalance:
-        type: object
-        properties:
-          Period:
-            description: Period the amount applies to (e.g. “2019-08”)
-            type: string
-            x-is-msdate: true
-          Amount:
-            description: LineItem Quantity
-            type: integer
-          UnitAmount:
-            description: Budgeted amount  
-            type: integer
-          Notes:
-            description: Any footnotes associated with this balance
-            maxLength: 255
-            type: string
-          type: object
+      type: object
+      properties:
+        Period:
+          description: Period the amount applies to (e.g. “2019-08”)
+          type: string
+          x-is-msdate: true
+        Amount:
+          description: LineItem Quantity
+          type: integer
+        UnitAmount:
+          description: Budgeted amount  
+          type: integer
+        Notes:
+          description: Any footnotes associated with this balance
+          maxLength: 255
+          type: string
     Balances:
       type: object
       description:  The raw AccountsReceivable(sales invoices) and
@@ -24756,7 +24755,7 @@ components:
               format: double
               x-is-money: true
             FullyPaidOnDate:
-          description: The date the invoice was fully paid. Only returned on fully paid invoices
+              description: The date the invoice was fully paid. Only returned on fully paid invoices
               type: string
               x-is-msdate: true
             AmountCredited:
@@ -25995,7 +25994,7 @@ components:
               type: string
               x-is-msdate: true
             CurrencyRate:
-          description: Exchange rate when payment is received. Only used for non base currency invoices and credit notes e.g. 0.7500
+              description: Exchange rate when payment is received. Only used for non base currency invoices and credit notes e.g. 0.7500
               type: number
               format: double
               x-is-money: true
@@ -26577,7 +26576,7 @@ components:
             url: 'http://developer.xero.com/documentation/api/reports/'
           properties:
             ReportID:
-          description: ID of the Report
+              description: ID of the Report
               type: string
             ReportName:
               description: Name of the report
