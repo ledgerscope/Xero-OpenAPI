@@ -23975,7 +23975,6 @@ components:
             description: Any footnotes associated with this balance
             maxLength: 255
             type: string
-          type: object
     Balances:
       type: object
       description:  The raw AccountsReceivable(sales invoices) and
