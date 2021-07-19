@@ -325,12 +325,12 @@ namespace {{packageName}}.Client
             {
                 foreach (var fileParam in options.FileParameters)
                 {
-                    var bytes = ClientUtils.ReadAsBytes(fileParam.Value);
-                    var fileStream = fileParam.Value as FileStream;
+                    var bytes = ClientUtils.ReadAsBytes(fileParam.Value.Item2);
+                    var fileStream = fileParam.Value.Item2 as FileStream;
                     if (fileStream != null)
                         request.AddFile(fileParam.Key, bytes, System.IO.Path.GetFileName(fileStream.Name));
                     else
-                        request.AddFile(fileParam.Key, bytes, "no_file_name_provided");
+                        request.AddFile(fileParam.Key, bytes, fileParam.Value.Item1);
                 }
             }
 

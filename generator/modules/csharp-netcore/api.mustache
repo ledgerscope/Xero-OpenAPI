@@ -280,7 +280,7 @@ namespace {{packageName}}.{{apiPackage}}
             if ({{paramName}} != null)
             {
                 {{#isFile}}
-                requestOptions.FileParameters.Add("{{baseName}}", {{paramName}});
+                requestOptions.FileParameters.Add("{{baseName}}", new Tuple<string, System.IO.Stream>(filename, {{paramName}}));
                 {{/isFile}}
                 {{^isFile}}
                 requestOptions.FormParameters.Add("{{baseName}}", {{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // form parameter
