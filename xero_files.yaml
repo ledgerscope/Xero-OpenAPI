@@ -817,7 +817,7 @@ components:
       properties: 
         body:
           type: string
-          format: byte
+          format: binary
         name:
           type: string
           description: exact name of the file you are uploading
