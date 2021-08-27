@@ -22905,6 +22905,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ValidationError'
+        HasValidationErrors:
+          description: A boolean to indicate if a contact has an validation errors
+          type: boolean
+          default: "false"
+          example: "false"
     LastUpdatedDate:
       type: object
       properties:
