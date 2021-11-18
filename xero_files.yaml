@@ -930,6 +930,7 @@ components:
       - Prepayment
       - Quote
       - PurchaseOrder
+      - Quote
       - Receipt
       - Reconciliation
       - Unknown
