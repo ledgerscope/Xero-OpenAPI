@@ -180,7 +180,15 @@ namespace {{packageName}}.Client
         /// <returns>Byte array</returns>
         public static byte[] ReadAsBytes(Stream inputStream)
         {
-            byte[] buf = new byte[16*1024];
+            byte[] buf;
+            if (inputStream.CanSeek && inputStream.Position == 0)
+			{
+				buf = new byte[inputStream.Length];
+				inputStream.Read(buf, 0, buf.Length);
+				return buf;
+			}
+
+            buf = new byte[16*1024];
             using (MemoryStream ms = new MemoryStream())
             {
                 int count;
