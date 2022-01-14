@@ -12,6 +12,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Xero.NetStandard.OAuth2.Shared;
 using Xero.NetStandard.OAuth2.Model.Accounting;
+using Xero.NetStandard.OAuth2.Model.Files;
 
 namespace {{packageName}}.Client
 {
@@ -48,19 +49,38 @@ namespace {{packageName}}.Client
             switch (status)
             {
                 case int code when status == 400:
-                    var error = JsonConvert.DeserializeObject<Error>(response.Content.ToString());
+                    Error error;
+                    
+                    try
+                    {
+                        error = JsonConvert.DeserializeObject<Error>(response.Content.ToString());
+                    }
+                    catch (JsonSerializationException)
+                    {
+                        var fileError = JsonConvert.DeserializeObject<FileError[]>(response.Content.ToString()).First();
+                        error = new Error()
+                        {
+                            Type = fileError.Type + " " + fileError.Title,
+                            Message = fileError.Detail
+                        };
+                    }
                     var validationBuilder = new StringBuilder();
                     var delimiter = "";
-                    foreach (Element e in error.Elements)
+                    
+                    if (error.Elements != null)
                     {
-                        foreach (ValidationError v in e.ValidationErrors)
+                        foreach (Element e in error.Elements)
                         {
-                            validationBuilder.Append(delimiter);
-                            validationBuilder.Append(v.Message);
-                            delimiter = ",";
-                        }
+                            foreach (ValidationError v in e.ValidationErrors)
+                            {
+                                validationBuilder.Append(delimiter);
+                                validationBuilder.Append(v.Message);
+                                delimiter = ",";
+                            }
 
+                        }
                     }
+
                     return new ApiException(status, string.Format("{0}:{1}", error.Message, validationBuilder.ToString()), error);
                 case int code when status == 401:
                     return new AuthorisationApiException(

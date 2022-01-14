@@ -130,6 +130,8 @@ paths:
           description: invalid input, object invalid
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/FileError'
               example: '[
                       {
                           "type":"Validation",
@@ -230,6 +232,8 @@ paths:
           description: invalid input, object invalid 
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/FileError'
               example: '[
                           {
                               "type":"Rename",
@@ -314,6 +318,8 @@ paths:
           description: invalid input, object invalid
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/FileError'
               example: '[
                       {
                           "type":"Validation",
@@ -429,6 +435,8 @@ paths:
           description: invalid input, object invalid
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/FileError'
               example: '[
                           {
                               "type":"Validation",
@@ -590,6 +598,8 @@ paths:
           description: invalid input, object invalid
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/FileError'
               example: '[
                           {
                               "type":"Validation",
@@ -674,6 +684,8 @@ paths:
           description: invalid input, object invalid
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/FileError'
               example: '[
                           {
                               "type":"Validation",
@@ -994,3 +1006,15 @@ components:
       - Termliab
       - NonCurrent
       - SalesQuote
+    FileError:
+      properties:
+        type:
+          description: Error Type
+          type: string
+        title:
+          description: Error Message
+          type: string
+        detail:
+          description: Error Details
+          type: string
+      type: object
