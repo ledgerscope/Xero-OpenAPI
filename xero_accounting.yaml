@@ -27589,7 +27589,7 @@ components:
       type: object
     ValidationError:
       externalDocs:
-        url: 'https://developer.xero.com/documentation/api/http-response-codes'
+        url: 'https://developer.xero.com/documentation/api/accounting/requests-and-responses'
       properties:
         Message:
           description: Validation error message
