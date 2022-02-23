@@ -932,6 +932,7 @@ components:
       - BankTransaction
       - Contact
       - CreditNote
+      - FixedAsset
       - FixedAssets
       - Invoice
       - Item
