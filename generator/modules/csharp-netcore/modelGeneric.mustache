@@ -9,10 +9,12 @@
         /// </summary>{{#description}}
         /// <value>{{description}}</value>{{/description}}
         {{#vendorExtensions.x-is-msdate-time}}
+        [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.JavaScriptDateTimeConverter))]
         public DateTime {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
 
         {{/vendorExtensions.x-is-msdate-time}}
         {{#vendorExtensions.x-is-msdate}}
+        [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.JavaScriptDateTimeConverter))]
         public DateTime {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
 
         {{/vendorExtensions.x-is-msdate}}
@@ -20,6 +22,10 @@
         public decimal? {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
 
         {{/vendorExtensions.x-is-money}}
+
+        {{#vendorExtensions.x-is-datetime}}
+        [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.IsoDateTimeConverter))]
+        {{/vendorExtensions.x-is-datetime}}
         {{^vendorExtensions.x-is-msdate-time}}
         {{^vendorExtensions.x-is-msdate}}
         {{^vendorExtensions.x-is-money}}
@@ -101,10 +107,12 @@
         [DataMember(Name="{{baseName}}", EmitDefaultValue={{#isNullable}}true{{/isNullable}}{{^isNullable}}{{#vendorExtensions.x-emit-default}}true{{/vendorExtensions.x-emit-default}}{{^vendorExtensions.x-emit-default}}emitDefault{{/vendorExtensions.x-emit-default}}{{/isNullable}})]{{#isDate}}
         [JsonConverter(typeof(IsoDateTimeConverter))]{{/isDate}}
         {{#vendorExtensions.x-is-msdate-time}}
+        [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.JavaScriptDateTimeConverter))]
         public DateTime {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
 
         {{/vendorExtensions.x-is-msdate-time}}
         {{#vendorExtensions.x-is-msdate}}
+        [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.IsoDateTimeConverter))]
         public DateTime {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
 
         {{/vendorExtensions.x-is-msdate}}
@@ -112,6 +120,11 @@
         public decimal? {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
 
         {{/vendorExtensions.x-is-money}}
+
+        {{#vendorExtensions.x-is-datetime}}
+        [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.IsoDateTimeConverter))]
+        {{/vendorExtensions.x-is-datetime}}
+
         {{^vendorExtensions.x-is-msdate-time}}
         {{^vendorExtensions.x-is-msdate}}
         {{^vendorExtensions.x-is-money}}
