@@ -941,7 +941,6 @@ components:
       - Payment
       - Payrun
       - Prepayment
-      - Quote
       - PurchaseOrder
       - Quote
       - Receipt
