@@ -13,13 +13,16 @@ namespace Xero.NetStandard.OAuth2.Json.Converters
 
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
 		{
-			var dateFormatHandling = writer.DateFormatHandling;
+			var oldDateFormatHandling = writer.DateFormatHandling;
+			var oldDateTimeZoneHandling = writer.DateTimeZoneHandling;
 
 			writer.DateFormatHandling = DateFormatHandling.MicrosoftDateFormat;
+			writer.DateTimeZoneHandling = DateTimeZoneHandling.Local;
 
 			writer.WriteValue(value);
 
-			writer.DateFormatHandling = dateFormatHandling;
+			writer.DateFormatHandling = oldDateFormatHandling;
+			writer.DateTimeZoneHandling = oldDateTimeZoneHandling;
 		}
 	}
 }
