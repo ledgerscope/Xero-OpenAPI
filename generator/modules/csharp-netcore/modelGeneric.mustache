@@ -9,12 +9,12 @@
         /// </summary>{{#description}}
         /// <value>{{description}}</value>{{/description}}
         {{#vendorExtensions.x-is-msdate-time}}
-        [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.JavaScriptDateTimeConverter))]
+        [Newtonsoft.Json.JsonConverterAttribute(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
         public DateTime {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
 
         {{/vendorExtensions.x-is-msdate-time}}
         {{#vendorExtensions.x-is-msdate}}
-        [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.JavaScriptDateTimeConverter))]
+        [Newtonsoft.Json.JsonConverterAttribute(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
         public DateTime {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
 
         {{/vendorExtensions.x-is-msdate}}
@@ -107,7 +107,7 @@
         [DataMember(Name="{{baseName}}", EmitDefaultValue={{#isNullable}}true{{/isNullable}}{{^isNullable}}{{#vendorExtensions.x-emit-default}}true{{/vendorExtensions.x-emit-default}}{{^vendorExtensions.x-emit-default}}emitDefault{{/vendorExtensions.x-emit-default}}{{/isNullable}})]{{#isDate}}
         [JsonConverter(typeof(IsoDateTimeConverter))]{{/isDate}}
         {{#vendorExtensions.x-is-msdate-time}}
-        [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.JavaScriptDateTimeConverter))]
+        [Newtonsoft.Json.JsonConverterAttribute(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
         public DateTime {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
 
         {{/vendorExtensions.x-is-msdate-time}}
