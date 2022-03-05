@@ -8,6 +8,22 @@ namespace Xero.NetStandard.OAuth2.Json.Converters
 	{
 		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 		{
+			if (reader.Value is DateTime dt)
+			{
+				if (objectType == typeof(DateTime))
+					return dt;
+				else if (objectType == typeof(DateTimeOffset))
+					return new DateTimeOffset(dt);
+			}
+
+			if (reader.Value is DateTimeOffset dto)
+			{
+				if (objectType == typeof(DateTimeOffset))
+					return dto;
+				else if (objectType == typeof(DateTime))
+					return dto.DateTime;
+			}
+
 			return Convert.ToDateTime(reader.Value.ToString());
 		}
 
