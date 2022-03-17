@@ -29,7 +29,7 @@
         {{^vendorExtensions.x-is-msdate-time}}
         {{^vendorExtensions.x-is-msdate}}
         {{^vendorExtensions.x-is-money}}
-        public {{{dataType}}}{{#isPrimitiveType}}{{^isString}}{{^isContainer}}{{^isByteArray}}?{{/isByteArray}}{{/isContainer}}{{/isString}}{{is}}{{/isPrimitiveType}} {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
+        public {{{dataType}}}{{#isPrimitiveType}}{{^isString}}{{^isContainer}}{{^isByteArray}}{{^isDate}}?{{/isDate}}{{/isByteArray}}{{/isContainer}}{{/isString}}{{is}}{{/isPrimitiveType}} {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
 
         {{/vendorExtensions.x-is-money}}
         {{/vendorExtensions.x-is-msdate}}
@@ -128,7 +128,7 @@
         {{^vendorExtensions.x-is-msdate-time}}
         {{^vendorExtensions.x-is-msdate}}
         {{^vendorExtensions.x-is-money}}
-        public {{{dataType}}}{{#isPrimitiveType}}{{^isString}}{{^isContainer}}{{^isByteArray}}?{{/isByteArray}}{{/isContainer}}{{/isString}}{{is}}{{/isPrimitiveType}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
+        public {{{dataType}}}{{#isPrimitiveType}}{{^isString}}{{^isContainer}}{{^isByteArray}}{{^isDate}}?{{/isDate}}{{/isByteArray}}{{/isContainer}}{{/isString}}{{is}}{{/isPrimitiveType}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
 
         {{#vendorExtensions.x-entity-identifier}}
         

@@ -25115,7 +25115,7 @@ components:
         JournalDate:
           description: Date the journal was posted
           type: string
-          x-is-msdate: true
+          format: date
         JournalNumber:
           description: Xero generated journal number
           type: integer
