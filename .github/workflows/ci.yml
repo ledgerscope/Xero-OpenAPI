@@ -15,7 +15,7 @@ jobs:
     - uses: actions/setup-dotnet@v1
 
     - name: Setup NuGet
-      run: dotnet nuget add source "https://pkgs.dev.azure.com/ledgerscope/_packaging/LSFeed/nuget/v3/index.json" --name LSFeed -u ledgerscope --password ${{ secrets.LEDGERSCOPEDEVOPS }} --store-password-in-clear-text
+      run: dotnet nuget add source --username ${{ github.repository_owner }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
 
     - name: OpenAPI Version
       uses: docker://openapitools/openapi-generator-cli:v4.3.1
@@ -71,11 +71,11 @@ jobs:
       working-directory: ./output/csharp-netcore/accounting
 
     - name: Package
-      run: dotnet pack -p:PackageVersion=4.0.${{github.run_number}}
-      working-directory: ./output/csharp-netcore/accounting
+      run: dotnet pack -p:PackageVersion=4.0.${{github.run_number}} -p:RepositoryUrl="https://github.com/ledgerscope/Xero-OpenAPI" -p:RepositoryType=git
+      working-directory: ./output/csharp-netcore/accounting/src/Xero.NetStandard.OAuth2/
 
     - name: Publish
-      run: dotnet nuget push -s LSFeed --api-key az "**/*.nupkg"
+      run: dotnet nuget push -s github "**/*.nupkg"
       working-directory: ./output/csharp-netcore/accounting
 
     - uses: actions/upload-artifact@v2
@@ -88,4 +88,4 @@ jobs:
       if: failure()
       with:
        name: Source
-       path: ./output/csharp-netcore/accounting/*
+       path: ./*
