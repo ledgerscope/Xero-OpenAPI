@@ -979,6 +979,7 @@ components:
       - ExpPayment
       - FixedAsset
       - ManJournal
+      - PayBatch
       - PayRun
       - PriceListItem
       - PurchaseOrder
