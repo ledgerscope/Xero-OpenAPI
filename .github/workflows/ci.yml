@@ -74,6 +74,10 @@ jobs:
       run: dotnet pack -p:PackageVersion=4.0.${{github.run_number}} -p:RepositoryUrl="https://github.com/ledgerscope/Xero-OpenAPI" -p:RepositoryType=git
       working-directory: ./output/csharp-netcore/accounting/src/Xero.NetStandard.OAuth2/
 
+  publish:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
     - name: Publish
       run: dotnet nuget push -s github "**/*.nupkg"
       working-directory: ./output/csharp-netcore/accounting
@@ -81,11 +85,12 @@ jobs:
     - uses: actions/upload-artifact@v2
       if: success()
       with:
-       name: Packages
-       path: ./**/*.nupkg
+        name: Packages
+        path: ./**/*.nupkg
 
     - uses: actions/upload-artifact@v2
       if: failure()
       with:
-       name: Source
-       path: ./*
+        name: Source
+        path: ./* 
+  
