@@ -20,6 +20,10 @@ jobs:
     - name: Setup NuGet
       run: dotnet nuget add source --username ${{ github.repository_owner }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
 
+    - name: Reference NuGet package from artifact feed
+      run: |
+        dotnet add package Ledgerscope.YamlMangl --source ./LSFeed
+
     - name: OpenAPI Version
       uses: docker://openapitools/openapi-generator-cli:v4.3.1
       with:
