@@ -25,7 +25,7 @@ jobs:
 
     - name: Get tool artifact
       run: |
-          az artifacts universal download --organization https://dev.azure.com/ledgerscope/ --feed LSFeed --name Ledgerscope.YamlMangl --path .
+          az artifacts universal download --organization https://dev.azure.com/ledgerscope/ --feed LSFeed --name Ledgerscope.YamlMangl --version 1.0.41668 --path .
 
     - name: OpenAPI Version
       uses: docker://openapitools/openapi-generator-cli:v4.3.1
