@@ -1,4 +1,9 @@
-modifications: 
+modifications:
+  - path: servers > - > url
+    content: https://api.ledgerflow.net
 
-- path: servers > - > url
-  content: https://api.ledgerflow.net
+insertions:
+  - path: "components > parameters > requiredHeader > required"
+    content:
+      x-universal:
+      x-is-tenant-id: true
