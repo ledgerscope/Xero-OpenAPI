@@ -3,7 +3,195 @@ modifications:
     content: https://api.ledgerflow.net
 
 insertions:
-  - path: "components > parameters > requiredHeader > required"
+  - path: "paths > /BankTransfers > put > x-hasAccountingValidationError"
+    type: siblingAfter
     content:
-      x-universal:
+      parameters:
+        - $ref: "#/components/parameters/summarizeErrors"
+  - path: components > parameters > requiredHeader > required
+    type: siblingAfter
+    content:
+      x-universal: true
       x-is-tenant-id: true
+  - path: components > parameters > summarizeErrors > schema
+    type: siblingAfter
+    content:
+      x-universal: true
+  - path: components > parameters > unitdp > schema
+    type: siblingAfter
+    content:
+      x-universal: true
+  - path: components > parameters > ifModifiedSince > schema
+    type: siblingAfter
+    content:
+      x-universal: true
+  - path: components > schemas > AddressForOrganisation
+    content:
+      ValidationResponses:
+        type: object
+        properties:
+          StatusAttributeString:
+            description: A string to indicate status
+            type: string
+            example: ERROR, OK
+          HasErrors:
+            description: A boolean to indicate if an entity has an validation errors
+            type: boolean
+            default: "false"
+            example: "false"
+          Warnings:
+            description: Displays array of warning messages from the API
+            type: array
+            items:
+              $ref: "#/components/schemas/ValidationError"
+          ValidationErrors:
+            description: Displays array of validation error messages from the API
+            type: array
+            items:
+              $ref: "#/components/schemas/ValidationError"
+          HasValidationErrors:
+            description: A boolean to indicate if a contact has an validation errors
+            type: boolean
+            default: "false"
+            example: "false"
+      LastUpdatedDate:
+        type: object
+        properties:
+          UpdatedDateUTC:
+            description: Last modified date UTC format
+            type: string
+            x-is-msdate-time: true
+            example: "/Date(1573755038314)/"
+            x-is-updated-date: true
+  - path: components > schemas > Account
+    type: parent
+    name: allOf
+  - path: components > schemas > BankTransaction
+    type: parent
+    name: allOf
+  - path: components > schemas > LineItem > properties > LineItemID > example
+    type: siblingAfter
+    content:
+      x-entity-identifier: true
+  - path: components > schemas > LineItem > properties > Description > type
+    type: siblingAfter
+    content:
+      maxLength: 4000
+  - path: components > schemas > BankTransfer
+    type: parent
+    name: allOf
+  - path: components > schemas > BatchPayment
+    type: parent
+    name: allOf
+  - path: components > schemas > PaymentService
+    type: parent
+    name: allOf
+  - path: components > schemas > Contact
+    type: parent
+    name: allOf
+  - path: components > schemas > CreditNote
+    type: parent
+    name: allOf
+  - path: components > schemas > Allocation
+    type: parent
+    name: allOf
+  - path: components > schemas > CurrencyCode > x-enum-varnames > - GHS
+    content:
+      - GGP
+      - IMP
+      - JEP
+      - SPL
+      - TVD
+      - XDR
+  - path: components > schemas > CurrencyCode > enum > - GHS
+    content:
+      - GGP
+      - IMP
+      - JEP
+      - SPL
+      - TVD
+      - XDR
+  - path: components > schemas > Employee
+    type: parent
+    name: allOf
+  - path: components > schemas > ExpenseClaim
+    type: parent
+    name: allOf
+  - path: components > schemas > Invoice
+    type: parent
+    name: allOf
+  - path: components > schemas > Item
+    type: parent
+    name: allOf
+  - path: components > schemas > Journal > properties > SourceType > enum > INTEGRATEDPAYROLLCN
+    content:
+      - INTEGRATEDPAYROLLPLL
+      - ""
+  - path: components > schemas > LinkedTransaction
+    type: parent
+    name: allOf
+  - path: components > schemas > ManualJournal
+    type: parent
+    name: allOf
+  - path: components > schemas > Organisation > properties > SalesTaxBasis > enum > - FLATRATEACCRUAL
+    content:
+      - ACCRUALS
+      - ""
+  - path: components > schemas > RepeatingInvoice > properties > LineItems > type
+    content:
+      x-is-lineitem: true
+  - path: components > schemas > Setup > externalDocs
+    type: siblingAfter
+    content:
+      x-emit-default: true
+  - path: components > schemas > ConversionBalances > properties > Balance >  format
+    type: siblingAfter
+    content:
+      x-is-money: true
+  - path: components > schemas > BalanceDetails > properties > Balance >  format
+    type: siblingAfter
+    content:
+      x-is-money: true
+  - path: components > schemas > TaxRate > properties > ReportTaxType >  enum > - TOURISTREFUND
+    content:
+      - TXRCN33INPUT
+      - TXRCREINPUT
+      - TXRCESSINPUT
+      - TXRCTSINPUT
+  - path: components > schemas > TaxComponent > properties > Name > type
+    type: siblingAfter
+    content:
+      maxLength: 50
+  - path: components > schemas > Overpayment
+    type: parent
+    name: allOf
+  - path: components > schemas > Payment
+    type: parent
+    name: allOf
+  - path: components > schemas > Prepayment
+    type: parent
+    name: allOf
+  - path: components > schemas > PurchaseOrder
+    type: parent
+    name: allOf
+  - path: components > schemas > Quote
+    type: parent
+    name: allOf
+  - path: components > schemas > Receipt
+    type: parent
+    name: allOf
+  - path: components > schemas > ReportWithRow
+    type: parent
+    name: allOf
+  - path: components > schemas > Report
+    type: parent
+    name: allOf
+  - path: components > schemas > TrackingCategory
+    type: parent
+    name: allOf
+  - path: components > schemas > TrackingOption
+    type: parent
+    name: allOf
+  - path: components > schemas > User
+    type: parent
+    name: allOf
