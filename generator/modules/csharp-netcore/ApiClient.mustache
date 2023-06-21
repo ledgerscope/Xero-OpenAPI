@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
 {{^netStandard}}
@@ -127,7 +128,7 @@ namespace {{packageName}}.Client
             }
             catch (Exception e)
             {
-                throw new ApiException(500, e.Message);
+                throw new ApiException(500, e.Message, response.Content);
             }
         }
 
@@ -324,12 +325,12 @@ namespace {{packageName}}.Client
             {
                 foreach (var fileParam in options.FileParameters)
                 {
-                    var bytes = ClientUtils.ReadAsBytes(fileParam.Value);
-                    var fileStream = fileParam.Value as FileStream;
+                    var bytes = ClientUtils.ReadAsBytes(fileParam.Value.Item2);
+                    var fileStream = fileParam.Value.Item2 as FileStream;
                     if (fileStream != null)
-                        FileParameter.Create(fileParam.Key, bytes, System.IO.Path.GetFileName(fileStream.Name));
+                        request.AddFile(fileParam.Key, bytes, System.IO.Path.GetFileName(fileStream.Name));
                     else
-                        FileParameter.Create(fileParam.Key, bytes, "no_file_name_provided");
+                        request.AddFile(fileParam.Key, bytes, fileParam.Value.Item1);
                 }
             }
 
@@ -379,7 +380,10 @@ namespace {{packageName}}.Client
             return transformed;
         }
 
-        private {{#supportsAsync}}async Task<ApiResponse<T>>{{/supportsAsync}}{{^supportsAsync}}ApiResponse<T>{{/supportsAsync}} Exec<T>(RestRequest req, IReadableConfiguration configuration)
+        static string[] _jsonTypes = new[] { "application/json", "text/json", "text/x-json", "text/javascript", "*+json", "*" };
+        static string[] _xmlTypes = new[] { "application/xml", "text/xml", "*+xml" };
+
+        private {{#supportsAsync}}async Task<ApiResponse<T>>{{/supportsAsync}}{{^supportsAsync}}ApiResponse<T>{{/supportsAsync}} Exec<T>(RestRequest req, IReadableConfiguration configuration, CancellationToken cancellationToken)
         {
             RestClient client = new RestClient(_baseUrl);
 
@@ -387,15 +391,21 @@ namespace {{packageName}}.Client
             var existingDeserializer = req.JsonSerializer as IDeserializer;
             if (existingDeserializer != null)
             {
-                client.AddHandler(existingDeserializer, "application/json", "text/json", "text/x-json", "text/javascript", "*+json", "*");
+                foreach (var item in _jsonTypes)
+                    client.AddHandler(item, () => existingDeserializer);
             }
             else
             {
                 var codec = new CustomJsonCodec(configuration);
-                client.AddHandler(codec, "application/json", "text/json", "text/x-json", "text/javascript", "*+json", "*");
+                foreach (var item in _jsonTypes)
+                    client.AddHandler(item, () => codec);
             }
 
-            client.AddHandler(new XmlDeserializer(), "application/xml", "text/xml", "*+xml");
+            foreach (var item in _xmlTypes)
+            {
+                var xmlDeserializer = new XmlDeserializer();
+                client.AddHandler(item, () => xmlDeserializer);
+            }
 
             client.Timeout = configuration.Timeout;
 
@@ -406,7 +416,7 @@ namespace {{packageName}}.Client
 
             InterceptRequest(req);
             {{#supportsAsync}}
-            var response = await client.ExecuteTaskAsync<T>(req);
+            var response = await client.ExecuteTaskAsync<T>(req, cancellationToken);
             {{/supportsAsync}}
             {{^supportsAsync}}
             var response = client.Execute(req);
@@ -458,10 +468,10 @@ namespace {{packageName}}.Client
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public async Task<ApiResponse<T>> GetAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public async Task<ApiResponse<T>> GetAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return await Exec<T>(newRequest(HttpMethod.Get, path, options, config), config);
+            return await Exec<T>(newRequest(HttpMethod.Get, path, options, config), config, cancellationToken);
         }
 
         /// <summary>
@@ -472,10 +482,10 @@ namespace {{packageName}}.Client
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public async Task<ApiResponse<T>> PostAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public async Task<ApiResponse<T>> PostAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return await Exec<T>(newRequest(HttpMethod.Post, path, options, config), config);
+            return await Exec<T>(newRequest(HttpMethod.Post, path, options, config), config, cancellationToken);
         }
 
         /// <summary>
@@ -486,10 +496,10 @@ namespace {{packageName}}.Client
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public async Task<ApiResponse<T>> PutAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public async Task<ApiResponse<T>> PutAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return await Exec<T>(newRequest(HttpMethod.Put, path, options, config), config);
+            return await Exec<T>(newRequest(HttpMethod.Put, path, options, config), config, cancellationToken);
         }
 
         /// <summary>
@@ -500,10 +510,10 @@ namespace {{packageName}}.Client
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public async Task<ApiResponse<T>> DeleteAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public async Task<ApiResponse<T>> DeleteAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return await Exec<T>(newRequest(HttpMethod.Delete, path, options, config), config);
+            return await Exec<T>(newRequest(HttpMethod.Delete, path, options, config), config, cancellationToken);
         }
 
         /// <summary>
@@ -514,10 +524,10 @@ namespace {{packageName}}.Client
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public async Task<ApiResponse<T>> HeadAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public async Task<ApiResponse<T>> HeadAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return await Exec<T>(newRequest(HttpMethod.Head, path, options, config), config);
+            return await Exec<T>(newRequest(HttpMethod.Head, path, options, config), config, cancellationToken);
         }
 
         /// <summary>
@@ -528,10 +538,10 @@ namespace {{packageName}}.Client
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public async Task<ApiResponse<T>> OptionsAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public async Task<ApiResponse<T>> OptionsAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return await Exec<T>(newRequest(HttpMethod.Options, path, options, config), config);
+            return await Exec<T>(newRequest(HttpMethod.Options, path, options, config), config, cancellationToken);
         }
 
         /// <summary>
@@ -542,10 +552,10 @@ namespace {{packageName}}.Client
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public async Task<ApiResponse<T>> PatchAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public async Task<ApiResponse<T>> PatchAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return await Exec<T>(newRequest(HttpMethod.Patch, path, options, config), config);
+            return await Exec<T>(newRequest(HttpMethod.Patch, path, options, config), config, cancellationToken);
         }
         #endregion IAsynchronousClient
         {{/supportsAsync}}
@@ -559,14 +569,14 @@ namespace {{packageName}}.Client
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public ApiResponse<T> Get<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public ApiResponse<T> Get<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             {{#supportsAsync}}
-            return GetAsync<T>(path, options, configuration).Result;
+            return GetAsync<T>(path, options, configuration, cancellationToken).Result;
             {{/supportsAsync}}
             {{^supportsAsync}}
             var config = configuration ?? GlobalConfiguration.Instance;
-            return Exec<T>(newRequest(HttpMethod.Get, path, options, config), config);
+            return Exec<T>(newRequest(HttpMethod.Get, path, options, config), config, cancellationToken);
             {{/supportsAsync}}
         }
 
@@ -578,14 +588,14 @@ namespace {{packageName}}.Client
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public ApiResponse<T> Post<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public ApiResponse<T> Post<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             {{#supportsAsync}}
-            return PostAsync<T>(path, options, configuration).Result;
+            return PostAsync<T>(path, options, configuration, cancellationToken).Result;
             {{/supportsAsync}}
             {{^supportsAsync}}
             var config = configuration ?? GlobalConfiguration.Instance;
-            return Exec<T>(newRequest(HttpMethod.Post, path, options, config), config);
+            return Exec<T>(newRequest(HttpMethod.Post, path, options, config), config, cancellationToken);
             {{/supportsAsync}}
         }
 
@@ -597,14 +607,14 @@ namespace {{packageName}}.Client
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public ApiResponse<T> Put<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public ApiResponse<T> Put<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             {{#supportsAsync}}
-            return PutAsync<T>(path, options, configuration).Result;
+            return PutAsync<T>(path, options, configuration, cancellationToken).Result;
             {{/supportsAsync}}
             {{^supportsAsync}}
             var config = configuration ?? GlobalConfiguration.Instance;
-            return Exec<T>(newRequest(HttpMethod.Put, path, options, config), config);
+            return Exec<T>(newRequest(HttpMethod.Put, path, options, config), config, cancellationToken);
             {{/supportsAsync}}
         }
 
@@ -616,14 +626,14 @@ namespace {{packageName}}.Client
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public ApiResponse<T> Delete<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public ApiResponse<T> Delete<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             {{#supportsAsync}}
-            return DeleteAsync<T>(path, options, configuration).Result;
+            return DeleteAsync<T>(path, options, configuration, cancellationToken).Result;
             {{/supportsAsync}}
             {{^supportsAsync}}
             var config = configuration ?? GlobalConfiguration.Instance;
-            return Exec<T>(newRequest(HttpMethod.Delete, path, options, config), config);
+            return Exec<T>(newRequest(HttpMethod.Delete, path, options, config), config, cancellationToken);
             {{/supportsAsync}}
         }
 
@@ -635,14 +645,14 @@ namespace {{packageName}}.Client
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public ApiResponse<T> Head<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public ApiResponse<T> Head<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             {{#supportsAsync}}
-            return HeadAsync<T>(path, options, configuration).Result;
+            return HeadAsync<T>(path, options, configuration, cancellationToken).Result;
             {{/supportsAsync}}
             {{^supportsAsync}}
             var config = configuration ?? GlobalConfiguration.Instance;
-            return Exec<T>(newRequest(HttpMethod.Head, path, options, config), config);
+            return Exec<T>(newRequest(HttpMethod.Head, path, options, config), config, cancellationToken);
             {{/supportsAsync}}
         }
 
@@ -654,14 +664,14 @@ namespace {{packageName}}.Client
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public ApiResponse<T> Options<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public ApiResponse<T> Options<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             {{#supportsAsync}}
-            return OptionsAsync<T>(path, options, configuration).Result;
+            return OptionsAsync<T>(path, options, configuration, cancellationToken).Result;
             {{/supportsAsync}}
             {{^supportsAsync}}
             var config = configuration ?? GlobalConfiguration.Instance;
-            return Exec<T>(newRequest(HttpMethod.Options, path, options, config), config);
+            return Exec<T>(newRequest(HttpMethod.Options, path, options, config), config, cancellationToken);
             {{/supportsAsync}}
         }
 
@@ -673,14 +683,14 @@ namespace {{packageName}}.Client
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public ApiResponse<T> Patch<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public ApiResponse<T> Patch<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             {{#supportsAsync}}
-            return PatchAsync<T>(path, options, configuration).Result;
+            return PatchAsync<T>(path, options, configuration, cancellationToken).Result;
             {{/supportsAsync}}
             {{^supportsAsync}}
             var config = configuration ?? GlobalConfiguration.Instance;
-            return Exec<T>(newRequest(HttpMethod.Patch, path, options, config), config);
+            return Exec<T>(newRequest(HttpMethod.Patch, path, options, config), config, cancellationToken);
             {{/supportsAsync}}
         }
         #endregion ISynchronousClient

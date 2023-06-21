@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Net.Mime;
+using System.Threading;
 using {{packageName}}.Client;
 {{#hasImport}}using {{packageName}}.{{modelPackage}};
 {{/hasImport}}
@@ -30,8 +31,9 @@ namespace {{packageName}}.{{apiPackage}}
         /// </remarks>
         /// <exception cref="{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}</param>
-        {{/allParams}}/// <returns>Task of {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}void{{/returnType}}</returns>
-        {{#returnType}}System.Threading.Tasks.Task<{{{returnType}}}>{{/returnType}}{{^returnType}}System.Threading.Tasks.Task{{/returnType}} {{operationId}}Async (string accessToken, {{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        {{/allParams}}/// <param name="ct">Indicates that the task is to be cancelled</param>
+        /// <returns>Task of {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}void{{/returnType}}</returns>
+        {{#returnType}}System.Threading.Tasks.Task<{{{returnType}}}>{{/returnType}}{{^returnType}}System.Threading.Tasks.Task{{/returnType}} {{operationId}}Async ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}, {{/allParams}}CancellationToken ct = default);
 
         /// <summary>
         /// {{summary}}
@@ -41,10 +43,20 @@ namespace {{packageName}}.{{apiPackage}}
         /// </remarks>
         /// <exception cref="{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}</param>
-        {{/allParams}}/// <returns>Task of ApiResponse{{#returnType}} ({{returnType}}){{/returnType}}</returns>
-        System.Threading.Tasks.Task<ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}>> {{operationId}}AsyncWithHttpInfo (string accessToken, {{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        {{/allParams}}/// <param name="ct">Indicates that the task is to be cancelled</param>
+        /// <returns>Task of ApiResponse{{#returnType}} ({{returnType}}){{/returnType}}</returns>
+        System.Threading.Tasks.Task<ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}>> {{operationId}}AsyncWithHttpInfo ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}, {{/allParams}}CancellationToken ct = default);
         {{/operation}}
         #endregion Asynchronous Operations
+
+        public string AccessToken { get; }
+        public string TenantId { get; }
+
+        public DateTime MinuteStart { get; }
+
+        public int? MinuteRateLimitRemaining { get; }
+        public int? DailyRateLimitRemaining { get; }
+        public int? AppRateLimitRemaining { get; }
     }
     {{/supportsAsync}}
 
@@ -67,7 +79,7 @@ namespace {{packageName}}.{{apiPackage}}
         /// Initializes a new instance of the <see cref="{{classname}}"/> class.
         /// </summary>
         /// <returns></returns>
-        public {{classname}}() : this((string) null)
+        public {{classname}}() : this("{{{basePath}}}")
         {
         }
 
@@ -83,6 +95,25 @@ namespace {{packageName}}.{{apiPackage}}
             );
             this.AsynchronousClient = new {{packageName}}.Client.ApiClient(this.Configuration.BasePath);
             this.ExceptionFactory = {{packageName}}.Client.Configuration.DefaultExceptionFactory;
+        }
+
+        public string AccessToken { get; set; }
+        public string TenantId { get; set; }
+
+        public DateTime MinuteStart { get; set; }
+
+        public int? MinuteRateLimitRemaining { get; set; }
+        public int? DailyRateLimitRemaining { get; set; }
+        public int? AppRateLimitRemaining { get; set; }
+
+        private async System.Threading.Tasks.Task populateRateLimiterIfNeeded(IApiResponse response)
+        {
+            MinuteRateLimitRemaining = response.MinuteRateLimitRemaining;
+            DailyRateLimitRemaining = response.DailyRateLimitRemaining;
+            AppRateLimitRemaining = response.AppRateLimitRemaining;
+
+            if (MinuteRateLimitRemaining == 59 || MinuteStart == DateTime.MinValue)
+                MinuteStart = DateTime.UtcNow;
         }
 
         /// <summary>
@@ -172,11 +203,14 @@ namespace {{packageName}}.{{apiPackage}}
         /// </summary>
         /// <exception cref="{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}</param>
-        {{/allParams}}/// <returns>Task of {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}void{{/returnType}}</returns>
-        {{#returnType}}public async System.Threading.Tasks.Task<{{{returnType}}}>{{/returnType}}{{^returnType}}public async System.Threading.Tasks.Task{{/returnType}} {{operationId}}Async (string accessToken, {{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+        {{/allParams}}/// <param name="ct">Indicates that the task is to be cancelled</param>
+        /// <returns>Task of {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}void{{/returnType}}</returns>
+        {{#returnType}}public async System.Threading.Tasks.Task<{{{returnType}}}>{{/returnType}}{{^returnType}}public async System.Threading.Tasks.Task{{/returnType}} {{operationId}}Async ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}, {{/allParams}}CancellationToken ct = default)
         {
-             {{#returnType}}{{packageName}}.Client.ApiResponse<{{{returnType}}}> localVarResponse = await {{operationId}}AsyncWithHttpInfo(accessToken, {{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
-             return localVarResponse.Data;{{/returnType}}{{^returnType}}await {{operationId}}AsyncWithHttpInfo(accessToken, {{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{/returnType}}
+            {{#returnType}}{{packageName}}.Client.ApiResponse<{{{returnType}}}> localVarResponse = await {{operationId}}AsyncWithHttpInfo({{#allParams}}{{paramName}}, {{/allParams}}ct);
+            if (localVarResponse.Data != null)
+                return localVarResponse.Data;
+            throw new ApiException(200, localVarResponse.ErrorText, localVarResponse.Content);{{/returnType}}{{^returnType}}await {{operationId}}AsyncWithHttpInfo({{#allParams}}{{paramName}}, {{/allParams}}ct);{{/returnType}}
 
         }
 
@@ -185,10 +219,14 @@ namespace {{packageName}}.{{apiPackage}}
         /// </summary>
         /// <exception cref="{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
         {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}</param>
-        {{/allParams}}/// <returns>Task of ApiResponse{{#returnType}} ({{returnType}}){{/returnType}}</returns>
-        public async System.Threading.Tasks.Task<{{packageName}}.Client.ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}>> {{operationId}}AsyncWithHttpInfo (string accessToken, {{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+        {{/allParams}}/// <param name="ct">Indicates that the task is to be cancelled</param>
+        /// <returns>Task of ApiResponse{{#returnType}} ({{returnType}}){{/returnType}}</returns>
+        public async System.Threading.Tasks.Task<{{packageName}}.Client.ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}>> {{operationId}}AsyncWithHttpInfo ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = null{{/optionalMethodArgument}}{{/required}}, {{/allParams}}CancellationToken ct = default)
         {
             {{#allParams}}
+            {{#vendorExtensions.x-is-tenant-id}}
+            xeroTenantId ??= TenantId;
+            {{/vendorExtensions.x-is-tenant-id}}
             {{^isNullable}}
             {{#required}}
             // verify the required parameter '{{paramName}}' is set
@@ -244,7 +282,7 @@ namespace {{packageName}}.{{apiPackage}}
             if ({{paramName}} != null)
             {
                 {{#isFile}}
-                requestOptions.FileParameters.Add("{{baseName}}", {{paramName}});
+                requestOptions.FileParameters.Add("{{baseName}}", new Tuple<string, System.IO.Stream>(filename, {{paramName}}));
                 {{/isFile}}
                 {{^isFile}}
                 requestOptions.FormParameters.Add("{{baseName}}", {{packageName}}.Client.ClientUtils.ParameterToString({{paramName}})); // form parameter
@@ -286,17 +324,25 @@ namespace {{packageName}}.{{apiPackage}}
             {{/isBasic}}
             {{#isOAuth}}
             // oauth required
-            if (!String.IsNullOrEmpty(accessToken))
+            if (!String.IsNullOrEmpty(AccessToken))
             {
-                requestOptions.HeaderParameters.Add("Authorization", "Bearer " + accessToken);
+                requestOptions.HeaderParameters.Add("Authorization", "Bearer " + AccessToken);
             }
             // make the HTTP request
             {{/isOAuth}}
 
             {{/authMethods}}
-      
 
-            var response = await this.AsynchronousClient.{{#lambda.titlecase}}{{#lambda.lowercase}}{{httpMethod}}{{/lambda.lowercase}}{{/lambda.titlecase}}Async<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}>("{{{path}}}", requestOptions, this.Configuration);
+            if (MinuteRateLimitRemaining == 1)
+            {
+                var difference = MinuteStart.AddMinutes(1).AddSeconds(1) - DateTime.UtcNow;
+                if (difference.TotalMilliseconds > 0)
+                    await System.Threading.Tasks.Task.Delay(difference);
+            }      
+
+            var response = await this.AsynchronousClient.{{#lambda.titlecase}}{{#lambda.lowercase}}{{httpMethod}}{{/lambda.lowercase}}{{/lambda.titlecase}}Async<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}>("{{#vendorExtensions.x-path}}{{{vendorExtensions.x-path}}}{{/vendorExtensions.x-path}}{{^vendorExtensions.x-path}}{{{path}}}{{/vendorExtensions.x-path}}", requestOptions, this.Configuration);
+
+            await populateRateLimiterIfNeeded(response);
 
             if (this.ExceptionFactory != null)
             {

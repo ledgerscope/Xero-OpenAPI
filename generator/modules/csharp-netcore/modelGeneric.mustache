@@ -1,3 +1,44 @@
+    
+    {{>visibility}} partial interface {{interfacePrefix}}{{classname}}
+    {
+{{#vars}}
+        {{^isInherited}}
+        {{^isEnum}}
+        /// <summary>
+        /// {{^description}}Gets or Sets {{{name}}}{{/description}}{{#description}}{{description}}{{/description}}
+        /// </summary>{{#description}}
+        /// <value>{{description}}</value>{{/description}}
+        {{#vendorExtensions.x-is-msdate-time}}
+        [Newtonsoft.Json.JsonConverterAttribute(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
+        public DateTime {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
+
+        {{/vendorExtensions.x-is-msdate-time}}
+        {{#vendorExtensions.x-is-msdate}}
+        [Newtonsoft.Json.JsonConverterAttribute(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
+        public DateTime {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
+
+        {{/vendorExtensions.x-is-msdate}}
+        {{#vendorExtensions.x-is-money}}
+        public decimal? {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
+
+        {{/vendorExtensions.x-is-money}}
+
+        {{#vendorExtensions.x-is-datetime}}
+        [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.IsoDateTimeConverter))]
+        {{/vendorExtensions.x-is-datetime}}
+        {{^vendorExtensions.x-is-msdate-time}}
+        {{^vendorExtensions.x-is-msdate}}
+        {{^vendorExtensions.x-is-money}}
+        public {{{dataType}}}{{#isPrimitiveType}}{{^isString}}{{^isContainer}}{{^isByteArray}}{{^isDate}}?{{/isDate}}{{/isByteArray}}{{/isContainer}}{{/isString}}{{is}}{{/isPrimitiveType}} {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
+
+        {{/vendorExtensions.x-is-money}}
+        {{/vendorExtensions.x-is-msdate}}
+        {{/vendorExtensions.x-is-msdate-time}}
+        {{/isEnum}}
+        {{/isInherited}}
+        {{/vars}}
+    }
+
     /// <summary>
     /// {{#description}}{{.}}{{/description}}{{^description}}{{classname}}{{/description}}
     /// </summary>
@@ -11,8 +52,17 @@
     [JsonSubtypes.KnownSubType(typeof({{{modelName}}}), "{{{mappingName}}}")]
     {{/mappedModels}}
     {{/discriminator}}
-    {{>visibility}} partial class {{classname}} : {{#parent}}{{{parent}}}, {{/parent}} IEquatable<{{classname}}>{{#validatable}}, IValidatableObject{{/validatable}}
+    {{>visibility}} partial class {{classname}} : {{#parent}}{{{parent}}}, {{/parent}} {{interfacePrefix}}{{classname}}, IEquatable<{{classname}}>{{#validatable}}, IValidatableObject{{/validatable}}
+    
+        {{#interfaces}},{{interfacePrefix}}{{{.}}} {{/interfaces}}
+        {{#vars}}
+        {{#vendorExtensions.x-entity-identifier}}, IHasId{{/vendorExtensions.x-entity-identifier}}
+        {{#vendorExtensions.x-is-updated-date}}, IHasUpdatedDate{{/vendorExtensions.x-is-updated-date}}
+        {{/vars}}
     {
+        {{#vendorExtensions.x-emit-default}}private const bool emitDefault = true;{{/vendorExtensions.x-emit-default}}
+        {{^vendorExtensions.x-emit-default}}private const bool emitDefault = false;{{/vendorExtensions.x-emit-default}}
+
         {{#vars}}
         {{#items.isEnum}}
         {{#items}}
@@ -33,7 +83,7 @@
         {{#description}}
         /// <value>{{description}}</value>
         {{/description}}
-        [DataMember(Name="{{baseName}}", EmitDefaultValue={{#isNullable}}true{{/isNullable}}{{^isNullable}}false{{/isNullable}})]
+        [DataMember(Name="{{baseName}}", EmitDefaultValue={{#isNullable}}true{{/isNullable}}{{^isNullable}}{{#vendorExtensions.x-emit-default}}true{{/vendorExtensions.x-emit-default}}{{^vendorExtensions.x-emit-default}}emitDefault{{/vendorExtensions.x-emit-default}}{{/isNullable}})]
         public {{#complexType}}{{{complexType}}}{{/complexType}}{{^complexType}}{{{datatypeWithEnum}}}{{/complexType}}{{^isContainer}}{{/isContainer}} {{name}} { get; set; }
         {{/isEnum}}
         {{/vars}}
@@ -54,10 +104,44 @@
         /// {{^description}}Gets or Sets {{{name}}}{{/description}}{{#description}}{{description}}{{/description}}
         /// </summary>{{#description}}
         /// <value>{{description}}</value>{{/description}}
-        [DataMember(Name="{{baseName}}", EmitDefaultValue={{#isNullable}}true{{/isNullable}}{{^isNullable}}false{{/isNullable}})]{{#isDate}}
-        [JsonConverter(typeof(OpenAPIDateConverter))]{{/isDate}}
-        public {{{dataType}}}{{#isPrimitiveType}}?{{is}}{{/isPrimitiveType}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
+        [DataMember(Name="{{baseName}}", EmitDefaultValue={{#isNullable}}true{{/isNullable}}{{^isNullable}}{{#vendorExtensions.x-emit-default}}true{{/vendorExtensions.x-emit-default}}{{^vendorExtensions.x-emit-default}}emitDefault{{/vendorExtensions.x-emit-default}}{{/isNullable}})]{{#isDate}}
+        [JsonConverter(typeof(IsoDateTimeConverter))]{{/isDate}}
+        {{#vendorExtensions.x-is-msdate-time}}
+        [Newtonsoft.Json.JsonConverterAttribute(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
+        public DateTime {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
 
+        {{/vendorExtensions.x-is-msdate-time}}
+        {{#vendorExtensions.x-is-msdate}}
+        [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.IsoDateTimeConverter))]
+        public DateTime {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
+
+        {{/vendorExtensions.x-is-msdate}}
+        {{#vendorExtensions.x-is-money}}
+        public decimal? {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
+
+        {{/vendorExtensions.x-is-money}}
+
+        {{#vendorExtensions.x-is-datetime}}
+        [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.IsoDateTimeConverter))]
+        {{/vendorExtensions.x-is-datetime}}
+
+        {{^vendorExtensions.x-is-msdate-time}}
+        {{^vendorExtensions.x-is-msdate}}
+        {{^vendorExtensions.x-is-money}}
+        public {{{dataType}}}{{#isPrimitiveType}}{{^isString}}{{^isContainer}}{{^isByteArray}}{{^isDate}}?{{/isDate}}{{/isByteArray}}{{/isContainer}}{{/isString}}{{is}}{{/isPrimitiveType}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
+
+        {{#vendorExtensions.x-entity-identifier}}
+        
+        public Guid Id
+        {
+            get => {{name}};
+            set => {{name}} = value;
+        }
+
+        {{/vendorExtensions.x-entity-identifier}}
+        {{/vendorExtensions.x-is-money}}
+        {{/vendorExtensions.x-is-msdate}}
+        {{/vendorExtensions.x-is-msdate-time}}
         {{/isEnum}}
         {{/isInherited}}
         {{/vars}}
@@ -165,7 +249,6 @@
         }
 
 {{#validatable}}
-{{#discriminator}}
         /// <summary>
         /// To validate all properties of the instance
         /// </summary>
@@ -181,22 +264,12 @@
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        protected IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> BaseValidate(ValidationContext validationContext)
+        protected {{#parent}}override{{/parent}} {{^parent}}virtual{{/parent}} IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> BaseValidate(ValidationContext validationContext)
         {
-{{/discriminator}}
-{{^discriminator}}
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-        {
-{{/discriminator}}
             {{#parent}}
             {{^isArrayModel}}
             {{^isMapModel}}
-            foreach(var x in BaseValidate(validationContext)) yield return x;
+            foreach(var x in base.BaseValidate(validationContext)) yield return x;
             {{/isMapModel}}
             {{/isArrayModel}}
             {{/parent}}
@@ -251,3 +324,25 @@
         }
 {{/validatable}}
     }
+
+        {{#vendorExtensions.x-isObjectArray}}{{#vars}}{{#isListContainer}}
+        {{>visibility}} partial class {{classname}} : IXeroCollection<{{classname}}, {{{dataType}}}>
+        {
+            {{{dataType}}} IXeroCollection<{{classname}}, {{{dataType}}}>.Collection 
+            {
+                get => {{{name}}};
+                set => {{{name}}} = value;
+            }
+        }
+
+        {{/isListContainer}}
+        {{/vars}}{{/vendorExtensions.x-isObjectArray}}
+    
+        {{#vars}}{{#vendorExtensions.x-is-lineitem}}
+        {{>visibility}} partial class {{classname}} : IHasLineItems
+        {
+            ICollection<LineItem> IHasLineItems.LineItems => LineItems;
+        }
+
+        {{/vendorExtensions.x-is-lineitem}}
+        {{/vars}}

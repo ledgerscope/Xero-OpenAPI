@@ -10,7 +10,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
-using Xero.NetStandard.OAuth2.Model;
+using Xero.NetStandard.OAuth2.Shared;
+using Xero.NetStandard.OAuth2.Model.Accounting;
+using Xero.NetStandard.OAuth2.Model.Files;
 
 namespace {{packageName}}.Client
 {
@@ -47,20 +49,52 @@ namespace {{packageName}}.Client
             switch (status)
             {
                 case int code when status == 400:
-                    var error = JsonConvert.DeserializeObject<Error>(response.Content.ToString());
+                    Error error;
+                    
+                    try
+                    {
+                        error = JsonConvert.DeserializeObject<Error>(response.Content.ToString());
+                    }
+                    catch (JsonSerializationException)
+                    {
+                        var fileError = JsonConvert.DeserializeObject<FileError[]>(response.Content.ToString()).First();
+                        error = new Error()
+                        {
+                            Type = fileError.Type + " " + fileError.Title,
+                            Message = fileError.Detail
+                        };
+                    }
                     var validationBuilder = new StringBuilder();
                     var delimiter = "";
-                    foreach (Element e in error.Elements)
+                    
+                    if (error.Elements != null)
                     {
-                        foreach (ValidationError v in e.ValidationErrors)
+                        foreach (Element e in error.Elements)
                         {
-                            validationBuilder.Append(delimiter);
-                            validationBuilder.Append(v.Message);
-                            delimiter = ",";
-                        }
+                            foreach (ValidationError v in e.ValidationErrors)
+                            {
+                                validationBuilder.Append(delimiter);
+                                validationBuilder.Append(v.Message);
+                                delimiter = ",";
+                            }
 
+                        }
                     }
+
                     return new ApiException(status, string.Format("{0}:{1}", error.Message, validationBuilder.ToString()), error);
+                case int code when status == 401:
+                    return new AuthorisationApiException(
+                                        string.Format("Error calling {0}: {1}", methodName, response.Content),
+                                        response.Content);
+                case int code when status == 403:
+                    return new AuthenticationApiException(
+                                        string.Format("Error calling {0}: {1}", methodName, response.Content),
+                                        response.Content);
+                case int code when status == 429:
+                    response.Headers.TryGetValue("Retry-After", out var retryAfterList);
+                    response.Headers.TryGetValue("X-Rate-Limit-Problem", out var rateLimitProblemList);
+
+                    return new RateLimitExceededException(rateLimitProblemList.FirstOrDefault(), int.Parse(retryAfterList.FirstOrDefault()));
                 case int code when status > 400:
                     return new ApiException(status,
                                        string.Format("Error calling {0}: {1}", methodName, response.Content),

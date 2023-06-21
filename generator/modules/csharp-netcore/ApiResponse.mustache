@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 namespace {{packageName}}.Client
@@ -42,6 +43,12 @@ namespace {{packageName}}.Client
         /// Gets or sets any cookies passed along on the response.
         /// </summary>
         List<Cookie> Cookies { get; set; }
+
+        int? MinuteRateLimitRemaining { get; }
+
+        int? DailyRateLimitRemaining { get; }
+
+        int? AppRateLimitRemaining { get; }
     }
 
     /// <summary>
@@ -91,6 +98,45 @@ namespace {{packageName}}.Client
         /// The data type of <see cref="Content"/>
         /// </summary>
         public object Content  { get; set; }
+
+        public int? MinuteRateLimitRemaining
+        {
+            get
+            {
+                if (Headers.TryGetValue("X-MinLimit-Remaining", out var rateLimitRemaining))
+                {
+                    return rateLimitRemaining.Select(a => int.Parse(a)).Sum();
+                }
+
+                return null;
+            }
+        }
+
+        public int? DailyRateLimitRemaining
+        {
+            get
+            {
+                if (Headers.TryGetValue("X-DayLimit-Remaining", out var rateLimitRemaining))
+                {
+                    return rateLimitRemaining.Select(a => int.Parse(a)).Sum();
+                }
+
+                return null;
+            }
+        }
+
+        public int? AppRateLimitRemaining
+        {
+            get
+            {
+                if (Headers.TryGetValue("X-AppMinLimit-Remaining", out var rateLimitRemaining))
+                {
+                    return rateLimitRemaining.Select(a => int.Parse(a)).Sum();
+                }
+
+                return null;
+            }
+        }
         
         #endregion Properties
         
