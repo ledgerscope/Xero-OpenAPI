@@ -64,10 +64,10 @@ insertions:
             example: "/Date(1573755038314)/"
             x-is-updated-date: true
   - path: components > schemas > Account
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > BankTransaction
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > LineItem > properties > LineItemID > example
     type: siblingAfter
@@ -78,22 +78,22 @@ insertions:
     content:
       maxLength: 4000
   - path: components > schemas > BankTransfer
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > BatchPayment
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > PaymentService
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > Contact
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > CreditNote
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > Allocation
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > CurrencyCode > x-enum-varnames > - GHS
     content:
@@ -112,26 +112,26 @@ insertions:
       - TVD
       - XDR
   - path: components > schemas > Employee
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > ExpenseClaim
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > Invoice
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > Item
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > Journal > properties > SourceType > enum > INTEGRATEDPAYROLLCN
     content:
       - INTEGRATEDPAYROLLPLL
       - ""
   - path: components > schemas > LinkedTransaction
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > ManualJournal
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > Organisation > properties > SalesTaxBasis > enum > - FLATRATEACCRUAL
     content:
@@ -163,35 +163,35 @@ insertions:
     content:
       maxLength: 50
   - path: components > schemas > Overpayment
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > Payment
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > Prepayment
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > PurchaseOrder
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > Quote
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > Receipt
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > ReportWithRow
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > Report
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > TrackingCategory
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > TrackingOption
-    type: parent
+    type: parentAfter
     name: allOf
   - path: components > schemas > User
-    type: parent
+    type: parentAfter
     name: allOf
