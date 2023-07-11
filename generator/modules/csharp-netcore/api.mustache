@@ -108,11 +108,13 @@ namespace {{packageName}}.{{apiPackage}}
 
         private async System.Threading.Tasks.Task populateRateLimiterIfNeeded(IApiResponse response)
         {
+            var originalRate = MinuteRateLimitRemaining;
+
             MinuteRateLimitRemaining = response.MinuteRateLimitRemaining;
             DailyRateLimitRemaining = response.DailyRateLimitRemaining;
             AppRateLimitRemaining = response.AppRateLimitRemaining;
 
-            if (MinuteRateLimitRemaining == 59 || MinuteStart == DateTime.MinValue)
+            if (MinuteRateLimitRemaining > originalRate)
                 MinuteStart = DateTime.UtcNow;
         }
 
@@ -333,7 +335,7 @@ namespace {{packageName}}.{{apiPackage}}
 
             {{/authMethods}}
 
-            if (MinuteRateLimitRemaining == 1)
+            if (MinuteRateLimitRemaining <= 2)
             {
                 var difference = MinuteStart.AddMinutes(1).AddSeconds(1) - DateTime.UtcNow;
                 if (difference.TotalMilliseconds > 0)
