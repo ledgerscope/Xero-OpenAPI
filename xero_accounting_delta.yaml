@@ -1,0 +1,711 @@
+actions:
+
+- action: addChild
+  path: paths > /BankTransfers > put
+  position: 5
+  key: parameters
+  content:
+    - $ref: '#/components/parameters/summarizeErrors'
+
+- action: addChild
+  path: components > parameters > requiredHeader
+  key: x-universal
+  content: true
+
+- action: addChild
+  path: components > parameters > requiredHeader
+  key: x-is-tenant-id
+  content: true
+  
+- action: addChild
+  path: components > parameters > summarizeErrors
+  key: x-universal
+  content: true
+  
+- action: addChild
+  path: components > parameters > unitdp
+  key: x-universal
+  content: true
+  
+- action: addChild
+  path: components > parameters > ifModifiedSince
+  key: x-universal
+  content: true
+  
+- action: addChild
+  path: components > schemas
+  position: 0
+  key: ValidationResponses
+  content:
+    type: object
+    properties:
+      StatusAttributeString:
+        description: A string to indicate status
+        type: string
+        example: ERROR, OK
+      HasErrors:
+        description: A boolean to indicate if an entity has an validation errors
+        type: boolean
+        default: "false"
+        example: "false"
+      Warnings:
+        description: Displays array of warning messages from the API
+        type: array
+        items:
+          $ref: "#/components/schemas/ValidationError"
+      ValidationErrors:
+        description: Displays array of validation error messages from the API
+        type: array
+        items:
+          $ref: "#/components/schemas/ValidationError"
+      HasValidationErrors:
+        description: A boolean to indicate if a contact has an validation errors
+        type: boolean
+        default: "false"
+        example: "false"
+
+- action: addChild
+  path: components > schemas
+  position: 1
+  key: LastUpdatedDate
+  content:
+    type: object
+    properties:
+      UpdatedDateUTC:
+        description: Last modified date UTC format
+        type: string
+        x-is-msdate-time: true
+        example: "/Date(1573755038314)/"
+        x-is-updated-date: true
+
+- action: addChild
+  path: components > schemas > Account
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/ValidationResponses'
+    - $ref: '#/components/schemas/LastUpdatedDate'
+    
+- action: adopt
+  path: components > schemas > Account > type
+  parentPath: components > schemas > Account > allOf > [1]
+
+- action: adopt
+  path: components > schemas > Account > externalDocs
+  parentPath: components > schemas > Account > allOf > [1]
+
+- action: adopt
+  path: components > schemas > Account > properties
+  parentPath: components > schemas > Account > allOf > [1]
+
+- action: addChild
+  path: components > schemas > BankTransaction
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/ValidationResponses'
+    - $ref: '#/components/schemas/LastUpdatedDate'
+    
+- action: addChild
+  path: components > schemas > BankTransaction > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > BankTransaction > externalDocs
+  parentPath: components > schemas > BankTransaction > allOf > [2]
+
+- action: adopt
+  path: components > schemas > BankTransaction > properties
+  parentPath: components > schemas > BankTransaction > allOf > [2]
+
+- action: addChild
+  path: components > schemas > LineItem > properties > LineItemID
+  key: x-entity-identifier
+  content: true
+
+- action: addChild
+  path: components > schemas > LineItem > properties > Description
+  key: maxLength
+  content: 4000
+
+- action: addChild
+  path: components > schemas > BankTransfer
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/ValidationResponses'
+    
+- action: addChild
+  path: components > schemas > BankTransfer > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > BankTransfer > externalDocs
+  parentPath: components > schemas > BankTransfer > allOf > [1]
+
+- action: adopt
+  path: components > schemas > BankTransfer > properties
+  parentPath: components > schemas > BankTransfer > allOf > [1]
+
+- action: addChild
+  path: components > schemas > BatchPayment
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/LastUpdatedDate'
+    - $ref: '#/components/schemas/ValidationResponses'
+    
+- action: addChild
+  path: components > schemas > BatchPayment > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > BatchPayment > externalDocs
+  parentPath: components > schemas > BatchPayment > allOf > [2]
+
+- action: adopt
+  path: components > schemas > BatchPayment > properties
+  parentPath: components > schemas > BatchPayment > allOf > [2]
+
+- action: addChild
+  path: components > schemas > PaymentService
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/ValidationResponses'
+    
+- action: addChild
+  path: components > schemas > PaymentService > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > PaymentService > externalDocs
+  parentPath: components > schemas > PaymentService > allOf > [1]
+
+- action: adopt
+  path: components > schemas > PaymentService > properties
+  parentPath: components > schemas > PaymentService > allOf > [1]
+
+- action: addChild
+  path: components > schemas > Contact
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/ValidationResponses'
+    - $ref: '#/components/schemas/LastUpdatedDate'
+    
+- action: addChild
+  path: components > schemas > Contact > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > Contact > externalDocs
+  parentPath: components > schemas > Contact > allOf > [2]
+
+- action: adopt
+  path: components > schemas > Contact > properties
+  parentPath: components > schemas > Contact > allOf > [2]
+
+- action: addChild
+  path: components > schemas > CreditNote
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/ValidationResponses'
+    - $ref: '#/components/schemas/LastUpdatedDate'
+    
+- action: addChild
+  path: components > schemas > CreditNote > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > CreditNote > externalDocs
+  parentPath: components > schemas > CreditNote > allOf > [2]
+
+- action: adopt
+  path: components > schemas > CreditNote > properties
+  parentPath: components > schemas > CreditNote > allOf > [2]
+
+- action: addChild
+  path: components > schemas > Allocation
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/ValidationResponses'
+    
+- action: addChild
+  path: components > schemas > Allocation > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > Allocation > externalDocs
+  parentPath: components > schemas > Allocation > allOf > [1]
+
+- action: adopt
+  path: components > schemas > Allocation > properties
+  parentPath: components > schemas > Allocation > allOf > [1]
+
+- action: addChild
+  path: components > schemas > CurrencyCode > x-enum-varnames
+  position: 0
+  content: GGP
+
+- action: addChild
+  path: components > schemas > CurrencyCode > x-enum-varnames
+  position: 1
+  content: IMP
+
+- action: addChild
+  path: components > schemas > CurrencyCode > x-enum-varnames
+  position: 2
+  content: JEP
+
+- action: addChild
+  path: components > schemas > CurrencyCode > x-enum-varnames
+  position: 3
+  content: SPL
+
+- action: addChild
+  path: components > schemas > CurrencyCode > x-enum-varnames
+  position: 4
+  content: TVD
+
+- action: addChild
+  path: components > schemas > CurrencyCode > x-enum-varnames
+  position: 5
+  content: XDR
+
+- action: addChild
+  path: components > schemas > CurrencyCode > enum
+  position: 0
+  content: GGP
+
+- action: addChild
+  path: components > schemas > CurrencyCode > enum
+  position: 1
+  content: IMP
+
+- action: addChild
+  path: components > schemas > CurrencyCode > enum
+  position: 2
+  content: JEP
+
+- action: addChild
+  path: components > schemas > CurrencyCode > enum
+  position: 3
+  content: SPL
+
+- action: addChild
+  path: components > schemas > CurrencyCode > enum
+  position: 4
+  content: TVD
+
+- action: addChild
+  path: components > schemas > CurrencyCode > enum
+  position: 5
+  content: XDR
+
+- action: addChild
+  path: components > schemas > Employee
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/ValidationResponses'
+    - $ref: '#/components/schemas/LastUpdatedDate'
+    
+- action: addChild
+  path: components > schemas > Employee > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > Employee > externalDocs
+  parentPath: components > schemas > Employee > allOf > [2]
+
+- action: adopt
+  path: components > schemas > Employee > properties
+  parentPath: components > schemas > Employee > allOf > [2]
+
+- action: addChild
+  path: components > schemas > ExpenseClaim
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/ValidationResponses'
+    
+- action: addChild
+  path: components > schemas > ExpenseClaim > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > ExpenseClaim > externalDocs
+  parentPath: components > schemas > ExpenseClaim > allOf > [1]
+
+- action: adopt
+  path: components > schemas > ExpenseClaim > properties
+  parentPath: components > schemas > ExpenseClaim > allOf > [1]
+
+- action: addChild
+  path: components > schemas > Invoice
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/ValidationResponses'
+    - $ref: '#/components/schemas/LastUpdatedDate'
+    
+- action: addChild
+  path: components > schemas > Invoice > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > Invoice > externalDocs
+  parentPath: components > schemas > Invoice > allOf > [2]
+
+- action: adopt
+  path: components > schemas > Invoice > properties
+  parentPath: components > schemas > Invoice > allOf > [2]
+
+- action: addChild
+  path: components > schemas > Item
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/ValidationResponses'
+    - $ref: '#/components/schemas/LastUpdatedDate'
+    
+- action: addChild
+  path: components > schemas > Item > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > Item > externalDocs
+  parentPath: components > schemas > Item > allOf > [2]
+
+- action: adopt
+  path: components > schemas > Item > properties
+  parentPath: components > schemas > Item > allOf > [2]
+
+- action: addChild
+  path: components > schemas > Journal > properties > SourceType > enum
+  content: INTEGRATEDPAYROLLPLL
+
+- action: addChild
+  path: components > schemas > LinkedTransaction
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/ValidationResponses'
+    - $ref: '#/components/schemas/LastUpdatedDate'
+    
+- action: addChild
+  path: components > schemas > LinkedTransaction > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > LinkedTransaction > externalDocs
+  parentPath: components > schemas > LinkedTransaction > allOf > [2]
+
+- action: adopt
+  path: components > schemas > LinkedTransaction > properties
+  parentPath: components > schemas > LinkedTransaction > allOf > [2]
+
+- action: addChild
+  path: components > schemas > ManualJournal
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/ValidationResponses'
+    - $ref: '#/components/schemas/LastUpdatedDate'
+    
+- action: addChild
+  path: components > schemas > ManualJournal > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > ManualJournal > externalDocs
+  parentPath: components > schemas > ManualJournal > allOf > [2]
+
+- action: adopt
+  path: components > schemas > ManualJournal > properties
+  parentPath: components > schemas > ManualJournal > allOf > [2]
+
+- action: addChild
+  path: components > schemas > Overpayment
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/LastUpdatedDate'
+    
+- action: addChild
+  path: components > schemas > Overpayment > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > Overpayment > externalDocs
+  parentPath: components > schemas > Overpayment > allOf > [1]
+
+- action: adopt
+  path: components > schemas > Overpayment > properties
+  parentPath: components > schemas > Overpayment > allOf > [1]
+
+- action: addChild
+  path: components > schemas > Payment
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/ValidationResponses'
+    - $ref: '#/components/schemas/LastUpdatedDate'
+    
+- action: addChild
+  path: components > schemas > Payment > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > Payment > externalDocs
+  parentPath: components > schemas > Payment > allOf > [2]
+
+- action: adopt
+  path: components > schemas > Payment > properties
+  parentPath: components > schemas > Payment > allOf > [2]
+
+- action: addChild
+  path: components > schemas > Prepayment
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/LastUpdatedDate'
+    
+- action: addChild
+  path: components > schemas > Prepayment > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > Prepayment > externalDocs
+  parentPath: components > schemas > Prepayment > allOf > [1]
+
+- action: adopt
+  path: components > schemas > Prepayment > properties
+  parentPath: components > schemas > Prepayment > allOf > [1]
+
+- action: addChild
+  path: components > schemas > PurchaseOrder
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/ValidationResponses'
+    - $ref: '#/components/schemas/LastUpdatedDate'
+    
+- action: addChild
+  path: components > schemas > PurchaseOrder > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > PurchaseOrder > externalDocs
+  parentPath: components > schemas > PurchaseOrder > allOf > [2]
+
+- action: adopt
+  path: components > schemas > PurchaseOrder > properties
+  parentPath: components > schemas > PurchaseOrder > allOf > [2]
+
+- action: addChild
+  path: components > schemas > Quote
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/ValidationResponses'
+    - $ref: '#/components/schemas/LastUpdatedDate'
+    
+- action: addChild
+  path: components > schemas > Quote > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > Quote > externalDocs
+  parentPath: components > schemas > Quote > allOf > [2]
+
+- action: adopt
+  path: components > schemas > Quote > properties
+  parentPath: components > schemas > Quote > allOf > [2]
+
+- action: addChild
+  path: components > schemas > Receipt
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/ValidationResponses'
+    - $ref: '#/components/schemas/LastUpdatedDate'
+    
+- action: addChild
+  path: components > schemas > Receipt > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > Receipt > externalDocs
+  parentPath: components > schemas > Receipt > allOf > [2]
+
+- action: adopt
+  path: components > schemas > Receipt > properties
+  parentPath: components > schemas > Receipt > allOf > [2]
+
+- action: addChild
+  path: components > schemas > RepeatingInvoice > properties > LineItems
+  position: 1
+  key: x-is-lineitem
+  content: true
+
+- action: addChild
+  path: components > schemas > ReportWithRow
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/LastUpdatedDate'
+    
+- action: addChild
+  path: components > schemas > ReportWithRow > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > ReportWithRow > externalDocs
+  parentPath: components > schemas > ReportWithRow > allOf > [1]
+
+- action: adopt
+  path: components > schemas > ReportWithRow > properties
+  parentPath: components > schemas > ReportWithRow > allOf > [1]
+
+- action: addChild
+  path: components > schemas > Report
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/LastUpdatedDate'
+    
+- action: addChild
+  path: components > schemas > Report > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > Report > externalDocs
+  parentPath: components > schemas > Report > allOf > [1]
+
+- action: adopt
+  path: components > schemas > Report > properties
+  parentPath: components > schemas > Report > allOf > [1]
+
+- action: addChild
+  path: components > schemas > Setup
+  position: 1
+  key: x-emit-default
+  content: true
+
+- action: addChild
+  path: components > schemas > ConversionBalances > properties > Balance
+  position: 1
+  key: x-is-money
+  content: true
+
+- action: addChild
+  path: components > schemas > BalanceDetails > properties > Balance
+  position: 1
+  key: x-is-money
+  content: true
+
+- action: addChild
+  path: components > schemas > TaxRate > properties > ReportTaxType >  enum
+  content: TXRCN33INPUT
+
+- action: addChild
+  path: components > schemas > TaxRate > properties > ReportTaxType >  enum
+  content: TXRCREINPUT
+
+- action: addChild
+  path: components > schemas > TaxRate > properties > ReportTaxType >  enum
+  content: TXRCESSINPUT
+
+- action: addChild
+  path: components > schemas > TaxRate > properties > ReportTaxType >  enum
+  content: TXRCTSINPUT
+
+- action: addChild
+  path: components > schemas > TaxComponent > properties > Name
+  key: maxLength
+  content: 50
+
+- action: addChild
+  path: components > schemas > TrackingCategory
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/ValidationResponses'
+    
+- action: addChild
+  path: components > schemas > TrackingCategory > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > TrackingCategory > externalDocs
+  parentPath: components > schemas > TrackingCategory > allOf > [1]
+
+- action: adopt
+  path: components > schemas > TrackingCategory > properties
+  parentPath: components > schemas > TrackingCategory > allOf > [1]
+
+- action: addChild
+  path: components > schemas > TrackingOption
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/ValidationResponses'
+    
+- action: addChild
+  path: components > schemas > TrackingOption > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > TrackingOption > externalDocs
+  parentPath: components > schemas > TrackingOption > allOf > [1]
+
+- action: adopt
+  path: components > schemas > TrackingOption > properties
+  parentPath: components > schemas > TrackingOption > allOf > [1]
+
+- action: addChild
+  path: components > schemas > User
+  position: 0
+  key: allOf
+  content:
+    - $ref: '#/components/schemas/LastUpdatedDate'
+    
+- action: addChild
+  path: components > schemas > User > allOf
+  content:
+    type: object
+
+- action: adopt
+  path: components > schemas > User > externalDocs
+  parentPath: components > schemas > User > allOf > [1]
+
+- action: adopt
+  path: components > schemas > User > properties
+  parentPath: components > schemas > User > allOf > [1]
