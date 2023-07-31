@@ -99,7 +99,6 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: Packages
-        path: ./**/*.nupkg
 
     - name: Publish
       run: dotnet nuget push -s github "**/*.nupkg"
