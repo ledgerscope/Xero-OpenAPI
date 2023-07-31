@@ -101,7 +101,7 @@ jobs:
         name: Packages
 
     - name: Setup NuGet
-      run: dotnet nuget add source "https://pkgs.dev.azure.com/ledgerscope/_packaging/LSFeed/nuget/v3/index.json" --name LSFeed -u ledgerscope --password ${{ secrets.LEDGERSCOPEDEVOPS }} --store-password-in-clear-text
+      run: dotnet nuget add source --username ${{ github.repository_owner }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
 
     - name: Publish
       run: dotnet nuget push -s github "**/*.nupkg"
