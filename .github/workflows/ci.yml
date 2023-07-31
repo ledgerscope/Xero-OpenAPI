@@ -100,6 +100,9 @@ jobs:
       with:
         name: Packages
 
+    - name: Setup NuGet
+      run: dotnet nuget add source "https://pkgs.dev.azure.com/ledgerscope/_packaging/LSFeed/nuget/v3/index.json" --name LSFeed -u ledgerscope --password ${{ secrets.LEDGERSCOPEDEVOPS }} --store-password-in-clear-text
+
     - name: Publish
       run: dotnet nuget push -s github "**/*.nupkg"
       working-directory: ./output/csharp-netcore/accounting
