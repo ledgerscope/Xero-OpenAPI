@@ -1,3 +1,7 @@
+settings:
+  failIfNotFound: true
+  applyXeroExampleKludge: true
+
 actions:
   - action: addChild
     path: paths > /BankTransfers > put
@@ -85,17 +89,22 @@ actions:
       - $ref: "#/components/schemas/ValidationResponses"
       - $ref: "#/components/schemas/LastUpdatedDate"
 
-  - action: adopt
+  - action: addChild
+    position: 2
+    path: components > schemas > Account > allOf
+    content:
+      type: object
+
+  - action: delete
     path: components > schemas > Account > type
-    parentPath: components > schemas > Account > allOf > [1]
 
   - action: adopt
     path: components > schemas > Account > externalDocs
-    parentPath: components > schemas > Account > allOf > [1]
+    parentPath: components > schemas > Account > allOf > [2]
 
   - action: adopt
     path: components > schemas > Account > properties
-    parentPath: components > schemas > Account > allOf > [1]
+    parentPath: components > schemas > Account > allOf > [2]
 
   - action: addChild
     path: components > schemas > BankTransaction
