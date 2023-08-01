@@ -588,6 +588,10 @@ actions:
     path: components > schemas > Journal > properties > SourceType > enum
     content: INTEGRATEDPAYROLLPLL
 
+  - action: addChild
+    path: components > schemas > Journal > properties > SourceType >  enum
+    content: ""
+
   - action: delete
     path: components > schemas > LinkedTransaction > properties > UpdatedDateUTC > readOnly
 
@@ -655,6 +659,10 @@ actions:
     path: components > schemas > Overpayment > properties > OverpaymentID
     key: x-entity-identifier
     content: true
+
+  - action: addChild
+    path: components > schemas > Overpayment > properties > Type >  enum
+    content: APOVERPAYMENT
 
   - action: delete
     path: components > schemas > Overpayment > properties > UpdatedDateUTC > readOnly
@@ -984,6 +992,11 @@ actions:
     content: 50
 
   - action: addChild
+    path: components > schemas > TrackingCategory > properties > TrackingCategoryID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
     path: components > schemas > TrackingCategory
     position: 0
     key: allOf
@@ -1002,6 +1015,11 @@ actions:
   - action: adopt
     path: components > schemas > TrackingCategory > properties
     parentPath: components > schemas > TrackingCategory > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > TrackingOption > properties > TrackingOptionID
+    key: x-entity-identifier
+    content: true
 
   - action: addChild
     path: components > schemas > TrackingOption
@@ -1053,6 +1071,10 @@ actions:
 
   - action: delete
     path: components > schemas > Organisation > properties > CreatedDateUTC > readOnly
+
+  - action: addChild
+    path: components > schemas > Organisation > properties > SalesTaxBasis >  enum
+    content: ""
 
   - action: delete
     path: components > schemas > JournalLine > properties > TaxAmount > readOnly
