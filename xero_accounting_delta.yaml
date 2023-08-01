@@ -239,6 +239,11 @@ actions:
     parentPath: components > schemas > Contact > allOf > [2]
 
   - action: addChild
+    path: components > schemas > CreditNote > properties > CreditNoteID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
     path: components > schemas > CreditNote
     position: 0
     key: allOf
