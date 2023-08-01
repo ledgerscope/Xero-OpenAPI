@@ -474,6 +474,11 @@ actions:
     parentPath: components > schemas > ManualJournal > allOf > [2]
 
   - action: addChild
+    path: components > schemas > Overpayment > properties > OverpaymentID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
     path: components > schemas > Overpayment
     position: 0
     key: allOf
