@@ -381,6 +381,11 @@ actions:
     parentPath: components > schemas > ExpenseClaim > allOf > [1]
 
   - action: addChild
+    path: components > schemas > Invoice > properties > InvoiceID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
     path: components > schemas > Invoice
     position: 0
     key: allOf
