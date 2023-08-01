@@ -1078,3 +1078,11 @@ actions:
 
   - action: delete
     path: components > schemas > JournalLine > properties > TaxAmount > readOnly
+
+  - action: modify
+    path: components > schemas > JournalLine > properties > TrackingCategories > items > $ref
+    content: "#/components/schemas/LineItemTracking"
+
+  - action: modify
+    path: components > schemas > ManualJournalLine > properties > Tracking > items > $ref
+    content: "#/components/schemas/LineItemTracking"
