@@ -126,6 +126,11 @@ actions:
     parentPath: components > schemas > Account > allOf > [2]
 
   - action: addChild
+    path: components > schemas > BankTransaction > properties > BankTransactionID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
     path: components > schemas > BankTransaction
     position: 0
     key: allOf
@@ -224,6 +229,11 @@ actions:
     content:
       - $ref: "#/components/schemas/ValidationResponses"
       - $ref: "#/components/schemas/LastUpdatedDate"
+
+  - action: addChild
+    path: components > schemas > Contact > properties > ContactID
+    key: x-entity-identifier
+    content: true
 
   - action: addChild
     path: components > schemas > Contact > allOf
