@@ -162,6 +162,11 @@ actions:
     content: 4000
 
   - action: addChild
+    path: components > schemas > BankTransfer > properties > BankTransferID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
     path: components > schemas > BankTransfer
     position: 0
     key: allOf
@@ -468,6 +473,11 @@ actions:
     parentPath: components > schemas > LinkedTransaction > allOf > [2]
 
   - action: addChild
+    path: components > schemas > ManualJournal > properties > ManualJournalID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
     path: components > schemas > ManualJournal
     position: 0
     key: allOf
@@ -514,6 +524,11 @@ actions:
     parentPath: components > schemas > Overpayment > allOf > [1]
 
   - action: addChild
+    path: components > schemas > Payment > properties > PaymentID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
     path: components > schemas > Payment
     position: 0
     key: allOf
@@ -553,6 +568,11 @@ actions:
   - action: adopt
     path: components > schemas > Prepayment > properties
     parentPath: components > schemas > Prepayment > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > PurchaseOrder > properties > PurchaseOrderID
+    key: x-entity-identifier
+    content: true
 
   - action: addChild
     path: components > schemas > PurchaseOrder
