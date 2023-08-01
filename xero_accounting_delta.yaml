@@ -10,6 +10,18 @@ actions:
     content:
       - $ref: "#/components/parameters/summarizeErrors"
 
+  - action: delete
+    path: components > schemas > BankTransfer > properties > ToBankTransactionID > readOnly
+
+  - action: delete
+    path: components > schemas > BankTransfer > properties > FromBankTransactionID > readOnly
+
+  - action: delete
+    path: components > schemas > BankTransfer > properties > CreatedDateUTC > readOnly
+
+  - action: delete
+    path: components > schemas > BankTransfer > properties > BankTransferID > readOnly
+
   - action: addChild
     path: components > parameters > requiredHeader
     key: x-universal
@@ -106,6 +118,19 @@ actions:
     content: true
 
   - action: addChild
+    path: components > schemas > Account > properties > Code
+    key: maxLength
+    content: 10
+
+  - action: delete
+    path: components > schemas > Account > properties > UpdatedDateUTC > readOnly
+
+  - action: addChild
+    path: components > schemas > Account > properties > UpdatedDateUTC
+    key: x-is-updated-date
+    content: true
+
+  - action: addChild
     path: components > schemas > Account
     position: 0
     key: allOf
@@ -134,6 +159,26 @@ actions:
     path: components > schemas > BankTransaction > properties > BankTransactionID
     key: x-entity-identifier
     content: true
+
+  - action: delete
+    path: components > schemas > BankTransaction > properties > UpdatedDateUTC > readOnly
+
+  - action: addChild
+    path: components > schemas > BankTransaction > properties > UpdatedDateUTC
+    key: x-is-updated-date
+    content: true
+
+  - action: delete
+    path: components > schemas > BankTransaction > properties > PrepaymentID > readOnly
+
+  - action: delete
+    path: components > schemas > BankTransaction > properties > OverpaymentID > readOnly
+
+  - action: delete
+    path: components > schemas > BankTransaction > properties > HasAttachments > readOnly
+
+  - action: delete
+    path: components > schemas > BankTransaction > properties > PrepaymentID > readOnly
 
   - action: addChild
     path: components > schemas > BankTransaction
@@ -232,6 +277,17 @@ actions:
     path: components > schemas > PaymentService > properties
     parentPath: components > schemas > PaymentService > allOf > [1]
 
+  - action: delete
+    path: components > schemas > Contact > properties > UpdatedDateUTC > readOnly
+
+  - action: addChild
+    path: components > schemas > Contact > properties > UpdatedDateUTC
+    key: x-is-updated-date
+    content: true
+
+  - action: delete
+    path: components > schemas > Contact > properties > Website > readOnly
+
   - action: addChild
     path: components > schemas > Contact
     position: 0
@@ -257,6 +313,17 @@ actions:
   - action: adopt
     path: components > schemas > Contact > properties
     parentPath: components > schemas > Contact > allOf > [2]
+
+  - action: delete
+    path: components > schemas > CreditNote > properties > UpdatedDateUTC > readOnly
+
+  - action: addChild
+    path: components > schemas > CreditNote > properties > UpdatedDateUTC
+    key: x-is-updated-date
+    content: true
+
+  - action: delete
+    path: components > schemas > CreditNote > properties > SentToContact > readOnly
 
   - action: addChild
     path: components > schemas > CreditNote > properties > CreditNoteID
@@ -410,6 +477,47 @@ actions:
     key: x-entity-identifier
     content: true
 
+  - action: delete
+    path: components > schemas > Invoice > properties > UpdatedDateUTC > readOnly
+
+  - action: addChild
+    path: components > schemas > Invoice > properties > UpdatedDateUTC
+    key: x-is-updated-date
+    content: true
+
+  - action: delete
+    path: components > schemas > Invoice > properties > TotalTax > readOnly
+
+  - action: delete
+    path: components > schemas > Invoice > properties > Total > readOnly
+
+  - action: delete
+    path: components > schemas > Invoice > properties > SubTotal > readOnly
+
+  - action: delete
+    path: components > schemas > Invoice > properties > Prepayments > readOnly
+
+  - action: delete
+    path: components > schemas > Invoice > properties > Payments > readOnly
+
+  - action: delete
+    path: components > schemas > Invoice > properties > Overpayments > readOnly
+
+  - action: delete
+    path: components > schemas > Invoice > properties > FullyPaidOnDate > readOnly
+
+  - action: delete
+    path: components > schemas > Invoice > properties > CreditNotes > readOnly
+
+  - action: delete
+    path: components > schemas > Invoice > properties > AmountPaid > readOnly
+
+  - action: delete
+    path: components > schemas > Invoice > properties > AmountDue > readOnly
+
+  - action: delete
+    path: components > schemas > Invoice > properties > AmountCredited > readOnly
+
   - action: addChild
     path: components > schemas > Invoice
     position: 0
@@ -452,6 +560,9 @@ actions:
     path: components > schemas > Item > properties
     parentPath: components > schemas > Item > allOf > [2]
 
+  - action: delete
+    path: components > schemas > Journal > properties > CreatedDateUTC > readOnly
+
   - action: addChild
     path: components > schemas > Journal > properties > SourceType > enum
     content: INTEGRATEDPAYROLLPLL
@@ -482,6 +593,14 @@ actions:
     key: x-entity-identifier
     content: true
 
+  - action: delete
+    path: components > schemas > ManualJournal > properties > UpdatedDateUTC > readOnly
+
+  - action: addChild
+    path: components > schemas > ManualJournal > properties > UpdatedDateUTC
+    key: x-is-updated-date
+    content: true
+
   - action: addChild
     path: components > schemas > ManualJournal
     position: 0
@@ -508,6 +627,17 @@ actions:
     key: x-entity-identifier
     content: true
 
+  - action: delete
+    path: components > schemas > Overpayment > properties > UpdatedDateUTC > readOnly
+
+  - action: addChild
+    path: components > schemas > Overpayment > properties > UpdatedDateUTC
+    key: x-is-updated-date
+    content: true
+
+  - action: delete
+    path: components > schemas > Overpayment > properties > HasAttachments > readOnly
+
   - action: addChild
     path: components > schemas > Overpayment
     position: 0
@@ -533,6 +663,14 @@ actions:
     key: x-entity-identifier
     content: true
 
+  - action: delete
+    path: components > schemas > Payment > properties > UpdatedDateUTC > readOnly
+
+  - action: addChild
+    path: components > schemas > Payment > properties > UpdatedDateUTC
+    key: x-is-updated-date
+    content: true
+
   - action: addChild
     path: components > schemas > Payment
     position: 0
@@ -553,6 +691,14 @@ actions:
   - action: adopt
     path: components > schemas > Payment > properties
     parentPath: components > schemas > Payment > allOf > [2]
+
+  - action: delete
+    path: components > schemas > Prepayment > properties > UpdatedDateUTC > readOnly
+
+  - action: addChild
+    path: components > schemas > Prepayment > properties > UpdatedDateUTC
+    key: x-is-updated-date
+    content: true
 
   - action: addChild
     path: components > schemas > Prepayment > properties > PrepaymentID
@@ -827,3 +973,9 @@ actions:
   - action: adopt
     path: components > schemas > User > properties
     parentPath: components > schemas > User > allOf > [1]
+
+  - action: delete
+    path: components > schemas > Organisation > properties > CreatedDateUTC > readOnly
+
+  - action: delete
+    path: components > schemas > JournalLine > properties > TaxAmount > readOnly
