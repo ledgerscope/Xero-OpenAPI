@@ -79,7 +79,7 @@ actions:
           type: string
           x-is-msdate-time: true
           example: "/Date(1573755038314)/"
-          readOnly: true
+          x-is-updated-date: true
 
   - action: addChild
     path: components > schemas
@@ -555,6 +555,14 @@ actions:
     parentPath: components > schemas > Payment > allOf > [2]
 
   - action: addChild
+    path: components > schemas > Prepayment > properties > PrepaymentID
+    key: x-entity-identifier
+    content: true
+
+  - action: delete
+    path: components > schemas > Prepayment > properties > HasAttachments > readOnly
+
+  - action: addChild
     path: components > schemas > Prepayment
     position: 0
     key: allOf
@@ -717,6 +725,27 @@ actions:
     position: 1
     key: x-is-money
     content: true
+
+  - action: delete
+    path: components > schemas > TaxRate > properties > EffectiveRate > readOnly
+
+  - action: delete
+    path: components > schemas > TaxRate > properties > DisplayTaxRate > readOnly
+
+  - action: delete
+    path: components > schemas > TaxRate > properties > CanApplyToRevenue > readOnly
+
+  - action: delete
+    path: components > schemas > TaxRate > properties > CanApplyToLiabilities > readOnly
+
+  - action: delete
+    path: components > schemas > TaxRate > properties > CanApplyToExpenses > readOnly
+
+  - action: delete
+    path: components > schemas > TaxRate > properties > CanApplyToEquity > readOnly
+
+  - action: delete
+    path: components > schemas > TaxRate > properties > CanApplyToAssets > readOnly
 
   - action: addChild
     path: components > schemas > TaxRate > properties > ReportTaxType >  enum
