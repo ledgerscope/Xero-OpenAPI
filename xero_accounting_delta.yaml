@@ -82,6 +82,25 @@ actions:
           readOnly: true
 
   - action: addChild
+    path: components > schemas
+    position: 0
+    key: ReportType
+    content:
+      description: See Prepayment Types
+      type: string
+      enum:
+        - AgedPayablesByContact
+        - AgedReceivablesByContact
+        - BalanceSheet
+        - BankSummary
+        - BankStatement
+        - BudgetSummary
+        - ExecutiveSummary
+        - ProfitAndLoss
+        - TenNinetyNine
+        - TrialBalance
+
+  - action: addChild
     path: components > schemas > Account
     position: 0
     key: allOf
@@ -580,6 +599,12 @@ actions:
     content: true
 
   - action: addChild
+    path: components > schemas > ReportWithRow > properties > ReportType
+    position: 1
+    key: $ref
+    content: "#/components/schemas/ReportType"
+
+  - action: addChild
     path: components > schemas > ReportWithRow
     position: 0
     key: allOf
@@ -598,6 +623,12 @@ actions:
   - action: adopt
     path: components > schemas > ReportWithRow > properties
     parentPath: components > schemas > ReportWithRow > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > Report > properties > ReportType
+    position: 1
+    key: $ref
+    content: "#/components/schemas/ReportType"
 
   - action: addChild
     path: components > schemas > Report
