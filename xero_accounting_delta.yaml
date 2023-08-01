@@ -233,6 +233,14 @@ actions:
     path: components > schemas > BankTransfer > properties
     parentPath: components > schemas > BankTransfer > allOf > [1]
 
+  - action: delete
+    path: components > schemas > BatchPayment > properties > UpdatedDateUTC > readOnly
+
+  - action: addChild
+    path: components > schemas > BatchPayment > properties > UpdatedDateUTC
+    key: x-is-updated-date
+    content: true
+
   - action: addChild
     path: components > schemas > BatchPayment
     position: 0
@@ -428,6 +436,14 @@ actions:
     position: 5
     content: XDR
 
+  - action: delete
+    path: components > schemas > Employee > properties > UpdatedDateUTC > readOnly
+
+  - action: addChild
+    path: components > schemas > Employee > properties > UpdatedDateUTC
+    key: x-is-updated-date
+    content: true
+
   - action: addChild
     path: components > schemas > Employee
     position: 0
@@ -544,6 +560,14 @@ actions:
       - $ref: "#/components/schemas/ValidationResponses"
       - $ref: "#/components/schemas/LastUpdatedDate"
 
+  - action: delete
+    path: components > schemas > Item > properties > UpdatedDateUTC > readOnly
+
+  - action: addChild
+    path: components > schemas > Item > properties > UpdatedDateUTC
+    key: x-is-updated-date
+    content: true
+
   - action: addChild
     path: components > schemas > Item > allOf
     content:
@@ -563,6 +587,14 @@ actions:
   - action: addChild
     path: components > schemas > Journal > properties > SourceType > enum
     content: INTEGRATEDPAYROLLPLL
+
+  - action: delete
+    path: components > schemas > LinkedTransaction > properties > UpdatedDateUTC > readOnly
+
+  - action: addChild
+    path: components > schemas > LinkedTransaction > properties > UpdatedDateUTC
+    key: x-is-updated-date
+    content: true
 
   - action: addChild
     path: components > schemas > LinkedTransaction
@@ -730,6 +762,14 @@ actions:
     key: x-entity-identifier
     content: true
 
+  - action: delete
+    path: components > schemas > PurchaseOrder > properties > UpdatedDateUTC > readOnly
+
+  - action: addChild
+    path: components > schemas > PurchaseOrder > properties > UpdatedDateUTC
+    key: x-is-updated-date
+    content: true
+
   - action: addChild
     path: components > schemas > PurchaseOrder
     position: 0
@@ -751,6 +791,14 @@ actions:
     path: components > schemas > PurchaseOrder > properties
     parentPath: components > schemas > PurchaseOrder > allOf > [2]
 
+  - action: delete
+    path: components > schemas > Quote > properties > UpdatedDateUTC > readOnly
+
+  - action: addChild
+    path: components > schemas > Quote > properties > UpdatedDateUTC
+    key: x-is-updated-date
+    content: true
+
   - action: addChild
     path: components > schemas > Quote
     position: 0
@@ -771,6 +819,14 @@ actions:
   - action: adopt
     path: components > schemas > Quote > properties
     parentPath: components > schemas > Quote > allOf > [2]
+
+  - action: delete
+    path: components > schemas > Receipt > properties > UpdatedDateUTC > readOnly
+
+  - action: addChild
+    path: components > schemas > Receipt > properties > UpdatedDateUTC
+    key: x-is-updated-date
+    content: true
 
   - action: addChild
     path: components > schemas > Receipt
@@ -799,6 +855,14 @@ actions:
     key: x-is-lineitem
     content: true
 
+  - action: delete
+    path: components > schemas > ReportWithRow > properties > UpdatedDateUTC > readOnly
+
+  - action: addChild
+    path: components > schemas > ReportWithRow > properties > UpdatedDateUTC
+    key: x-is-updated-date
+    content: true
+
   - action: addChild
     path: components > schemas > ReportWithRow > properties > ReportType
     position: 1
@@ -824,6 +888,14 @@ actions:
   - action: adopt
     path: components > schemas > ReportWithRow > properties
     parentPath: components > schemas > ReportWithRow > allOf > [1]
+
+  - action: delete
+    path: components > schemas > Report > properties > UpdatedDateUTC > readOnly
+
+  - action: addChild
+    path: components > schemas > Report > properties > UpdatedDateUTC
+    key: x-is-updated-date
+    content: true
 
   - action: addChild
     path: components > schemas > Report > properties > ReportType
@@ -950,6 +1022,14 @@ actions:
   - action: adopt
     path: components > schemas > TrackingOption > properties
     parentPath: components > schemas > TrackingOption > allOf > [1]
+
+  - action: delete
+    path: components > schemas > User > properties > UpdatedDateUTC > readOnly
+
+  - action: addChild
+    path: components > schemas > User > properties > UpdatedDateUTC
+    key: x-is-updated-date
+    content: true
 
   - action: addChild
     path: components > schemas > User
