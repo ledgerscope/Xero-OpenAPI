@@ -101,6 +101,11 @@ actions:
         - TrialBalance
 
   - action: addChild
+    path: components > schemas > Account > properties > AccountID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
     path: components > schemas > Account
     position: 0
     key: allOf
