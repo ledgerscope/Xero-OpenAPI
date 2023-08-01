@@ -177,9 +177,6 @@ actions:
   - action: delete
     path: components > schemas > BankTransaction > properties > HasAttachments > readOnly
 
-  - action: delete
-    path: components > schemas > BankTransaction > properties > PrepaymentID > readOnly
-
   - action: addChild
     path: components > schemas > BankTransaction
     position: 0
