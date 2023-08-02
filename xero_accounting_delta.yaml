@@ -629,6 +629,9 @@ actions:
   - action: delete
     path: components > schemas > ManualJournal > properties > UpdatedDateUTC > readOnly
 
+  - action: delete
+    path: components > schemas > ManualJournal > properties > HasAttachments > readOnly
+
   - action: addChild
     path: components > schemas > ManualJournal > properties > UpdatedDateUTC
     key: x-is-updated-date
@@ -1086,3 +1089,6 @@ actions:
   - action: modify
     path: components > schemas > ManualJournalLine > properties > Tracking > items > $ref
     content: "#/components/schemas/LineItemTracking"
+
+  - action: delete
+    path: components > schemas > BrandingTheme > properties > CreatedDateUTC > readOnly
