@@ -244,6 +244,21 @@ actions:
   - action: delete
     path: components > schemas > BatchPayment > properties > UpdatedDateUTC > readOnly
 
+  - action: delete
+    path: components > schemas > BatchPayment > type
+
+  - action: delete
+    path: components > schemas > BatchPayment > properties > Type > readOnly
+
+  - action: delete
+    path: components > schemas > BatchPayment > properties > Status > readOnly
+
+  - action: delete
+    path: components > schemas > BatchPayment > properties > TotalAmount > readOnly
+
+  - action: delete
+    path: components > schemas > BatchPayment > properties > IsReconciled > readOnly
+
   - action: addChild
     path: components > schemas > BatchPayment > properties > UpdatedDateUTC
     key: x-is-updated-date
@@ -706,6 +721,9 @@ actions:
     path: components > schemas > Overpayment > properties
     parentPath: components > schemas > Overpayment > allOf > [1]
 
+  - action: delete
+    path: components > schemas > Payment > type
+
   - action: addChild
     path: components > schemas > Payment > properties > PaymentID
     key: x-entity-identifier
@@ -739,6 +757,9 @@ actions:
   - action: adopt
     path: components > schemas > Payment > properties
     parentPath: components > schemas > Payment > allOf > [2]
+
+  - action: delete
+    path: components > schemas > Prepayment > type
 
   - action: delete
     path: components > schemas > Prepayment > properties > UpdatedDateUTC > readOnly
