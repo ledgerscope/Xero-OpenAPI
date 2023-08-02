@@ -1077,6 +1077,10 @@ actions:
     path: components > schemas > User > properties > UpdatedDateUTC > readOnly
 
   - action: addChild
+    path: components > schemas > User > properties > OrganisationRole > enum
+    content: REMOVED
+
+  - action: addChild
     path: components > schemas > User > properties > UpdatedDateUTC
     key: x-is-updated-date
     content: true
