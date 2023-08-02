@@ -233,6 +233,14 @@ actions:
     path: components > schemas > BankTransfer > properties
     parentPath: components > schemas > BankTransfer > allOf > [1]
 
+  - action: addChild
+    path: components > schemas > BatchPayment > properties > BatchPaymentID
+    key: x-entity-identifier
+    content: true
+
+  - action: delete
+    path: components > schemas > BatchPayment > properties > BatchPaymentID > readOnly
+
   - action: delete
     path: components > schemas > BatchPayment > properties > UpdatedDateUTC > readOnly
 
