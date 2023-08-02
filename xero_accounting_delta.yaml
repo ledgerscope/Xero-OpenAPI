@@ -233,6 +233,20 @@ actions:
     path: components > schemas > BankTransfer > properties
     parentPath: components > schemas > BankTransfer > allOf > [1]
 
+  - action: modify
+    path: components > schemas > BatchPayment > properties > TotalAmount > type
+    content: string
+
+  - action: delete
+    path: components > schemas > BatchPayment > properties > TotalAmount > format
+
+  - action: delete
+    path: components > schemas > BatchPayment > properties > TotalAmount > x-is-money
+
+  - action: modify
+    path: components > schemas > BatchPayment > properties > IsReconciled > type
+    content: string
+
   - action: addChild
     path: components > schemas > BatchPayment > properties > BatchPaymentID
     key: x-entity-identifier
