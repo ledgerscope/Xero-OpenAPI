@@ -123,6 +123,9 @@ actions:
     content: 10
 
   - action: delete
+    path: components > schemas > Account > properties > ReportingCodeName > readOnly
+
+  - action: delete
     path: components > schemas > Account > properties > UpdatedDateUTC > readOnly
 
   - action: addChild
