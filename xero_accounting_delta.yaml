@@ -126,6 +126,9 @@ actions:
     path: components > schemas > Account > properties > ReportingCodeName > readOnly
 
   - action: delete
+    path: components > schemas > Account > properties > HasAttachments > readOnly
+
+  - action: delete
     path: components > schemas > Account > properties > UpdatedDateUTC > readOnly
 
   - action: addChild
