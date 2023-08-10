@@ -38,7 +38,7 @@ namespace {{packageName}}.Client
         /// <summary>
         /// File parameters to be sent along with the request.
         /// </summary>
-        public Dictionary<String, Tuple<string, Stream>> FileParameters { get; set; }
+        public List<FileParameters> FileParameters { get; set; }
 
         /// <summary>
         /// Cookies to be sent along with the request.
@@ -59,8 +59,16 @@ namespace {{packageName}}.Client
             QueryParameters = new Multimap<string, string>();
             HeaderParameters = new Multimap<string, string>();
             FormParameters = new Dictionary<string, string>();
-            FileParameters = new Dictionary<String, Tuple<string, Stream>>();
+            FileParameters = new List<FileParameters>();
             Cookies = new List<Cookie>();
         }
+    }
+
+    public class FileParameters
+    {
+        public string Key { get; set; }
+        public string Name { get; set; }
+        public Stream Contents { get; set; }
+        public string ContentType { get; set; }
     }
 }
