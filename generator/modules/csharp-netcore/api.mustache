@@ -108,7 +108,7 @@ namespace {{packageName}}.{{apiPackage}}
 
         private async System.Threading.Tasks.Task populateRateLimiterIfNeeded(IApiResponse response)
         {
-            var originalRate = MinuteRateLimitRemaining;
+            var originalRate = MinuteRateLimitRemaining.GetValueOrDefault();
 
             MinuteRateLimitRemaining = response.MinuteRateLimitRemaining;
             DailyRateLimitRemaining = response.DailyRateLimitRemaining;
