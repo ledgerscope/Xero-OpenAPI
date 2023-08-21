@@ -27287,6 +27287,7 @@ components:
           - IMN33
           - IMESS
           - IMRE
+          - IM
           - INPUT
           - INPUTTAXED
           - MOSSSALES
@@ -27353,8 +27354,10 @@ components:
           - IGDSINPUT3
           - SROVR
           - TOURISTREFUND
+          - TXRCN33
           - TXRCN33INPUT
           - TXRCREINPUT
+          - TXRCESS
           - TXRCESSINPUT
           - TXRCTSINPUT
         CanApplyToAssets:
