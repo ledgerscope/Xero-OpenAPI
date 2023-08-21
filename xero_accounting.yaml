@@ -27273,6 +27273,7 @@ components:
           enum:
           - AVALARA
           - BASEXCLUDED
+          - BADDEBTRECOVERY
           - CAPITALSALESOUTPUT
           - CAPITALEXPENSESINPUT
           - ECOUTPUT
