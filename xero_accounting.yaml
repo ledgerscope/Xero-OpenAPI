@@ -27364,6 +27364,7 @@ components:
           - TXRCRE
           - SROVRLVG
           - SRLVG
+          - SROVRRS
         CanApplyToAssets:
           description: Boolean to describe if tax rate can be used for asset accounts i.e.  true,false
           type: boolean
