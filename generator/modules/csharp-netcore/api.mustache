@@ -114,8 +114,14 @@ namespace {{packageName}}.{{apiPackage}}
             DailyRateLimitRemaining = response.DailyRateLimitRemaining;
             AppRateLimitRemaining = response.AppRateLimitRemaining;
 
-            if (MinuteRateLimitRemaining > originalRate)
+            if (MinuteRateLimitRemaining >= originalRate)
+            {
                 MinuteStart = DateTime.UtcNow;
+            }
+            else if (MinuteStart.AddMinutes(1) < DateTime.UtcNow)
+            {
+                MinuteStart = DateTime.UtcNow;
+            }
         }
 
         /// <summary>
