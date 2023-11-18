@@ -24705,6 +24705,7 @@ components:
               description: Xero generated unique identifier for an expense claim
               type: string
               format: uuid
+              x-entity-identifier: true
             Status:
               description: Current status of an expense claim – see status types
               type: string
@@ -25112,6 +25113,7 @@ components:
           description: Xero identifier
           type: string
           format: uuid
+          x-entity-identifier: true
         JournalDate:
           description: Date the journal was posted
           type: string
