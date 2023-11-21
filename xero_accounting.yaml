@@ -25074,6 +25074,7 @@ components:
               description: The Xero identifier for an Item
               type: string
               format: uuid
+              x-entity-identifier: true
           required:
             - Code
     Purchase:
