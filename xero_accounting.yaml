@@ -24102,6 +24102,7 @@ components:
             following the endpoint name. e.g. /297c2dc5-cc47-4afd-8ec8-74990b8761e9
           type: string
           format: uuid
+          x-entity-identifier: true
         Contacts:
           description: The ContactID and Name of Contacts in a contact group. Returned on
             GETs when the ContactGroupID is supplied in the URL.
