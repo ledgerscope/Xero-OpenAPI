@@ -25446,6 +25446,7 @@ components:
           type: string
           format: uuid
           example: 8be9db36-3598-4755-ba5c-c2dbc8c4a7a2
+          x-entity-identifier: true
         APIKey:
           description: Display a unique key used for Xero-to-Xero transactions
           type: string
