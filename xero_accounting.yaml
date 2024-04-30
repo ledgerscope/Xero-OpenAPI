@@ -25997,6 +25997,7 @@ components:
       - DATELINESTANDARDTIME
       - EASTERISLANDSTANDARDTIME
       - SUDANSTANDARDTIME
+      - YUKONSTANDARDTIME
     PaymentTerm:
       externalDocs:
         url: 'http://developer.xero.com/documentation/api/organisation/'
