@@ -15,6 +15,13 @@ jobs:
     - uses: actions/setup-dotnet@v1
 
     - name: Setup NuGet
+      run: dotnet nuget add source "https://pkgs.dev.azure.com/ledgerscope/_packaging/LSFeed/nuget/v3/index.json" --name LSFeed -u ledgerscope --password ${{ secrets.LEDGERSCOPEDEVOPS }} --store-password-in-clear-text
+
+    - run: dotnet new tool-manifest
+    - run: dotnet tool install Ledgerscope.YamlMangl
+    - run: dotnet yamlmangl merge -input ./xero_accounting.yaml -delta ./xero_accounting_delta.yaml -output ./xero_accounting_output.yaml -headerType full
+
+    - name: Setup NuGet
       run: dotnet nuget add source --username ${{ github.repository_owner }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
 
     - name: OpenAPI Version
@@ -50,7 +57,7 @@ jobs:
     - name: generate csharp Accounting
       uses: docker://openapitools/openapi-generator-cli:v4.3.1
       with:
-        args: generate -t ./generator/modules/csharp-netcore -i ./xero_accounting.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting --additional-properties=packageVersion=4.0.${{github.run_number}} -c ./generator/scripts/csharp/config.yml --model-package Model.Accounting
+        args: generate -t ./generator/modules/csharp-netcore -i ./xero_accounting_output.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting --additional-properties=packageVersion=4.0.${{github.run_number}} -c ./generator/scripts/csharp/config.yml --model-package Model.Accounting
     
     - name: Update permissions
       run: sudo chmod 777 -R .
@@ -73,19 +80,30 @@ jobs:
     - name: Package
       run: dotnet pack -p:PackageVersion=4.0.${{github.run_number}} -p:RepositoryUrl="https://github.com/ledgerscope/Xero-OpenAPI" -p:RepositoryType=git
       working-directory: ./output/csharp-netcore/accounting/src/Xero.NetStandard.OAuth2/
+    
+    - uses: actions/upload-artifact@v2
+      if: success()
+      with:
+        name: Packages
+        path: ./**/*.nupkg
+
+    - uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: Source
+        path: ./* 
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:    
+    - uses: actions/download-artifact@v2
+      with:
+        name: Packages
+
+    - name: Setup NuGet
+      run: dotnet nuget add source --username ${{ github.repository_owner }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
 
     - name: Publish
       run: dotnet nuget push -s github "**/*.nupkg"
       working-directory: ./output/csharp-netcore/accounting
-
-    - uses: actions/upload-artifact@v2
-      if: success()
-      with:
-       name: Packages
-       path: ./**/*.nupkg
-
-    - uses: actions/upload-artifact@v2
-      if: failure()
-      with:
-       name: Source
-       path: ./*
