@@ -37,10 +37,10 @@ actions:
     path: paths > * > delete
 
   - action: delete
-    path: components > schemas > TaxRate > Properties > CanApplyToAssets > readonly
+    path: components > schemas > TaxRate > properties > CanApplyToAssets > readOnly
 
   - action: delete
-    path: components > schemas > TaxRate > Properties > DisplayTaxRate > readonly
+    path: components > schemas > TaxRate > properties > DisplayTaxRate > readOnly
 
   - action: delete
-    path: components > schemas > Invoice > properties > Total > readonly
+    path: components > schemas > Invoice > properties > Total > readOnly
