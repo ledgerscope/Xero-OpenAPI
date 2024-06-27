@@ -35,3 +35,12 @@ actions:
 
   - action: delete
     path: paths > * > delete
+
+  - action: delete
+    path: components > schemas > TaxRate > Properties > CanApplyToAssets > readonly
+
+  - action: delete
+    path: components > schemas > TaxRate > Properties > DisplayTaxRate > readonly
+
+  - action: delete
+    path: components > schemas > Invoice > properties > Total > readonly
