@@ -55,7 +55,7 @@ actions:
 
   - action: addChild
     path: components > schemas > Report > properties > ReportType > enum
-    content: ProfitLoss
+    content: ProfitAndLoss
 
   - action: addChild
     path: components > schemas > Report > properties > ReportType > enum
