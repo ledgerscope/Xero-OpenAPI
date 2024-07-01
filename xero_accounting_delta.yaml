@@ -44,3 +44,31 @@ actions:
 
   - action: delete
     path: components > schemas > Invoice > properties > Total > readOnly
+
+  - action: addChild
+    path: components > schemas > Report > properties > ReportType > enum
+    content: BalanceSheet
+
+  - action: addChild
+    path: components > schemas > Report > properties > ReportType > enum
+    content: BankSummary
+
+  - action: addChild
+    path: components > schemas > Report > properties > ReportType > enum
+    content: ProfitLoss
+
+  - action: addChild
+    path: components > schemas > Report > properties > ReportType > enum
+    content: BudgetSummary
+
+  - action: addChild
+    path: components > schemas > Report > properties > ReportType > enum
+    content: ExecutiveSummary
+
+  - action: addChild
+    path: components > schemas > Report > properties > ReportType > enum
+    content: TrialBalance
+
+  - action: addChild
+    path: components > schemas > Report > properties > ReportType > enum
+    content: AgedReceivablesByContact
