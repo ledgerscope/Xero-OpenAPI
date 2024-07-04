@@ -4,6 +4,30 @@ settings:
 
 actions:
   - action: delete
+    path: paths > /ContactGroups/{ContactGroupID}/Contacts
+
+  - action: delete
+    path: paths > /ContactGroups/{ContactGroupID}/Contacts/{ContactID}
+
+  - action: delete
+    path: paths > /CreditNotes/{CreditNoteID}/Allocations
+
+  - action: delete
+    path: paths > /Invoices/{InvoiceID}/Email
+
+  - action: delete
+    path: paths > /Overpayments/{OverpaymentID}/Allocations
+
+  - action: delete
+    path: paths > /Prepayments/{PrepaymentID}/Allocations
+
+  - action: delete
+    path: paths > /TrackingCategories/{TrackingCategoryID}/Options
+
+  - action: delete
+    path: paths > /TrackingCategories/{TrackingCategoryID}/Options/{TrackingOptionID}
+
+  - action: delete
     path: paths > * > post
 
   - action: delete
