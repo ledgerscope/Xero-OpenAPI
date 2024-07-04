@@ -653,3 +653,7 @@ actions:
        type: array
        items:
          $ref: '#/components/schemas/ValidationError'
+
+  - action: addChild
+    path: components > schemas > AccountType > enum
+    content: ASSET
