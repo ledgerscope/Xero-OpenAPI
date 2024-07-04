@@ -184,3 +184,472 @@ actions:
     path: paths > /Prepayments/{PrepaymentID}/Allocations/{AllocationID} > parameters
     content:
       $ref: '#/components/parameters/PrepaymentID'
+
+  - action: addChild
+    path: components > schemas > BankTransaction
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+
+  - action: adopt
+    path: components > schemas > BankTransaction > externalDocs
+    parentPath: components > schemas > BankTransaction > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > BankTransaction > properties
+    parentPath: components > schemas > BankTransaction > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > BankTransaction > required
+    parentPath: components > schemas > BankTransaction > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > BankTransaction > type
+    parentPath: components > schemas > BankTransaction > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > BankTransfer
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+
+  - action: adopt
+    path: components > schemas > BankTransfer > externalDocs
+    parentPath: components > schemas > BankTransfer > allOf > [0]
+
+  - action: adopt
+    path: components > schemas > BankTransfer > properties
+    parentPath: components > schemas > BankTransfer > allOf > [0]
+
+  - action: adopt
+    path: components > schemas > BankTransfer > required
+    parentPath: components > schemas > BankTransfer > allOf > [0]
+
+  - action: adopt
+    path: components > schemas > BankTransfer > type
+    parentPath: components > schemas > BankTransfer > allOf > [0]
+
+  - action: addChild
+    path: components > schemas > BatchPayment
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+
+  - action: adopt
+    path: components > schemas > BatchPayment > externalDocs
+    parentPath: components > schemas > BatchPayment > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > BatchPayment > properties
+    parentPath: components > schemas > BatchPayment > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > BatchPayment > type
+    parentPath: components > schemas > BatchPayment > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > PaymentService
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+
+  - action: adopt
+    path: components > schemas > PaymentService > externalDocs
+    parentPath: components > schemas > PaymentService > allOf > [0]
+
+  - action: adopt
+    path: components > schemas > PaymentService > properties
+    parentPath: components > schemas > PaymentService > allOf > [0]
+
+  - action: addChild
+    path: components > schemas > CreditNote
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+
+  - action: adopt
+    path: components > schemas > CreditNote > externalDocs
+    parentPath: components > schemas > CreditNote > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > CreditNote > properties
+    parentPath: components > schemas > CreditNote > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > CreditNote > type
+    parentPath: components > schemas > CreditNote > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > Allocation
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+
+  - action: adopt
+    path: components > schemas > Allocation > externalDocs
+    parentPath: components > schemas > Allocation > allOf > [0]
+
+  - action: adopt
+    path: components > schemas > Allocation > properties
+    parentPath: components > schemas > Allocation > allOf > [0]
+
+  - action: adopt
+    path: components > schemas > Allocation > required
+    parentPath: components > schemas > Allocation > allOf > [0]
+
+  - action: adopt
+    path: components > schemas > Allocation > type
+    parentPath: components > schemas > Allocation > allOf > [0]
+
+  - action: addChild
+    path: components > schemas > Employee
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+
+  - action: adopt
+    path: components > schemas > Employee > externalDocs
+    parentPath: components > schemas > Employee > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > Employee > properties
+    parentPath: components > schemas > Employee > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > Employee > type
+    parentPath: components > schemas > Employee > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > ExpenseClaim
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/LastUpdatedDate'
+
+  - action: adopt
+    path: components > schemas > ExpenseClaim > externalDocs
+    parentPath: components > schemas > ExpenseClaim > allOf > [0]
+
+  - action: adopt
+    path: components > schemas > ExpenseClaim > properties
+    parentPath: components > schemas > ExpenseClaim > allOf > [0]
+
+  - action: adopt
+    path: components > schemas > ExpenseClaim > type
+    parentPath: components > schemas > ExpenseClaim > allOf > [0]
+
+  - action: addChild
+    path: components > schemas > Invoice
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+
+  - action: adopt
+    path: components > schemas > Invoice > externalDocs
+    parentPath: components > schemas > Invoice > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > Invoice > properties
+    parentPath: components > schemas > Invoice > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > Invoice > type
+    parentPath: components > schemas > Invoice > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > Item
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+
+  - action: adopt
+    path: components > schemas > Item > externalDocs
+    parentPath: components > schemas > Item > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > Item > properties
+    parentPath: components > schemas > Item > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > Item > required
+    parentPath: components > schemas > Item > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > Item > type
+    parentPath: components > schemas > Item > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > LinkedTransaction
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+
+  - action: adopt
+    path: components > schemas > LinkedTransaction > externalDocs
+    parentPath: components > schemas > LinkedTransaction > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > LinkedTransaction > properties
+    parentPath: components > schemas > LinkedTransaction > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > LinkedTransaction > type
+    parentPath: components > schemas > LinkedTransaction > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > ManualJournal
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+
+  - action: adopt
+    path: components > schemas > ManualJournal > externalDocs
+    parentPath: components > schemas > ManualJournal > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > ManualJournal > properties
+    parentPath: components > schemas > ManualJournal > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > ManualJournal > required
+    parentPath: components > schemas > ManualJournal > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > ManualJournal > type
+    parentPath: components > schemas > ManualJournal > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > Overpayment
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/LastUpdatedDate'
+
+  - action: adopt
+    path: components > schemas > Overpayment > externalDocs
+    parentPath: components > schemas > Overpayment > allOf > [0]
+
+  - action: adopt
+    path: components > schemas > Overpayment > properties
+    parentPath: components > schemas > Overpayment > allOf > [0]
+
+  - action: adopt
+    path: components > schemas > Overpayment > type
+    parentPath: components > schemas > Overpayment > allOf > [0]
+
+  - action: addChild
+    path: components > schemas > Payment
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+
+  - action: adopt
+    path: components > schemas > Payment > externalDocs
+    parentPath: components > schemas > Payment > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > Payment > properties
+    parentPath: components > schemas > Payment > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > Payment > type
+    parentPath: components > schemas > Payment > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > Prepayment
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/LastUpdatedDate'
+
+  - action: adopt
+    path: components > schemas > Prepayment > externalDocs
+    parentPath: components > schemas > Prepayment > allOf > [0]
+
+  - action: adopt
+    path: components > schemas > Prepayment > properties
+    parentPath: components > schemas > Prepayment > allOf > [0]
+
+  - action: adopt
+    path: components > schemas > Prepayment > type
+    parentPath: components > schemas > Prepayment > allOf > [0]
+
+  - action: addChild
+    path: components > schemas > PurchaseOrder
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+
+  - action: adopt
+    path: components > schemas > PurchaseOrder > externalDocs
+    parentPath: components > schemas > PurchaseOrder > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > PurchaseOrder > properties
+    parentPath: components > schemas > PurchaseOrder > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > PurchaseOrder > type
+    parentPath: components > schemas > PurchaseOrder > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > Quote
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+
+  - action: adopt
+    path: components > schemas > Quote > externalDocs
+    parentPath: components > schemas > Quote > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > Quote > properties
+    parentPath: components > schemas > Quote > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > Quote > type
+    parentPath: components > schemas > Quote > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > Receipt
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+
+  - action: adopt
+    path: components > schemas > Receipt > externalDocs
+    parentPath: components > schemas > Receipt > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > Receipt > properties
+    parentPath: components > schemas > Receipt > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > Receipt > type
+    parentPath: components > schemas > Receipt > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > ReportWithRow
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > ReportWithRow > externalDocs
+    parentPath: components > schemas > ReportWithRow > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > ReportWithRow > properties
+    parentPath: components > schemas > ReportWithRow > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > Report
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > Report > externalDocs
+    parentPath: components > schemas > Report > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > Report > properties
+    parentPath: components > schemas > Report > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > TrackingCategory
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+
+  - action: adopt
+    path: components > schemas > TrackingCategory > externalDocs
+    parentPath: components > schemas > TrackingCategory > allOf > [0]
+
+  - action: adopt
+    path: components > schemas > TrackingCategory > properties
+    parentPath: components > schemas > TrackingCategory > allOf > [0]
+
+  - action: adopt
+    path: components > schemas > TrackingCategory > type
+    parentPath: components > schemas > TrackingCategory > allOf > [0]
+
+  - action: addChild
+    path: components > schemas > TrackingOption
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+
+  - action: adopt
+    path: components > schemas > TrackingOption > externalDocs
+    parentPath: components > schemas > TrackingOption > allOf > [0]
+
+  - action: adopt
+    path: components > schemas > TrackingOption > properties
+    parentPath: components > schemas > TrackingOption > allOf > [0]
+
+  - action: adopt
+    path: components > schemas > TrackingOption > type
+    parentPath: components > schemas > TrackingOption > allOf > [0]
+
+  - action: addChild
+    path: components > schemas > User
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/LastUpdatedDate'
+
+  - action: adopt
+    path: components > schemas > User > externalDocs
+    parentPath: components > schemas > User > allOf > [0]
+
+  - action: adopt
+    path: components > schemas > User > properties
+    parentPath: components > schemas > User > allOf > [0]
+
+  - action: adopt
+    path: components > schemas > User > type
+    parentPath: components > schemas > User > allOf > [0]
+
+  - action: addChild
+    path: components > schemas > Element > properties
+    position: 0
+    key: ValidationErrors
+    content:
+       description: Array of Validation Error message
+       type: array
+       items:
+         $ref: '#/components/schemas/ValidationError'
