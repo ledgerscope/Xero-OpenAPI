@@ -72,3 +72,115 @@ actions:
   - action: addChild
     path: components > schemas > Report > properties > ReportType > enum
     content: AgedReceivablesByContact
+
+  - action: delete
+    path: components > schemas > * > properties > StatusAttributeString
+
+  - action: delete
+    path: components > schemas > * > properties > HasErrors
+
+  - action: delete
+    path: components > schemas > * > properties > ValidationErrors
+
+  - action: delete
+    path: components > schemas > * > properties > Warnings
+
+  - action: delete
+    path: components > schemas > * > properties > HasValidationErrors
+
+  - action: delete
+    path: components > schemas > * > properties > UpdatedDateUTC
+
+  - action: addChild
+    path: components > schemas
+    key: ValidationResponses
+    content: 
+      type: object
+      properties:
+        StatusAttributeString:
+          description: A string to indicate status
+          type: string
+          example: ERROR, OK
+        HasErrors:
+          description: A boolean to indicate if an entity has an validation errors
+          type: boolean
+          default: "false"
+          example: "false"
+        Warnings: 
+          description: Displays array of warning messages from the API
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+        ValidationErrors: 
+          description: Displays array of validation error messages from the API
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+        HasValidationErrors:
+          description: A boolean to indicate if a contact has an validation errors
+          type: boolean
+          default: "false"
+          example: "false"
+
+  - action: addChild
+    path: components > schemas
+    key: LastUpdatedDate
+    content: 
+      type: object
+      properties:
+        UpdatedDateUTC:
+          description: Last modified date UTC format
+          type: string
+          x-is-msdate-time: true
+          example: "/Date(1573755038314)/"
+          x-is-updated-date: true
+
+  - action: addChild
+    path: components > schemas > Account
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      
+  - action: adopt
+    path: components > schemas > Account > type
+    parentPath: components > schemas > Account > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > Account > externalDocs
+    parentPath: components > schemas > Account > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > Account > properties
+    parentPath: components > schemas > Account > allOf > [1]
+
+  - action: addChild
+    path: paths > /CreditNotes/{CreditNoteID}/Allocations/{AllocationID} > parameters
+    content:
+      $ref: '#/components/parameters/CreditNoteID'
+
+  - action: addChild
+    path: paths > /CreditNotes/{CreditNoteID}/Allocations/{AllocationID} > parameters
+    content:
+      $ref: '#/components/parameters/AllocationID'
+
+  - action: addChild
+    path: paths > /Overpayments/{OverpaymentID}/Allocations/{AllocationID} > parameters
+    content:
+      $ref: '#/components/parameters/AllocationID'
+
+  - action: addChild
+    path: paths > /Prepayments/{PrepaymentID}/Allocations/{AllocationID} > parameters
+    content:
+      $ref: '#/components/parameters/AllocationID'
+
+  - action: addChild
+    path: paths > /Overpayments/{OverpaymentID}/Allocations/{AllocationID} > parameters
+    content:
+      $ref: '#/components/parameters/OverpaymentID'
+
+  - action: addChild
+    path: paths > /Prepayments/{PrepaymentID}/Allocations/{AllocationID} > parameters
+    content:
+      $ref: '#/components/parameters/PrepaymentID'
