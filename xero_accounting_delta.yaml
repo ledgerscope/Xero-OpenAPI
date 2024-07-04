@@ -28,15 +28,6 @@ actions:
     path: paths > /TrackingCategories/{TrackingCategoryID}/Options/{TrackingOptionID}
 
   - action: delete
-    path: paths > * > post
-
-  - action: delete
-    path: paths > * > put
-
-  - action: delete
-    path: paths > * > delete
-
-  - action: delete
     path: components > schemas > TaxRate > properties > CanApplyToAssets > readOnly
 
   - action: delete

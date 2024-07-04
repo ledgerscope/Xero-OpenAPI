@@ -1,0 +1,13 @@
+settings:
+  failIfNotFound: true
+  applyXeroExampleKludge: true
+
+actions:
+  - action: delete
+    path: paths > * > post
+
+  - action: delete
+    path: paths > * > put
+
+  - action: delete
+    path: paths > * > delete
