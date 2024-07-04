@@ -657,3 +657,23 @@ actions:
   - action: addChild
     path: components > schemas > AccountType > enum
     content: ASSET
+
+  - action: addChild
+    path: components > schemas > Contact
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+
+  - action: adopt
+    path: components > schemas > Contact > externalDocs
+    parentPath: components > schemas > Contact > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > Contact > properties
+    parentPath: components > schemas > Contact > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > Contact > type
+    parentPath: components > schemas > Contact > allOf > [1]
