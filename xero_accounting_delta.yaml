@@ -103,6 +103,11 @@ actions:
           x-is-updated-date: true
 
   - action: addChild
+    path: components > schemas > Account > properties > AccountID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
     path: components > schemas > Account
     position: 0
     key: allOf
@@ -153,6 +158,11 @@ actions:
       $ref: '#/components/parameters/PrepaymentID'
 
   - action: addChild
+    path: components > schemas > BankTransaction > properties > BankTransactionID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
     path: components > schemas > BankTransaction
     position: 0
     key: allOf
@@ -177,6 +187,11 @@ actions:
     parentPath: components > schemas > BankTransaction > allOf > [1]
 
   - action: addChild
+    path: components > schemas > BankTransfer > properties > BankTransferID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
     path: components > schemas > BankTransfer
     position: 0
     key: allOf
@@ -198,6 +213,11 @@ actions:
   - action: adopt
     path: components > schemas > BankTransfer > type
     parentPath: components > schemas > BankTransfer > allOf > [0]
+
+  - action: addChild
+    path: components > schemas > BatchPayment > properties > BatchPaymentID
+    key: x-entity-identifier
+    content: true
 
   - action: addChild
     path: components > schemas > BatchPayment
@@ -233,6 +253,11 @@ actions:
   - action: adopt
     path: components > schemas > PaymentService > properties
     parentPath: components > schemas > PaymentService > allOf > [0]
+
+  - action: addChild
+    path: components > schemas > CreditNote > properties > CreditNoteID
+    key: x-entity-identifier
+    content: true
 
   - action: addChild
     path: components > schemas > CreditNote
@@ -298,6 +323,11 @@ actions:
     parentPath: components > schemas > Employee > allOf > [1]
 
   - action: addChild
+    path: components > schemas > ExpenseClaim > properties > ExpenseClaimID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
     path: components > schemas > ExpenseClaim
     position: 0
     key: allOf
@@ -315,6 +345,11 @@ actions:
   - action: adopt
     path: components > schemas > ExpenseClaim > type
     parentPath: components > schemas > ExpenseClaim > allOf > [0]
+
+  - action: addChild
+    path: components > schemas > Invoice > properties > InvoiceID
+    key: x-entity-identifier
+    content: true
 
   - action: addChild
     path: components > schemas > Invoice
@@ -335,6 +370,11 @@ actions:
   - action: adopt
     path: components > schemas > Invoice > type
     parentPath: components > schemas > Invoice > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > Item > properties > ItemID
+    key: x-entity-identifier
+    content: true
 
   - action: addChild
     path: components > schemas > Item
@@ -381,6 +421,11 @@ actions:
     parentPath: components > schemas > LinkedTransaction > allOf > [1]
 
   - action: addChild
+    path: components > schemas > ManualJournal > properties > ManualJournalID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
     path: components > schemas > ManualJournal
     position: 0
     key: allOf
@@ -405,6 +450,11 @@ actions:
     parentPath: components > schemas > ManualJournal > allOf > [1]
 
   - action: addChild
+    path: components > schemas > Overpayment > properties > OverpaymentID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
     path: components > schemas > Overpayment
     position: 0
     key: allOf
@@ -422,6 +472,11 @@ actions:
   - action: adopt
     path: components > schemas > Overpayment > type
     parentPath: components > schemas > Overpayment > allOf > [0]
+
+  - action: addChild
+    path: components > schemas > Payment > properties > PaymentID
+    key: x-entity-identifier
+    content: true
 
   - action: addChild
     path: components > schemas > Payment
@@ -444,6 +499,11 @@ actions:
     parentPath: components > schemas > Payment > allOf > [1]
 
   - action: addChild
+    path: components > schemas > Prepayment > properties > PrepaymentID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
     path: components > schemas > Prepayment
     position: 0
     key: allOf
@@ -461,6 +521,11 @@ actions:
   - action: adopt
     path: components > schemas > Prepayment > type
     parentPath: components > schemas > Prepayment > allOf > [0]
+
+  - action: addChild
+    path: components > schemas > PurchaseOrder > properties > PurchaseOrderID
+    key: x-entity-identifier
+    content: true
 
   - action: addChild
     path: components > schemas > PurchaseOrder
@@ -555,6 +620,11 @@ actions:
     parentPath: components > schemas > Report > allOf > [1]
 
   - action: addChild
+    path: components > schemas > TrackingCategory > properties > TrackingCategoryID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
     path: components > schemas > TrackingCategory
     position: 0
     key: allOf
@@ -572,6 +642,11 @@ actions:
   - action: adopt
     path: components > schemas > TrackingCategory > type
     parentPath: components > schemas > TrackingCategory > allOf > [0]
+
+  - action: addChild
+    path: components > schemas > TrackingOption > properties > TrackingOptionID
+    key: x-entity-identifier
+    content: true
 
   - action: addChild
     path: components > schemas > TrackingOption
@@ -629,6 +704,11 @@ actions:
     path: components > schemas > Contact > type
 
   - action: addChild
+    path: components > schemas > Contact > properties > ContactID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
     path: components > schemas > Contact
     position: 0
     key: allOf
@@ -644,3 +724,23 @@ actions:
   - action: adopt
     path: components > schemas > Contact > properties
     parentPath: components > schemas > Contact > allOf > [2]
+
+  - action: addChild
+    path: components > schemas > LineItem > properties > LineItemID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
+    path: components > schemas > ContactGroup > properties > ContactGroupID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
+    path: components > schemas > Journal > properties > JournalID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
+    path: components > schemas > Organisation > properties > OrganisationID
+    key: x-entity-identifier
+    content: true
