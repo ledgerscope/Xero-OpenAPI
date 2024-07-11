@@ -454,29 +454,32 @@ actions:
     key: x-entity-identifier
     content: true
 
+  - action: delete
+    path: components > schemas > Overpayment > type
+
   - action: addChild
     path: components > schemas > Overpayment
     position: 0
     key: allOf
     content:
       - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
 
   - action: adopt
     path: components > schemas > Overpayment > externalDocs
-    parentPath: components > schemas > Overpayment > allOf > [0]
+    parentPath: components > schemas > Overpayment > allOf > [1]
 
   - action: adopt
     path: components > schemas > Overpayment > properties
-    parentPath: components > schemas > Overpayment > allOf > [0]
-
-  - action: adopt
-    path: components > schemas > Overpayment > type
-    parentPath: components > schemas > Overpayment > allOf > [0]
+    parentPath: components > schemas > Overpayment > allOf > [1]
 
   - action: addChild
     path: components > schemas > Payment > properties > PaymentID
     key: x-entity-identifier
     content: true
+
+  - action: delete
+    path: components > schemas > Payment > type
 
   - action: addChild
     path: components > schemas > Payment
@@ -485,23 +488,23 @@ actions:
     content:
       - $ref: '#/components/schemas/ValidationResponses'
       - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
 
   - action: adopt
     path: components > schemas > Payment > externalDocs
-    parentPath: components > schemas > Payment > allOf > [1]
+    parentPath: components > schemas > Payment > allOf > [2]
 
   - action: adopt
     path: components > schemas > Payment > properties
-    parentPath: components > schemas > Payment > allOf > [1]
-
-  - action: adopt
-    path: components > schemas > Payment > type
-    parentPath: components > schemas > Payment > allOf > [1]
+    parentPath: components > schemas > Payment > allOf > [2]
 
   - action: addChild
     path: components > schemas > Prepayment > properties > PrepaymentID
     key: x-entity-identifier
     content: true
+
+  - action: delete
+    path: components > schemas > Prepayment > type
 
   - action: addChild
     path: components > schemas > Prepayment
@@ -509,18 +512,15 @@ actions:
     key: allOf
     content:
       - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
 
   - action: adopt
     path: components > schemas > Prepayment > externalDocs
-    parentPath: components > schemas > Prepayment > allOf > [0]
+    parentPath: components > schemas > Prepayment > allOf > [1]
 
   - action: adopt
     path: components > schemas > Prepayment > properties
-    parentPath: components > schemas > Prepayment > allOf > [0]
-
-  - action: adopt
-    path: components > schemas > Prepayment > type
-    parentPath: components > schemas > Prepayment > allOf > [0]
+    parentPath: components > schemas > Prepayment > allOf > [1]
 
   - action: addChild
     path: components > schemas > PurchaseOrder > properties > PurchaseOrderID
