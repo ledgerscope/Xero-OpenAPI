@@ -107,6 +107,9 @@ actions:
     key: x-entity-identifier
     content: true
 
+  - action: delete
+    path: components > schemas > Account > type
+
   - action: addChild
     path: components > schemas > Account
     position: 0
@@ -114,18 +117,15 @@ actions:
     content:
       - $ref: '#/components/schemas/ValidationResponses'
       - $ref: '#/components/schemas/LastUpdatedDate'
-      
-  - action: adopt
-    path: components > schemas > Account > type
-    parentPath: components > schemas > Account > allOf > [1]
+      - type: object
 
   - action: adopt
     path: components > schemas > Account > externalDocs
-    parentPath: components > schemas > Account > allOf > [1]
+    parentPath: components > schemas > Account > allOf > [2]
 
   - action: adopt
     path: components > schemas > Account > properties
-    parentPath: components > schemas > Account > allOf > [1]
+    parentPath: components > schemas > Account > allOf > [2]
 
   - action: addChild
     path: paths > /CreditNotes/{CreditNoteID}/Allocations/{AllocationID} > parameters
@@ -376,6 +376,9 @@ actions:
     key: x-entity-identifier
     content: true
 
+  - action: delete
+    path: components > schemas > Item > type
+
   - action: addChild
     path: components > schemas > Item
     position: 0
@@ -383,22 +386,19 @@ actions:
     content:
       - $ref: '#/components/schemas/ValidationResponses'
       - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
 
   - action: adopt
     path: components > schemas > Item > externalDocs
-    parentPath: components > schemas > Item > allOf > [1]
+    parentPath: components > schemas > Item > allOf > [2]
 
   - action: adopt
     path: components > schemas > Item > properties
-    parentPath: components > schemas > Item > allOf > [1]
+    parentPath: components > schemas > Item > allOf > [2]
 
   - action: adopt
     path: components > schemas > Item > required
-    parentPath: components > schemas > Item > allOf > [1]
-
-  - action: adopt
-    path: components > schemas > Item > type
-    parentPath: components > schemas > Item > allOf > [1]
+    parentPath: components > schemas > Item > allOf > [2]
 
   - action: addChild
     path: components > schemas > LinkedTransaction
@@ -425,6 +425,9 @@ actions:
     key: x-entity-identifier
     content: true
 
+  - action: delete
+    path: components > schemas > ManualJournal > type
+
   - action: addChild
     path: components > schemas > ManualJournal
     position: 0
@@ -432,22 +435,19 @@ actions:
     content:
       - $ref: '#/components/schemas/ValidationResponses'
       - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
 
   - action: adopt
     path: components > schemas > ManualJournal > externalDocs
-    parentPath: components > schemas > ManualJournal > allOf > [1]
+    parentPath: components > schemas > ManualJournal > allOf > [2]
 
   - action: adopt
     path: components > schemas > ManualJournal > properties
-    parentPath: components > schemas > ManualJournal > allOf > [1]
+    parentPath: components > schemas > ManualJournal > allOf > [2]
 
   - action: adopt
     path: components > schemas > ManualJournal > required
-    parentPath: components > schemas > ManualJournal > allOf > [1]
-
-  - action: adopt
-    path: components > schemas > ManualJournal > type
-    parentPath: components > schemas > ManualJournal > allOf > [1]
+    parentPath: components > schemas > ManualJournal > allOf > [2]
 
   - action: addChild
     path: components > schemas > Overpayment > properties > OverpaymentID
@@ -624,24 +624,24 @@ actions:
     key: x-entity-identifier
     content: true
 
+  - action: delete
+    path: components > schemas > TrackingCategory > type
+
   - action: addChild
     path: components > schemas > TrackingCategory
     position: 0
     key: allOf
     content:
       - $ref: '#/components/schemas/ValidationResponses'
+      - type: object
 
   - action: adopt
     path: components > schemas > TrackingCategory > externalDocs
-    parentPath: components > schemas > TrackingCategory > allOf > [0]
+    parentPath: components > schemas > TrackingCategory > allOf > [1]
 
   - action: adopt
     path: components > schemas > TrackingCategory > properties
-    parentPath: components > schemas > TrackingCategory > allOf > [0]
-
-  - action: adopt
-    path: components > schemas > TrackingCategory > type
-    parentPath: components > schemas > TrackingCategory > allOf > [0]
+    parentPath: components > schemas > TrackingCategory > allOf > [1]
 
   - action: addChild
     path: components > schemas > TrackingOption > properties > TrackingOptionID
