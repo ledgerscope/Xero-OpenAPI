@@ -162,6 +162,9 @@ actions:
     key: x-entity-identifier
     content: true
 
+  - action: delete
+    path: components > schemas > BankTransaction > type
+
   - action: addChild
     path: components > schemas > BankTransaction
     position: 0
@@ -169,22 +172,19 @@ actions:
     content:
       - $ref: '#/components/schemas/ValidationResponses'
       - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
 
   - action: adopt
     path: components > schemas > BankTransaction > externalDocs
-    parentPath: components > schemas > BankTransaction > allOf > [1]
+    parentPath: components > schemas > BankTransaction > allOf > [2]
 
   - action: adopt
     path: components > schemas > BankTransaction > properties
-    parentPath: components > schemas > BankTransaction > allOf > [1]
+    parentPath: components > schemas > BankTransaction > allOf > [2]
 
   - action: adopt
     path: components > schemas > BankTransaction > required
-    parentPath: components > schemas > BankTransaction > allOf > [1]
-
-  - action: adopt
-    path: components > schemas > BankTransaction > type
-    parentPath: components > schemas > BankTransaction > allOf > [1]
+    parentPath: components > schemas > BankTransaction > allOf > [2]
 
   - action: addChild
     path: components > schemas > BankTransfer > properties > BankTransferID
@@ -259,6 +259,9 @@ actions:
     key: x-entity-identifier
     content: true
 
+  - action: delete
+    path: components > schemas > CreditNote > type
+
   - action: addChild
     path: components > schemas > CreditNote
     position: 0
@@ -266,18 +269,15 @@ actions:
     content:
       - $ref: '#/components/schemas/ValidationResponses'
       - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
 
   - action: adopt
     path: components > schemas > CreditNote > externalDocs
-    parentPath: components > schemas > CreditNote > allOf > [1]
+    parentPath: components > schemas > CreditNote > allOf > [2]
 
   - action: adopt
     path: components > schemas > CreditNote > properties
-    parentPath: components > schemas > CreditNote > allOf > [1]
-
-  - action: adopt
-    path: components > schemas > CreditNote > type
-    parentPath: components > schemas > CreditNote > allOf > [1]
+    parentPath: components > schemas > CreditNote > allOf > [2]
 
   - action: addChild
     path: components > schemas > Allocation
@@ -351,6 +351,9 @@ actions:
     key: x-entity-identifier
     content: true
 
+  - action: delete
+    path: components > schemas > Invoice > type
+
   - action: addChild
     path: components > schemas > Invoice
     position: 0
@@ -358,18 +361,15 @@ actions:
     content:
       - $ref: '#/components/schemas/ValidationResponses'
       - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
 
   - action: adopt
     path: components > schemas > Invoice > externalDocs
-    parentPath: components > schemas > Invoice > allOf > [1]
+    parentPath: components > schemas > Invoice > allOf > [2]
 
   - action: adopt
     path: components > schemas > Invoice > properties
-    parentPath: components > schemas > Invoice > allOf > [1]
-
-  - action: adopt
-    path: components > schemas > Invoice > type
-    parentPath: components > schemas > Invoice > allOf > [1]
+    parentPath: components > schemas > Invoice > allOf > [2]
 
   - action: addChild
     path: components > schemas > Item > properties > ItemID
@@ -527,6 +527,9 @@ actions:
     key: x-entity-identifier
     content: true
 
+  - action: delete
+    path: components > schemas > PurchaseOrder > type
+
   - action: addChild
     path: components > schemas > PurchaseOrder
     position: 0
@@ -534,18 +537,15 @@ actions:
     content:
       - $ref: '#/components/schemas/ValidationResponses'
       - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
 
   - action: adopt
     path: components > schemas > PurchaseOrder > externalDocs
-    parentPath: components > schemas > PurchaseOrder > allOf > [1]
+    parentPath: components > schemas > PurchaseOrder > allOf > [2]
 
   - action: adopt
     path: components > schemas > PurchaseOrder > properties
-    parentPath: components > schemas > PurchaseOrder > allOf > [1]
-
-  - action: adopt
-    path: components > schemas > PurchaseOrder > type
-    parentPath: components > schemas > PurchaseOrder > allOf > [1]
+    parentPath: components > schemas > PurchaseOrder > allOf > [2]
 
   - action: addChild
     path: components > schemas > Quote
