@@ -191,33 +191,36 @@ actions:
     key: x-entity-identifier
     content: true
 
+  - action: delete
+    path: components > schemas > BankTransfer > type
+
   - action: addChild
     path: components > schemas > BankTransfer
     position: 0
     key: allOf
     content:
       - $ref: '#/components/schemas/ValidationResponses'
+      - type: object
 
   - action: adopt
     path: components > schemas > BankTransfer > externalDocs
-    parentPath: components > schemas > BankTransfer > allOf > [0]
+    parentPath: components > schemas > BankTransfer > allOf > [1]
 
   - action: adopt
     path: components > schemas > BankTransfer > properties
-    parentPath: components > schemas > BankTransfer > allOf > [0]
+    parentPath: components > schemas > BankTransfer > allOf > [1]
 
   - action: adopt
     path: components > schemas > BankTransfer > required
-    parentPath: components > schemas > BankTransfer > allOf > [0]
-
-  - action: adopt
-    path: components > schemas > BankTransfer > type
-    parentPath: components > schemas > BankTransfer > allOf > [0]
+    parentPath: components > schemas > BankTransfer > allOf > [1]
 
   - action: addChild
     path: components > schemas > BatchPayment > properties > BatchPaymentID
     key: x-entity-identifier
     content: true
+
+  - action: delete
+    path: components > schemas > BatchPayment > type
 
   - action: addChild
     path: components > schemas > BatchPayment
@@ -226,18 +229,15 @@ actions:
     content:
       - $ref: '#/components/schemas/ValidationResponses'
       - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
 
   - action: adopt
     path: components > schemas > BatchPayment > externalDocs
-    parentPath: components > schemas > BatchPayment > allOf > [1]
+    parentPath: components > schemas > BatchPayment > allOf > [2]
 
   - action: adopt
     path: components > schemas > BatchPayment > properties
-    parentPath: components > schemas > BatchPayment > allOf > [1]
-
-  - action: adopt
-    path: components > schemas > BatchPayment > type
-    parentPath: components > schemas > BatchPayment > allOf > [1]
+    parentPath: components > schemas > BatchPayment > allOf > [2]
 
   - action: addChild
     path: components > schemas > PaymentService
@@ -245,14 +245,15 @@ actions:
     key: allOf
     content:
       - $ref: '#/components/schemas/ValidationResponses'
+      - type: object
 
   - action: adopt
     path: components > schemas > PaymentService > externalDocs
-    parentPath: components > schemas > PaymentService > allOf > [0]
+    parentPath: components > schemas > PaymentService > allOf > [1]
 
   - action: adopt
     path: components > schemas > PaymentService > properties
-    parentPath: components > schemas > PaymentService > allOf > [0]
+    parentPath: components > schemas > PaymentService > allOf > [1]
 
   - action: addChild
     path: components > schemas > CreditNote > properties > CreditNoteID
@@ -279,28 +280,32 @@ actions:
     path: components > schemas > CreditNote > properties
     parentPath: components > schemas > CreditNote > allOf > [2]
 
+
+  - action: delete
+    path: components > schemas > Allocation > type
+
   - action: addChild
     path: components > schemas > Allocation
     position: 0
     key: allOf
     content:
       - $ref: '#/components/schemas/ValidationResponses'
+      - type: object
 
   - action: adopt
     path: components > schemas > Allocation > externalDocs
-    parentPath: components > schemas > Allocation > allOf > [0]
+    parentPath: components > schemas > Allocation > allOf > [1]
 
   - action: adopt
     path: components > schemas > Allocation > properties
-    parentPath: components > schemas > Allocation > allOf > [0]
+    parentPath: components > schemas > Allocation > allOf > [1]
 
   - action: adopt
     path: components > schemas > Allocation > required
-    parentPath: components > schemas > Allocation > allOf > [0]
+    parentPath: components > schemas > Allocation > allOf > [1]
 
-  - action: adopt
-    path: components > schemas > Allocation > type
-    parentPath: components > schemas > Allocation > allOf > [0]
+  - action: delete
+    path: components > schemas > Employee > type
 
   - action: addChild
     path: components > schemas > Employee
@@ -309,23 +314,23 @@ actions:
     content:
       - $ref: '#/components/schemas/ValidationResponses'
       - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
 
   - action: adopt
     path: components > schemas > Employee > externalDocs
-    parentPath: components > schemas > Employee > allOf > [1]
+    parentPath: components > schemas > Employee > allOf > [2]
 
   - action: adopt
     path: components > schemas > Employee > properties
-    parentPath: components > schemas > Employee > allOf > [1]
-
-  - action: adopt
-    path: components > schemas > Employee > type
-    parentPath: components > schemas > Employee > allOf > [1]
+    parentPath: components > schemas > Employee > allOf > [2]
 
   - action: addChild
     path: components > schemas > ExpenseClaim > properties > ExpenseClaimID
     key: x-entity-identifier
     content: true
+
+  - action: delete
+    path: components > schemas > ExpenseClaim > type
 
   - action: addChild
     path: components > schemas > ExpenseClaim
@@ -333,18 +338,15 @@ actions:
     key: allOf
     content:
       - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
 
   - action: adopt
     path: components > schemas > ExpenseClaim > externalDocs
-    parentPath: components > schemas > ExpenseClaim > allOf > [0]
+    parentPath: components > schemas > ExpenseClaim > allOf > [1]
 
   - action: adopt
     path: components > schemas > ExpenseClaim > properties
-    parentPath: components > schemas > ExpenseClaim > allOf > [0]
-
-  - action: adopt
-    path: components > schemas > ExpenseClaim > type
-    parentPath: components > schemas > ExpenseClaim > allOf > [0]
+    parentPath: components > schemas > ExpenseClaim > allOf > [1]
 
   - action: addChild
     path: components > schemas > Invoice > properties > InvoiceID
@@ -400,6 +402,9 @@ actions:
     path: components > schemas > Item > required
     parentPath: components > schemas > Item > allOf > [2]
 
+  - action: delete
+    path: components > schemas > LinkedTransaction > type
+
   - action: addChild
     path: components > schemas > LinkedTransaction
     position: 0
@@ -407,18 +412,15 @@ actions:
     content:
       - $ref: '#/components/schemas/ValidationResponses'
       - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
 
   - action: adopt
     path: components > schemas > LinkedTransaction > externalDocs
-    parentPath: components > schemas > LinkedTransaction > allOf > [1]
+    parentPath: components > schemas > LinkedTransaction > allOf > [2]
 
   - action: adopt
     path: components > schemas > LinkedTransaction > properties
-    parentPath: components > schemas > LinkedTransaction > allOf > [1]
-
-  - action: adopt
-    path: components > schemas > LinkedTransaction > type
-    parentPath: components > schemas > LinkedTransaction > allOf > [1]
+    parentPath: components > schemas > LinkedTransaction > allOf > [2]
 
   - action: addChild
     path: components > schemas > ManualJournal > properties > ManualJournalID
@@ -547,6 +549,9 @@ actions:
     path: components > schemas > PurchaseOrder > properties
     parentPath: components > schemas > PurchaseOrder > allOf > [2]
 
+  - action: delete
+    path: components > schemas > Quote > type
+
   - action: addChild
     path: components > schemas > Quote
     position: 0
@@ -554,18 +559,18 @@ actions:
     content:
       - $ref: '#/components/schemas/ValidationResponses'
       - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
 
   - action: adopt
     path: components > schemas > Quote > externalDocs
-    parentPath: components > schemas > Quote > allOf > [1]
+    parentPath: components > schemas > Quote > allOf > [2]
 
   - action: adopt
     path: components > schemas > Quote > properties
-    parentPath: components > schemas > Quote > allOf > [1]
+    parentPath: components > schemas > Quote > allOf > [2]
 
-  - action: adopt
-    path: components > schemas > Quote > type
-    parentPath: components > schemas > Quote > allOf > [1]
+  - action: delete
+    path: components > schemas > Receipt > type
 
   - action: addChild
     path: components > schemas > Receipt
@@ -574,18 +579,15 @@ actions:
     content:
       - $ref: '#/components/schemas/ValidationResponses'
       - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
 
   - action: adopt
     path: components > schemas > Receipt > externalDocs
-    parentPath: components > schemas > Receipt > allOf > [1]
+    parentPath: components > schemas > Receipt > allOf > [2]
 
   - action: adopt
     path: components > schemas > Receipt > properties
-    parentPath: components > schemas > Receipt > allOf > [1]
-
-  - action: adopt
-    path: components > schemas > Receipt > type
-    parentPath: components > schemas > Receipt > allOf > [1]
+    parentPath: components > schemas > Receipt > allOf > [2]
 
   - action: addChild
     path: components > schemas > ReportWithRow
@@ -667,24 +669,24 @@ actions:
     path: components > schemas > TrackingOption > properties
     parentPath: components > schemas > TrackingOption > allOf > [1]
 
+  - action: delete
+    path: components > schemas > User > type
+
   - action: addChild
     path: components > schemas > User
     position: 0
     key: allOf
     content:
       - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
 
   - action: adopt
     path: components > schemas > User > externalDocs
-    parentPath: components > schemas > User > allOf > [0]
+    parentPath: components > schemas > User > allOf > [1]
 
   - action: adopt
     path: components > schemas > User > properties
-    parentPath: components > schemas > User > allOf > [0]
-
-  - action: adopt
-    path: components > schemas > User > type
-    parentPath: components > schemas > User > allOf > [0]
+    parentPath: components > schemas > User > allOf > [1]
 
   - action: addChild
     path: components > schemas > Element > properties
