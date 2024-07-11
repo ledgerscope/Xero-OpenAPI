@@ -648,24 +648,24 @@ actions:
     key: x-entity-identifier
     content: true
 
+  - action: delete
+    path: components > schemas > TrackingOption > type
+
   - action: addChild
     path: components > schemas > TrackingOption
     position: 0
     key: allOf
     content:
       - $ref: '#/components/schemas/ValidationResponses'
+      - type: object
 
   - action: adopt
     path: components > schemas > TrackingOption > externalDocs
-    parentPath: components > schemas > TrackingOption > allOf > [0]
+    parentPath: components > schemas > TrackingOption > allOf > [1]
 
   - action: adopt
     path: components > schemas > TrackingOption > properties
-    parentPath: components > schemas > TrackingOption > allOf > [0]
-
-  - action: adopt
-    path: components > schemas > TrackingOption > type
-    parentPath: components > schemas > TrackingOption > allOf > [0]
+    parentPath: components > schemas > TrackingOption > allOf > [1]
 
   - action: addChild
     path: components > schemas > User
