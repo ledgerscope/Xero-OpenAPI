@@ -786,3 +786,8 @@ actions:
   - action: addChild
     path: components > schemas > Organisation > properties > SalesTaxBasis > enum
     content: ''
+
+  - action: addChild
+    path: components > schemas > ConversionBalances > properties > Balance
+    key: x-is-money
+    content: true
