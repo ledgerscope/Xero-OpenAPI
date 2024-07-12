@@ -1,16 +1,11 @@
 settings:
-  failIfNotFound: true
+  failIfNotFound: false
   applyXeroExampleKludge: true
 
 actions:
-  - action: delete
-    path: components > schemas > TaxRate > properties > CanApplyToAssets > readOnly
 
   - action: delete
-    path: components > schemas > TaxRate > properties > DisplayTaxRate > readOnly
-
-  - action: delete
-    path: components > schemas > Invoice > properties > Total > readOnly
+    path: components > schemas > * > properties > * > readOnly
 
   - action: addChild
     path: components > schemas > Report > properties > ReportType > enum
@@ -332,6 +327,12 @@ actions:
   - action: delete
     path: components > schemas > ExpenseClaim > type
 
+  - action: delete
+    path: components > schemas > ExpenseClaim > properties > AmountDue > readOnly
+
+  - action: delete
+    path: components > schemas > ExpenseClaim > properties > AmountPaid > readOnly
+
   - action: addChild
     path: components > schemas > ExpenseClaim
     position: 0
@@ -458,6 +459,10 @@ actions:
 
   - action: delete
     path: components > schemas > Overpayment > type
+
+  - action: addChild
+    path: components > schemas > Overpayment > properties > Type > enum
+    content: APOVERPAYMENT
 
   - action: addChild
     path: components > schemas > Overpayment
@@ -711,6 +716,13 @@ actions:
     content: true
 
   - action: addChild
+    path:  components > schemas > Contact > properties
+    key: SkypeUserName
+    content: 
+      description: Skype user name of contact
+      type: string
+
+  - action: addChild
     path: components > schemas > Contact
     position: 0
     key: allOf
@@ -746,3 +758,31 @@ actions:
     path: components > schemas > Organisation > properties > OrganisationID
     key: x-entity-identifier
     content: true
+
+  - action: addChild
+    path: components > schemas > AccountType > enum
+    content: PAYGLIABILITY
+
+  - action: addChild
+    path: components > schemas > AccountType > enum
+    content: SUPERANNUATIONEXPENSE
+
+  - action: addChild
+    path: components > schemas > AccountType > enum
+    content: SUPERANNUATIONLIABILITY
+
+  - action: addChild
+    path: components > schemas > AccountType > enum
+    content: WAGESEXPENSE
+    
+  - action: addChild
+    path: components > schemas > Journal > properties > SourceType > enum
+    content: INTEGRATEDPAYROLLPLL
+  
+  - action: addChild
+    path: components > schemas > Journal > properties > SourceType > enum
+    content: ''
+
+  - action: addChild
+    path: components > schemas > Organisation > properties > SalesTaxBasis > enum
+    content: ''
