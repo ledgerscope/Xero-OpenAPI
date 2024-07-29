@@ -428,6 +428,11 @@ actions:
     key: x-entity-identifier
     content: true
 
+  - action: addChild
+    path: components > schemas > ManualJournal > properties > Status
+    key: x-enum-name
+    content: ManualJournalStatusEnum
+
   - action: delete
     path: components > schemas > ManualJournal > type
 
@@ -630,6 +635,11 @@ actions:
     path: components > schemas > TrackingCategory > properties > TrackingCategoryID
     key: x-entity-identifier
     content: true
+
+  - action: addChild
+    path: components > schemas > TrackingCategory > properties > Status
+    key: x-enum-name
+    content: TrackingCategoryStatusEnum
 
   - action: delete
     path: components > schemas > TrackingCategory > type
