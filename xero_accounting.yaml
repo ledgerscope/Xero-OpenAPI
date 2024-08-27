@@ -27287,7 +27287,6 @@ components:
           enum:
           - AVALARA
           - BASEXCLUDED
-          - BADDEBTRECOVERY
           - CAPITALSALESOUTPUT
           - CAPITALEXPENSESINPUT
           - ECOUTPUT
@@ -27298,10 +27297,6 @@ components:
           - EXEMPTINPUT
           - EXEMPTOUTPUT
           - GSTONIMPORTS
-          - IMN33
-          - IMESS
-          - IMRE
-          - IM
           - INPUT
           - INPUTTAXED
           - MOSSSALES
@@ -27369,16 +27364,26 @@ components:
           - SROVR
           - TOURISTREFUND
           - TXRCN33
-          - TXRCN33INPUT
-          - TXRCREINPUT
-          - TXRCESS
-          - TXRCESSINPUT
-          - TXRCTSINPUT
-          - TXRCTS
           - TXRCRE
+          - TXRCESS
+          - TXRCTS
+          - CAPEXINPUT
+          - UNDEFINED
+          - CAPEXOUTPUT
+          - ZEROEXPOUTPUT
+          - GOODSIMPORT
+          - NONEINPUT
+          - NOTREPORTED
+          - SROVRRS
           - SROVRLVG
           - SRLVG
-          - SROVRRS
+          - IM
+          - IMESS
+          - IMN33
+          - IMRE
+          - BADDEBTRECOVERY
+          - USSALESTAX
+          - BLINPUT3
         CanApplyToAssets:
           description: Boolean to describe if tax rate can be used for asset accounts i.e.  true,false
           type: boolean
