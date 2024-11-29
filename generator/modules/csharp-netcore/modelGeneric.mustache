@@ -325,7 +325,7 @@
 {{/validatable}}
     }
 
-        {{#vendorExtensions.x-isObjectArray}}{{#vars}}{{#isListContainer}}
+        {{#vendorExtensions.x-objectArrayKey}}{{#vars}}{{#isListContainer}}
         {{>visibility}} partial class {{classname}} : IXeroCollection<{{classname}}, {{{dataType}}}>
         {
             {{{dataType}}} IXeroCollection<{{classname}}, {{{dataType}}}>.Collection 
@@ -336,7 +336,7 @@
         }
 
         {{/isListContainer}}
-        {{/vars}}{{/vendorExtensions.x-isObjectArray}}
+        {{/vars}}{{/vendorExtensions.x-objectArrayKey}}
     
         {{#vars}}{{#vendorExtensions.x-is-lineitem}}
         {{>visibility}} partial class {{classname}} : IHasLineItems
