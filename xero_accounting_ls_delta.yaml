@@ -1,0 +1,1071 @@
+settings:
+  failIfNotFound: false
+  applyXeroExampleKludge: true
+
+actions:
+
+  - action: modify
+    path: info > title
+    content: Ledgerscope API
+
+  - action: modify
+    path: info > termsOfService
+    content: https://www.ledgerscope.com/terms-of-use
+
+  - action: modify
+    path: info > contact > name
+    content: Ledgerscope Team
+
+  - action: modify
+    path: info > contact > email
+    content: info@ledgerscope.com
+
+  - action: modify
+    path: info > contact > url
+    content: https://www.ledgerscope.com
+
+  - action: modify
+    path: servers > * > description
+    content: The Ledgerscope Accounting API exposes accounting and related functions of the main Xero application and can be used for a variety of purposes such as creating transactions like invoices and credit notes, right through to extracting accounting data via our reports endpoint.
+
+  - action: modify
+    path: servers > * > url
+    content: https://xero.api.ledgerscope.com/api.xro/2.0
+
+  - action: modify
+    path: components > securitySchemes > OAuth2 > flows > authorizationCode > authorizationUrl
+    content: https://xero.api.ledgerscope.com/identity/connect/authorize
+
+  - action: modify
+    path: components > securitySchemes > OAuth2 > flows > authorizationCode > tokenUrl
+    content: https://xero.api.ledgerscope.com/identity/connect/token
+    
+  - action: delete
+    path: paths > /ContactGroups/{ContactGroupID}/Contacts
+
+  - action: delete
+    path: paths > /ContactGroups/{ContactGroupID}/Contacts/{ContactID}
+
+  - action: delete
+    path: paths > /CreditNotes/{CreditNoteID}/Allocations
+
+  - action: delete
+    path: paths > /Invoices/{InvoiceID}/Email
+
+  - action: delete
+    path: paths > /Overpayments/{OverpaymentID}/Allocations
+
+  - action: delete
+    path: paths > /Prepayments/{PrepaymentID}/Allocations
+
+  - action: delete
+    path: paths > /TrackingCategories/{TrackingCategoryID}/Options
+
+  - action: delete
+    path: paths > /TrackingCategories/{TrackingCategoryID}/Options/{TrackingOptionID}
+
+  - action: delete
+    path: paths > * > post
+
+  - action: delete
+    path: paths > * > put
+
+  - action: delete
+    path: paths > * > delete
+
+  - action: delete
+    path: components > schemas > * > properties > * > readOnly
+
+  - action: addChild
+    path: components > schemas > Report > properties > ReportType > enum
+    content: BalanceSheet
+
+  - action: addChild
+    path: components > schemas > Report > properties > ReportType > enum
+    content: BankSummary
+
+  - action: addChild
+    path: components > schemas > Report > properties > ReportType > enum
+    content: ProfitAndLoss
+
+  - action: addChild
+    path: components > schemas > Report > properties > ReportType > enum
+    content: BudgetSummary
+
+  - action: addChild
+    path: components > schemas > Report > properties > ReportType > enum
+    content: ExecutiveSummary
+
+  - action: addChild
+    path: components > schemas > Report > properties > ReportType > enum
+    content: TrialBalance
+
+  - action: addChild
+    path: components > schemas > Report > properties > ReportType > enum
+    content: AgedReceivablesByContact
+
+  - action: delete
+    path: components > schemas > * > properties > StatusAttributeString
+
+  - action: delete
+    path: components > schemas > * > properties > HasErrors
+
+  - action: delete
+    path: components > schemas > * > properties > ValidationErrors
+
+  - action: delete
+    path: components > schemas > * > properties > Warnings
+
+  - action: delete
+    path: components > schemas > * > properties > HasValidationErrors
+
+  - action: delete
+    path: components > schemas > * > properties > UpdatedDateUTC
+
+  - action: addChild
+    path: components > schemas
+    key: ValidationResponses
+    content: 
+      type: object
+      properties:
+        StatusAttributeString:
+          description: A string to indicate status
+          type: string
+          example: ERROR, OK
+        HasErrors:
+          description: A boolean to indicate if an entity has an validation errors
+          type: boolean
+          default: false
+          example: false
+        Warnings: 
+          description: Displays array of warning messages from the API
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+        ValidationErrors: 
+          description: Displays array of validation error messages from the API
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+        HasValidationErrors:
+          description: A boolean to indicate if a contact has an validation errors
+          type: boolean
+          default: false
+          example: false
+
+  - action: addChild
+    path: components > schemas
+    key: LastUpdatedDate
+    content: 
+      type: object
+      properties:
+        UpdatedDateUTC:
+          description: Last modified date UTC format
+          type: string
+          x-is-msdate-time: true
+          example: "/Date(1573755038314)/"
+          x-is-updated-date: true
+
+  - action: addChild
+    path: components > schemas > Account > properties > AccountID
+    key: x-entity-identifier
+    content: true
+
+  - action: delete
+    path: components > schemas > Account > type
+
+  - action: modify
+    path: components > schemas > Account > properties > HasAttachments > default
+    content: false
+
+  - action: modify
+    path: components > schemas > Account > properties > HasAttachments > example
+    content: false
+
+  - action: addChild
+    path: components > schemas > Account > properties > BankAccountType
+    key: x-ms-enum
+    content:
+      name: BankAccountType
+      values:
+        - value: ''
+          name: EMPTY
+
+  - action: addChild
+    path: components > schemas > Account
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > Account > externalDocs
+    parentPath: components > schemas > Account > allOf > [2]
+
+  - action: adopt
+    path: components > schemas > Account > properties
+    parentPath: components > schemas > Account > allOf > [2]
+
+  - action: addChild
+    path: paths > /CreditNotes/{CreditNoteID}/Allocations/{AllocationID} > parameters
+    content:
+      $ref: '#/components/parameters/CreditNoteID'
+
+  - action: addChild
+    path: paths > /CreditNotes/{CreditNoteID}/Allocations/{AllocationID} > parameters
+    content:
+      $ref: '#/components/parameters/AllocationID'
+
+  - action: addChild
+    path: paths > /Overpayments/{OverpaymentID}/Allocations/{AllocationID} > parameters
+    content:
+      $ref: '#/components/parameters/AllocationID'
+
+  - action: addChild
+    path: paths > /Prepayments/{PrepaymentID}/Allocations/{AllocationID} > parameters
+    content:
+      $ref: '#/components/parameters/AllocationID'
+
+  - action: addChild
+    path: paths > /Overpayments/{OverpaymentID}/Allocations/{AllocationID} > parameters
+    content:
+      $ref: '#/components/parameters/OverpaymentID'
+
+  - action: addChild
+    path: paths > /Prepayments/{PrepaymentID}/Allocations/{AllocationID} > parameters
+    content:
+      $ref: '#/components/parameters/PrepaymentID'
+
+  - action: addChild
+    path: components > schemas > BankTransaction > properties > BankTransactionID
+    key: x-entity-identifier
+    content: true
+
+  - action: delete
+    path: components > schemas > BankTransaction > type
+
+  - action: modify
+    path: components > schemas > BankTransaction > properties > HasAttachments > default
+    content: false
+
+  - action: modify
+    path: components > schemas > BankTransaction > properties > HasAttachments > example
+    content: false
+
+  - action: addChild
+    path: components > schemas > BankTransaction
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > BankTransaction > externalDocs
+    parentPath: components > schemas > BankTransaction > allOf > [2]
+
+  - action: adopt
+    path: components > schemas > BankTransaction > properties
+    parentPath: components > schemas > BankTransaction > allOf > [2]
+
+  - action: adopt
+    path: components > schemas > BankTransaction > required
+    parentPath: components > schemas > BankTransaction > allOf > [2]
+
+  - action: addChild
+    path: components > schemas > BankTransfer > properties > BankTransferID
+    key: x-entity-identifier
+    content: true
+
+  - action: delete
+    path: components > schemas > BankTransfer > type
+
+  - action: modify
+    path: components > schemas > BankTransfer > properties > HasAttachments > default
+    content: false
+
+  - action: modify
+    path: components > schemas > BankTransfer > properties > HasAttachments > example
+    content: false
+
+  - action: modify
+    path: components > schemas > BankTransfer > properties > FromIsReconciled > default
+    content: false
+
+  - action: modify
+    path: components > schemas > BankTransfer > properties > FromIsReconciled > example
+    content: false
+
+  - action: modify
+    path: components > schemas > BankTransfer > properties > ToIsReconciled > default
+    content: false
+
+  - action: modify
+    path: components > schemas > BankTransfer > properties > ToIsReconciled > example
+    content: false
+
+  - action: addChild
+    path: components > schemas > BankTransfer
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > BankTransfer > externalDocs
+    parentPath: components > schemas > BankTransfer > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > BankTransfer > properties
+    parentPath: components > schemas > BankTransfer > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > BankTransfer > required
+    parentPath: components > schemas > BankTransfer > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > BatchPayment > properties > BatchPaymentID
+    key: x-entity-identifier
+    content: true
+
+  - action: delete
+    path: components > schemas > BatchPayment > type
+
+  - action: addChild
+    path: components > schemas > BatchPayment
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > BatchPayment > externalDocs
+    parentPath: components > schemas > BatchPayment > allOf > [2]
+
+  - action: adopt
+    path: components > schemas > BatchPayment > properties
+    parentPath: components > schemas > BatchPayment > allOf > [2]
+
+  - action: addChild
+    path: components > schemas > PaymentService
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > PaymentService > externalDocs
+    parentPath: components > schemas > PaymentService > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > PaymentService > properties
+    parentPath: components > schemas > PaymentService > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > CreditNote > properties > CreditNoteID
+    key: x-entity-identifier
+    content: true
+
+  - action: delete
+    path: components > schemas > CreditNote > type
+
+  - action: modify
+    path: components > schemas > CreditNote > properties > HasAttachments > default
+    content: false
+
+  - action: modify
+    path: components > schemas > CreditNote > properties > HasAttachments > example
+    content: false
+
+  - action: addChild
+    path: components > schemas > CreditNote
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > CreditNote > externalDocs
+    parentPath: components > schemas > CreditNote > allOf > [2]
+
+  - action: adopt
+    path: components > schemas > CreditNote > properties
+    parentPath: components > schemas > CreditNote > allOf > [2]
+
+
+  - action: delete
+    path: components > schemas > Allocation > type
+
+  - action: addChild
+    path: components > schemas > Allocation
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > Allocation > externalDocs
+    parentPath: components > schemas > Allocation > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > Allocation > properties
+    parentPath: components > schemas > Allocation > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > Allocation > required
+    parentPath: components > schemas > Allocation > allOf > [1]
+
+  - action: delete
+    path: components > schemas > Employee > type
+
+  - action: addChild
+    path: components > schemas > Employee
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > Employee > externalDocs
+    parentPath: components > schemas > Employee > allOf > [2]
+
+  - action: adopt
+    path: components > schemas > Employee > properties
+    parentPath: components > schemas > Employee > allOf > [2]
+
+  - action: addChild
+    path: components > schemas > ExpenseClaim > properties > ExpenseClaimID
+    key: x-entity-identifier
+    content: true
+
+  - action: delete
+    path: components > schemas > ExpenseClaim > type
+
+  - action: delete
+    path: components > schemas > ExpenseClaim > properties > AmountDue > readOnly
+
+  - action: delete
+    path: components > schemas > ExpenseClaim > properties > AmountPaid > readOnly
+
+  - action: addChild
+    path: components > schemas > ExpenseClaim
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > ExpenseClaim > externalDocs
+    parentPath: components > schemas > ExpenseClaim > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > ExpenseClaim > properties
+    parentPath: components > schemas > ExpenseClaim > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > Invoice > properties > InvoiceID
+    key: x-entity-identifier
+    content: true
+
+  - action: delete
+    path: components > schemas > Invoice > type
+
+  - action: modify
+    path: components > schemas > Invoice > properties > HasAttachments > default
+    content: false
+
+  - action: modify
+    path: components > schemas > Invoice > properties > HasAttachments > example
+    content: false
+
+  - action: addChild
+    path: components > schemas > Invoice
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > Invoice > externalDocs
+    parentPath: components > schemas > Invoice > allOf > [2]
+
+  - action: adopt
+    path: components > schemas > Invoice > properties
+    parentPath: components > schemas > Invoice > allOf > [2]
+
+  - action: addChild
+    path: components > schemas > Item > properties > ItemID
+    key: x-entity-identifier
+    content: true
+
+  - action: delete
+    path: components > schemas > Item > type
+
+  - action: addChild
+    path: components > schemas > Item
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > Item > externalDocs
+    parentPath: components > schemas > Item > allOf > [2]
+
+  - action: adopt
+    path: components > schemas > Item > properties
+    parentPath: components > schemas > Item > allOf > [2]
+
+  - action: adopt
+    path: components > schemas > Item > required
+    parentPath: components > schemas > Item > allOf > [2]
+
+  - action: delete
+    path: components > schemas > LinkedTransaction > type
+
+  - action: addChild
+    path: components > schemas > LinkedTransaction
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > LinkedTransaction > externalDocs
+    parentPath: components > schemas > LinkedTransaction > allOf > [2]
+
+  - action: adopt
+    path: components > schemas > LinkedTransaction > properties
+    parentPath: components > schemas > LinkedTransaction > allOf > [2]
+
+  - action: addChild
+    path: components > schemas > ManualJournal > properties > ManualJournalID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
+    path: components > schemas > ManualJournal > properties > Status
+    key: x-enum-name
+    content: ManualJournalStatusEnum
+
+  - action: delete
+    path: components > schemas > ManualJournal > type
+
+  - action: modify
+    path: components > schemas > ManualJournal > properties > HasAttachments > default
+    content: false
+
+  - action: modify
+    path: components > schemas > ManualJournal > properties > HasAttachments > example
+    content: false
+
+  - action: addChild
+    path: components > schemas > ManualJournal
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > ManualJournal > externalDocs
+    parentPath: components > schemas > ManualJournal > allOf > [2]
+
+  - action: adopt
+    path: components > schemas > ManualJournal > properties
+    parentPath: components > schemas > ManualJournal > allOf > [2]
+
+  - action: adopt
+    path: components > schemas > ManualJournal > required
+    parentPath: components > schemas > ManualJournal > allOf > [2]
+
+  - action: addChild
+    path: components > schemas > Overpayment > properties > OverpaymentID
+    key: x-entity-identifier
+    content: true
+
+  - action: delete
+    path: components > schemas > Overpayment > type
+
+  - action: modify
+    path: components > schemas > Overpayment > properties > HasAttachments > default
+    content: false
+
+  - action: modify
+    path: components > schemas > Overpayment > properties > HasAttachments > example
+    content: false
+
+  - action: addChild
+    path: components > schemas > Overpayment > properties > Type > enum
+    content: APOVERPAYMENT
+
+  - action: addChild
+    path: components > schemas > Overpayment
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > Overpayment > externalDocs
+    parentPath: components > schemas > Overpayment > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > Overpayment > properties
+    parentPath: components > schemas > Overpayment > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > Payment > properties > PaymentID
+    key: x-entity-identifier
+    content: true
+
+  - action: delete
+    path: components > schemas > Payment > type
+
+  - action: modify
+    path: components > schemas > Payment > properties > HasAttachments > default
+    content: false
+
+  - action: modify
+    path: components > schemas > Payment > properties > HasAttachments > example
+    content: false
+
+  - action: modify
+    path: components > schemas > Payment > properties > HasAccount > default
+    content: false
+
+  - action: modify
+    path: components > schemas > Payment > properties > HasAccount > example
+    content: false
+
+  - action: addChild
+    path: components > schemas > Payment
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > Payment > externalDocs
+    parentPath: components > schemas > Payment > allOf > [2]
+
+  - action: adopt
+    path: components > schemas > Payment > properties
+    parentPath: components > schemas > Payment > allOf > [2]
+
+  - action: addChild
+    path: components > schemas > Prepayment > properties > PrepaymentID
+    key: x-entity-identifier
+    content: true
+
+  - action: delete
+    path: components > schemas > Prepayment > type
+
+  - action: modify
+    path: components > schemas > Prepayment > properties > HasAttachments > default
+    content: false
+
+  - action: modify
+    path: components > schemas > Prepayment > properties > HasAttachments > example
+    content: false
+
+  - action: addChild
+    path: components > schemas > Prepayment
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > Prepayment > externalDocs
+    parentPath: components > schemas > Prepayment > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > Prepayment > properties
+    parentPath: components > schemas > Prepayment > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > PurchaseOrder > properties > PurchaseOrderID
+    key: x-entity-identifier
+    content: true
+
+  - action: delete
+    path: components > schemas > PurchaseOrder > type
+
+  - action: modify
+    path: components > schemas > PurchaseOrder > properties > HasAttachments > default
+    content: false
+
+  - action: modify
+    path: components > schemas > PurchaseOrder > properties > HasAttachments > example
+    content: false
+
+  - action: addChild
+    path: components > schemas > PurchaseOrder
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > PurchaseOrder > externalDocs
+    parentPath: components > schemas > PurchaseOrder > allOf > [2]
+
+  - action: adopt
+    path: components > schemas > PurchaseOrder > properties
+    parentPath: components > schemas > PurchaseOrder > allOf > [2]
+
+  - action: delete
+    path: components > schemas > Quote > type
+
+  - action: addChild
+    path: components > schemas > Quote
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > Quote > externalDocs
+    parentPath: components > schemas > Quote > allOf > [2]
+
+  - action: adopt
+    path: components > schemas > Quote > properties
+    parentPath: components > schemas > Quote > allOf > [2]
+
+  - action: delete
+    path: components > schemas > Receipt > type
+
+  - action: modify
+    path: components > schemas > Receipt > properties > HasAttachments > default
+    content: false
+
+  - action: modify
+    path: components > schemas > Receipt > properties > HasAttachments > example
+    content: false
+
+  - action: addChild
+    path: components > schemas > Receipt
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > Receipt > externalDocs
+    parentPath: components > schemas > Receipt > allOf > [2]
+
+  - action: adopt
+    path: components > schemas > Receipt > properties
+    parentPath: components > schemas > Receipt > allOf > [2]
+
+  - action: addChild
+    path: components > schemas > ReportWithRow
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > ReportWithRow > externalDocs
+    parentPath: components > schemas > ReportWithRow > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > ReportWithRow > properties
+    parentPath: components > schemas > ReportWithRow > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > Report
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > Report > externalDocs
+    parentPath: components > schemas > Report > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > Report > properties
+    parentPath: components > schemas > Report > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > TrackingCategory > properties > TrackingCategoryID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
+    path: components > schemas > TrackingCategory > properties > Status
+    key: x-enum-name
+    content: TrackingCategoryStatusEnum
+
+  - action: delete
+    path: components > schemas > TrackingCategory > type
+
+  - action: addChild
+    path: components > schemas > TrackingCategory
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > TrackingCategory > externalDocs
+    parentPath: components > schemas > TrackingCategory > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > TrackingCategory > properties
+    parentPath: components > schemas > TrackingCategory > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > TrackingOption > properties > TrackingOptionID
+    key: x-entity-identifier
+    content: true
+
+  - action: delete
+    path: components > schemas > TrackingOption > type
+
+  - action: addChild
+    path: components > schemas > TrackingOption
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > TrackingOption > externalDocs
+    parentPath: components > schemas > TrackingOption > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > TrackingOption > properties
+    parentPath: components > schemas > TrackingOption > allOf > [1]
+
+  - action: delete
+    path: components > schemas > User > type
+
+  - action: addChild
+    path: components > schemas > User > properties > OrganisationRole > enum
+    content: REMOVED
+
+  - action: addChild
+    path: components > schemas > User
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > User > externalDocs
+    parentPath: components > schemas > User > allOf > [1]
+
+  - action: adopt
+    path: components > schemas > User > properties
+    parentPath: components > schemas > User > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > Element > properties
+    position: 0
+    key: ValidationErrors
+    content:
+       description: Array of Validation Error message
+       type: array
+       items:
+         $ref: '#/components/schemas/ValidationError'
+
+  - action: addChild
+    path: components > schemas > AccountType > enum
+    content: ASSET
+
+  - action: delete
+    path: components > schemas > Contact > type
+
+  - action: addChild
+    path: components > schemas > Contact > properties > ContactID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
+    path:  components > schemas > Contact > properties
+    key: SkypeUserName
+    content: 
+      description: Skype user name of contact
+      type: string
+
+  - action: modify
+    path: components > schemas > Contact > properties > HasAttachments > default
+    content: false
+
+  - action: modify
+    path: components > schemas > Contact > properties > HasAttachments > example
+    content: false
+
+  - action: addChild
+    path: components > schemas > Contact
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/ValidationResponses'
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
+
+  - action: adopt
+    path: components > schemas > Contact > externalDocs
+    parentPath: components > schemas > Contact > allOf > [2]
+
+  - action: adopt
+    path: components > schemas > Contact > properties
+    parentPath: components > schemas > Contact > allOf > [2]
+
+  - action: addChild
+    path: components > schemas > LineItem > properties > LineItemID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
+    path: components > schemas > ContactGroup > properties > ContactGroupID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
+    path: components > schemas > Journal > properties > JournalID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
+    path: components > schemas > Organisation > properties > OrganisationID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
+    path: components > schemas > Organisation > properties > PeriodLockDate
+    key: nullable
+    content: true
+
+  - action: addChild
+    path: components > schemas > Organisation > properties > EndOfYearLockDate
+    key: nullable
+    content: true
+
+  - action: addChild
+    path: components > schemas > AccountType > enum
+    content: PAYGLIABILITY
+
+  - action: addChild
+    path: components > schemas > AccountType > enum
+    content: SUPERANNUATIONEXPENSE
+
+  - action: addChild
+    path: components > schemas > AccountType > enum
+    content: SUPERANNUATIONLIABILITY
+
+  - action: addChild
+    path: components > schemas > AccountType > enum
+    content: WAGESEXPENSE
+    
+  - action: addChild
+    path: components > schemas > Journal > properties > SourceType > enum
+    content: INTEGRATEDPAYROLLPLL
+  
+  - action: addChild
+    path: components > schemas > Journal > properties > SourceType > enum
+    content: ''
+
+  - action: addChild
+    path: components > schemas > Organisation > properties > SalesTaxBasis > enum
+    content: ''
+
+  - action: addChild
+    path: components > schemas > ConversionBalances > properties > Balance
+    key: x-is-money
+    content: true
+
+  - action: modify
+    path: components > parameters > requiredHeader > name
+    content: ledgerscope-tenant-id
+
+  - action: modify
+    path: components > parameters > requiredHeader > x-snake
+    content: ledgerscope_tenant_id
+
+  - action: modify
+    path: components > parameters > requiredHeader > description
+    content: Ledgerscope Identifier for Tenant
+
+  - action: modify
+    path: components > parameters > requiredHeader > example
+    content: YOUR_LEDGERSCOPE_TENANT_ID
+
+  - action: modify
+    path: components > schemas > RepeatingInvoice > properties > HasAttachments > default
+    content: false
+
+  - action: modify
+    path: components > schemas > RepeatingInvoice > properties > HasAttachments > example
+    content: false
+
+  - action: modify
+    path: components > schemas > RepeatingInvoice > properties > ApprovedForSending > default
+    content: false
+
+  - action: modify
+    path: components > schemas > RepeatingInvoice > properties > ApprovedForSending > example
+    content: false
+
+  - action: modify
+    path: components > schemas > RepeatingInvoice > properties > SendCopy > default
+    content: false
+
+  - action: modify
+    path: components > schemas > RepeatingInvoice > properties > SendCopy > example
+    content: false
+
+  - action: modify
+    path: components > schemas > RepeatingInvoice > properties > MarkAsSent > default
+    content: false
+
+  - action: modify
+    path: components > schemas > RepeatingInvoice > properties > MarkAsSent > example
+    content: false
+
+  - action: modify
+    path: components > schemas > RepeatingInvoice > properties > IncludePDF > default
+    content: false
+
+  - action: modify
+    path: components > schemas > RepeatingInvoice > properties > IncludePDF > example
+    content: false

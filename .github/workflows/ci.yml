@@ -20,8 +20,15 @@ jobs:
       run: dotnet nuget add source "https://pkgs.dev.azure.com/ledgerscope/_packaging/LSFeed/nuget/v3/index.json" --name LSFeed -u ledgerscope --password ${{ secrets.LEDGERSCOPEDEVOPS }} --store-password-in-clear-text
 
     - run: dotnet new tool-manifest
-    - run: dotnet tool install Ledgerscope.YamlMangl
-    - run: dotnet yamlmangl merge -input ./xero_accounting.yaml -delta ./xero_accounting_delta.yaml -output ./xero_accounting_output.yaml -headerType full
+
+    - name: Install Ledgerscope YamlMangl
+      run: dotnet tool install Ledgerscope.YamlMangl
+
+    - name: Generate xero_accounting_output.yaml from YamlMangl
+      run: dotnet yamlmangl merge -input ./xero_accounting.yaml -delta ./xero_accounting_delta.yaml -output ./xero_accounting_output.yaml -headerType full
+
+    - name: Run YamlMangl with Ledgerscope delta yaml
+      run: dotnet yamlmangl merge -input ./xero_accounting.yaml -delta ./xero_accounting_ls_delta.yaml -output ./xero_accounting_ls_output.yaml -headerType full
 
     - name: Setup NuGet
       run: dotnet nuget add source --username ${{ github.repository_owner }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
