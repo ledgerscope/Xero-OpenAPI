@@ -10,12 +10,12 @@
         /// <value>{{description}}</value>{{/description}}
         {{#vendorExtensions.x-is-msdate-time}}
         [Newtonsoft.Json.JsonConverterAttribute(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
-        public DateTime {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
+        public {{#isNullable}}DateTime?{{/isNullable}}{{^isNullable}}DateTime{{/isNullable}} {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
 
         {{/vendorExtensions.x-is-msdate-time}}
         {{#vendorExtensions.x-is-msdate}}
         [Newtonsoft.Json.JsonConverterAttribute(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
-        public DateTime {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
+        public {{#isNullable}}DateTime?{{/isNullable}}{{^isNullable}}DateTime{{/isNullable}} {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
 
         {{/vendorExtensions.x-is-msdate}}
         {{#vendorExtensions.x-is-money}}
