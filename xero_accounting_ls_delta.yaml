@@ -18,7 +18,7 @@ actions:
 
   - action: modify
     path: info > contact > email
-    content: info@ledgerscope.com
+    content: support@ledgerscope.com
 
   - action: modify
     path: info > contact > url
@@ -1069,3 +1069,164 @@ actions:
   - action: modify
     path: components > schemas > RepeatingInvoice > properties > IncludePDF > example
     content: false
+
+  - action: delete
+    path: paths > /Accounts/{AccountID}/Attachments
+
+  - action: delete
+    path: paths > /Accounts/{AccountID}/Attachments/{AttachmentID}
+
+  - action: delete
+    path: paths > /Accounts/{AccountID}/Attachments/{FileName}
+
+  - action: delete
+    path: paths > /BatchPayments/{BatchPaymentID}/History
+
+  - action: delete
+    path: paths > /BankTransactions/{BankTransactionID}/Attachments
+
+  - action: delete
+    path: paths > /BankTransactions/{BankTransactionID}/Attachments/{AttachmentID}
+
+  - action: delete
+    path: paths > /BankTransactions/{BankTransactionID}/Attachments/{FileName}
+
+  - action: delete
+    path: paths > /BankTransactions/{BankTransactionID}/History
+
+  - action: delete
+    path: paths > /BankTransfers/{BankTransferID}/Attachments
+
+  - action: delete
+    path: paths > /BankTransfers/{BankTransferID}/Attachments/{AttachmentID}
+
+  - action: delete
+    path: paths > /BankTransfers/{BankTransferID}/Attachments/{FileName}
+
+  - action: delete
+    path: paths > /BankTransfers/{BankTransferID}/History
+
+  - action: delete
+    path: paths > /Contacts/{ContactID}/Attachments
+
+  - action: delete
+    path: paths > /Contacts/{ContactID}/Attachments/{AttachmentID}
+
+  - action: delete
+    path: paths > /Contacts/{ContactID}/Attachments/{FileName}
+
+  - action: delete
+    path: paths > /Contacts/{ContactID}/History
+
+  - action: delete
+    path: paths > /CreditNotes/{CreditNoteID}/Attachments
+
+  - action: delete
+    path: paths > /CreditNotes/{CreditNoteID}/Attachments/{AttachmentID}
+
+  - action: delete
+    path: paths > /CreditNotes/{CreditNoteID}/Attachments/{FileName}
+
+  - action: delete
+    path: paths > /CreditNotes/{CreditNoteID}/pdf
+
+  - action: delete
+    path: paths > /CreditNotes/{CreditNoteID}/History
+
+  - action: delete
+    path: paths > /ExpenseClaims/{ExpenseClaimID}/History
+
+  - action: delete
+    path: paths > /Invoices/{InvoiceID}/Attachments
+
+  - action: delete
+    path: paths > /Invoices/{InvoiceID}/pdf
+
+  - action: delete
+    path: paths > /Invoices/{InvoiceID}/Attachments/{AttachmentID}
+
+  - action: delete
+    path: paths > /Invoices/{InvoiceID}/Attachments/{FileName}
+
+  - action: delete
+    path: paths > /Invoices/{InvoiceID}/History
+
+  - action: delete
+    path: paths > /Items/{ItemID}/History
+
+  - action: delete
+    path: paths > /ManualJournals/{ManualJournalID}/Attachments
+
+  - action: delete
+    path: paths > /ManualJournals/{ManualJournalID}/Attachments/{AttachmentID}
+
+  - action: delete
+    path: paths > /ManualJournals/{ManualJournalID}/Attachments/{FileName}
+
+  - action: delete
+    path: paths > /ManualJournals/{ManualJournalID}/History
+
+  - action: delete
+    path: paths > /Overpayments/{OverpaymentID}/History
+
+  - action: delete
+    path: paths > /Payments/{PaymentID}/History
+
+  - action: delete
+    path: paths > /Prepayments/{PrepaymentID}/History
+
+  - action: delete
+    path: paths > /PurchaseOrders/{PurchaseOrderID}/pdf
+
+  - action: delete
+    path: paths > /PurchaseOrders/{PurchaseOrderID}/History
+
+  - action: delete
+    path: paths > /PurchaseOrders/{PurchaseOrderID}/Attachments
+
+  - action: delete
+    path: paths > /PurchaseOrders/{PurchaseOrderID}/Attachments/{AttachmentID}
+
+  - action: delete
+    path: paths > /PurchaseOrders/{PurchaseOrderID}/Attachments/{FileName}
+
+  - action: delete
+    path: paths > /Quotes/{QuoteID}/History
+
+  - action: delete
+    path: paths > /Quotes/{QuoteID}/pdf
+
+  - action: delete
+    path: paths > /Quotes/{QuoteID}/Attachments
+
+  - action: delete
+    path: paths > /Quotes/{QuoteID}/Attachments/{AttachmentID}
+
+  - action: delete
+    path: paths > /Quotes/{QuoteID}/Attachments/{FileName}
+
+  - action: delete
+    path: paths > /Receipts/{ReceiptID}/Attachments
+
+  - action: delete
+    path: paths > /Receipts/{ReceiptID}/Attachments/{AttachmentID}
+
+  - action: delete
+    path: paths > /Receipts/{ReceiptID}/Attachments/{FileName}
+
+  - action: delete
+    path: paths > /Receipts/{ReceiptID}/History
+
+  - action: delete
+    path: paths > /RepeatingInvoices/{RepeatingInvoiceID}/Attachments
+
+  - action: delete
+    path: paths > /RepeatingInvoices/{RepeatingInvoiceID}/Attachments/{AttachmentID}
+
+  - action: delete
+    path: paths > /RepeatingInvoices/{RepeatingInvoiceID}/Attachments/{FileName}
+
+  - action: delete
+    path: paths > /RepeatingInvoices/{RepeatingInvoiceID}/History
+
+  
