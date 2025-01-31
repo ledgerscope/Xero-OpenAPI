@@ -805,3 +805,13 @@ actions:
     path: components > schemas > ConversionBalances > properties > Balance
     key: x-is-money
     content: true
+
+  - action: addChild
+    path: components > schemas > Organisation > properties > PeriodLockDate
+    key: nullable
+    content: true
+
+  - action: addChild
+    path: components > schemas > Organisation > properties > EndOfYearLockDate
+    key: nullable
+    content: true
