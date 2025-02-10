@@ -23387,6 +23387,7 @@ components:
       schema:
         type: string
       required: true
+      x-is-tenant-id: true
     summarizeErrors:
       in: query
       name: summarizeErrors
