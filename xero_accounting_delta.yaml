@@ -691,10 +691,6 @@ actions:
     path: components > schemas > User > type
 
   - action: addChild
-    path: components > schemas > User > properties > OrganisationRole > enum
-    content: REMOVED
-
-  - action: addChild
     path: components > schemas > User
     position: 0
     key: allOf
