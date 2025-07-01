@@ -818,3 +818,8 @@ actions:
     path: components > schemas > Organisation > properties > EndOfYearLockDate
     key: nullable
     content: true
+
+  - action: addChild
+    path: components > parameters > requiredHeader
+    key: x-is-tenant-id
+    content: true
