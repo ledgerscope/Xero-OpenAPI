@@ -861,3 +861,15 @@ actions:
 
   - action: delete
     path: components > schemas > BrandingThemes
+
+  - action: delete
+    path: components > schemas > PaymentServices
+
+  - action: delete
+    path: components > schemas > PaymentService
+
+  - action: delete
+    path: paths > /PaymentServices
+
+  - action: delete
+    path: components > securitySchemes > OAuth2 > flows > authorizationCode > scopes > paymentservices
