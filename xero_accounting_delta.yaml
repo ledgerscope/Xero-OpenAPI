@@ -17,6 +17,9 @@ actions:
     path: components > parameters > BrandingThemeID
 
   - action: delete
+    path: components > schemas > Invoice > properties > RepeatingInvoiceID
+
+  - action: delete
     path: paths > /Contacts/{ContactID} > get > responses > 200 > content > application/json > example > Contacts > * > BrandingTheme
 
   - action: delete
@@ -906,3 +909,37 @@ actions:
 
   - action: delete
     path: components > schemas > QuotesLineAmountTypes
+
+  - action: delete
+    path: paths > /RepeatingInvoices
+
+  - action: delete
+    path: paths > /RepeatingInvoices/{RepeatingInvoiceID}
+
+  - action: delete
+    path: paths > /RepeatingInvoices/{RepeatingInvoiceID}/Attachments
+
+  - action: delete
+    path: paths > /RepeatingInvoices/{RepeatingInvoiceID}/Attachments/{AttachmentID}
+
+  - action: delete
+    path: paths > /RepeatingInvoices/{RepeatingInvoiceID}/Attachments/{FileName}
+
+  - action: delete
+    path: paths > /RepeatingInvoices/{RepeatingInvoiceID}/History
+
+  - action: delete
+    path: components > schemas > RepeatingInvoices
+
+  - action: delete
+    path: components > schemas > RepeatingInvoice
+
+  - action: delete
+    path: paths > /Invoices > get > responses > 200 > content > application/json > example > Invoices > * > RepeatingInvoiceID
+
+  - action: delete
+    path: components > parameters > RepeatingInvoiceID
+
+  - action: delete
+    path: components > schemas > LineItem > properties > RepeatingInvoiceID
+
