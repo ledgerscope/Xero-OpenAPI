@@ -20,6 +20,27 @@ actions:
     path: components > schemas > Invoice > properties > RepeatingInvoiceID
 
   - action: delete
+    path: components > schemas > ExpenseClaim > properties > Receipts
+
+  - action: delete
+    path: paths > /ExpenseClaims > get > responses > 200 > content > application/json > example > ExpenseClaims > * > Receipts
+
+  - action: delete
+    path: paths > /ExpenseClaims > put > requestBody > content > application/json > example > ExpenseClaims > * > Receipts
+
+  - action: delete
+    path: paths > /ExpenseClaims > put > responses > 200 > content > application/json > example > ExpenseClaims > * > Receipts
+
+  - action: delete
+    path: paths > /ExpenseClaims/{ExpenseClaimID} > get > responses > 200 > content > application/json > example > ExpenseClaims > * > Receipts
+
+  - action: delete
+    path: paths > /ExpenseClaims/{ExpenseClaimID} > post > responses > 200 > content > application/json > example > ExpenseClaims > * > Receipts
+
+  - action: delete
+    path: paths > /ExpenseClaims/{ExpenseClaimID} > post > requestBody > content > application/json > example > ExpenseClaims > * > Receipts
+
+  - action: delete
     path: paths > /Contacts/{ContactID} > get > responses > 200 > content > application/json > example > Contacts > * > BrandingTheme
 
   - action: delete
@@ -943,3 +964,26 @@ actions:
   - action: delete
     path: components > schemas > LineItem > properties > RepeatingInvoiceID
 
+  - action: delete
+    path: paths > /Receipts
+
+  - action: delete
+    path: paths > /Receipts/{ReceiptID}
+
+  - action: delete
+    path: paths > /Receipts/{ReceiptID}/Attachments
+
+  - action: delete
+    path: paths > /Receipts/{ReceiptID}/Attachments/{AttachmentID}
+
+  - action: delete
+    path: paths > /Receipts/{ReceiptID}/Attachments/{FileName}
+
+  - action: delete
+    path: paths > /Receipts/{ReceiptID}/History
+
+  - action: delete
+    path: components > schemas > Receipts
+
+  - action: delete
+    path: components > schemas > Receipt
