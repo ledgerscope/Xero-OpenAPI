@@ -873,3 +873,36 @@ actions:
 
   - action: delete
     path: components > securitySchemes > OAuth2 > flows > authorizationCode > scopes > paymentservices
+
+  - action: delete
+    path: paths > /Quotes
+
+  - action: delete
+    path: paths > /Quotes/{QuoteID}
+
+  - action: delete
+    path: paths > /Quotes/{QuoteID}/History
+
+  - action: delete
+    path: paths > /Quotes/{QuoteID}/pdf
+
+  - action: delete
+    path: paths > /Quotes/{QuoteID}/Attachments
+
+  - action: delete
+    path: paths > /Quotes/{QuoteID}/Attachments/{AttachmentID}
+
+  - action: delete
+    path: paths > /Quotes/{QuoteID}/Attachments/{FileName}
+
+  - action: delete
+    path: components > schemas > Quotes
+
+  - action: delete
+    path: components > schemas > Quote
+
+  - action: delete
+    path: components > schemas > QuoteStatusCodes
+
+  - action: delete
+    path: components > schemas > QuotesLineAmountTypes
