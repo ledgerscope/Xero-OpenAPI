@@ -119,7 +119,7 @@ jobs:
         name: Source
         path: ./* 
 
-  publish:
+  publish-nuget:
     runs-on: ubuntu-latest
     needs: build
     permissions:
