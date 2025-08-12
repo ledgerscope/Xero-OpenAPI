@@ -4,10 +4,6 @@ on:
   push:
   workflow_dispatch:
 
-permissions:
-  id-token: write
-  contents: read
-
 jobs:
   build:
     env:
@@ -33,19 +29,6 @@ jobs:
 
     - name: Run YamlMangl with Ledgerscope delta yaml
       run: dotnet yamlmangl merge -input ./xero_accounting.yaml -delta ./xero_accounting_ls_delta.yaml -output ./xero_accounting_ls_output.yaml -headerType full
-
-    - name: Az CLI login
-      uses: azure/login@v1
-      with:
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-    - name: Confirm Az login
-      run: az account show
-
-    - name: Upload xero_accounting_ls_output.yaml to Azure Blob Storage
-      run: az storage blob upload --account-name lfidocsstaging --container-name '$web' --file ./xero_accounting_ls_output.yaml --name docs/xero_accounting_ls_output.yaml --auth-mode login --overwrite
 
     - name: Setup NuGet
       run: dotnet nuget add source --username ${{ github.repository_owner }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
@@ -118,6 +101,30 @@ jobs:
       with:
         name: Source
         path: ./* 
+
+  publish-yaml:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+    - uses: actions/download-artifact@v4
+      with:
+        name: Source
+
+    - name: Az CLI login
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Confirm Az login
+      run: az account show
+
+    - name: Upload xero_accounting_ls_output.yaml to Azure Blob Storage
+      run: az storage blob upload --account-name lfidocsstaging --container-name '$web' --file ./xero_accounting_ls_output.yaml --name docs/xero_accounting_ls_output.yaml --auth-mode login --overwrite
 
   publish-nuget:
     runs-on: ubuntu-latest
