@@ -121,7 +121,9 @@ jobs:
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Confirm Az login
-      run: az account show
+      run: | 
+        az account show
+        az group list
 
     - name: Upload xero_accounting_ls_output.yaml to Azure Blob Storage
       run: az storage blob upload --account-name lfidocsstaging --container-name '$web' --file ./xero_accounting_ls_output.yaml --name docs/xero_accounting_ls_output.yaml --auth-mode login --overwrite
