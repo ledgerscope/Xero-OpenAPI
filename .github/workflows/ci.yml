@@ -94,7 +94,6 @@ jobs:
           -p:RepositoryType=git \
           -p:Authors="Ledgerscope Services Limited" \
           -p:Description="This is a Ledgerscope mangled modification of the Xero .NETStandard SDK library used to communicate with the Xero API using OAuth2.0. See https://github.com/ledgerscope/Xero-OpenAPI for more information" \
-          -p:PackageTags="xero, api, sdk, oauth2, oauth2.0" \
           -p:PackageProjectUrl="https://github.com/ledgerscope/Xero-OpenAPI"
       working-directory: ./output/csharp-netcore/accounting/src/Xero.NetStandard.OAuth2/
     
