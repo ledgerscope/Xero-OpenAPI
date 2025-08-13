@@ -28,7 +28,7 @@ jobs:
       run: dotnet yamlmangl merge -input ./xero_accounting.yaml -delta ./xero_accounting_delta.yaml -output ./xero_accounting_output.yaml -headerType full
 
     - name: Run YamlMangl with Ledgerscope delta yaml
-      run: dotnet yamlmangl merge -input ./xero_accounting.yaml -delta ./xero_accounting_ls_delta.yaml -output ./xero_accounting_ls_output.yaml -headerType full
+      run: dotnet yamlmangl merge -input ./xero_accounting_output.yaml -delta ./xero_accounting_ls_delta.yaml -output ./xero_accounting_ls_output.yaml -headerType full
 
     - name: Setup NuGet
       run: dotnet nuget add source --username ${{ github.repository_owner }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
@@ -87,7 +87,14 @@ jobs:
       working-directory: ./output/csharp-netcore/accounting
 
     - name: Package
-      run: dotnet pack -p:PackageVersion=4.0.${{github.run_number}} -p:RepositoryUrl="https://github.com/ledgerscope/Xero-OpenAPI" -p:RepositoryType=git
+      run: dotnet pack -p:PackageVersion=4.0.${{github.run_number}} 
+            -p:RepositoryUrl="https://github.com/ledgerscope/Xero-OpenAPI" 
+            -p:RepositoryType=git \
+            -p:Authors="LedgerScope Services Limited" \
+            -p:Description="This is a Ledgerscope mangled modification of the Xero .NETStandard SDK library, used to communicate with the Xero API using OAuth2.0. See https://github.com/ledgerscope/Xero-OpenAPI for more information" \
+            -p:PackageTags="xero, api, sdk, oauth2, oauth2.0" \
+            -p:PackageReleaseNotes="Published on $(date +'%Y-%m-%d')" \
+            -p:PackageProjectUrl="https://github.com/ledgerscope/Xero-OpenAPI" \
       working-directory: ./output/csharp-netcore/accounting/src/Xero.NetStandard.OAuth2/
     
     - uses: actions/upload-artifact@v4
