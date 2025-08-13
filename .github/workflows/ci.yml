@@ -89,6 +89,7 @@ jobs:
     - name: Package
       run: |
         dotnet pack \
+          -p:PackageId="Ledgerscope.Xero.NetStandard.OAuth2" \
           -p:PackageVersion=4.0.${{github.run_number}} \
           -p:RepositoryUrl="https://github.com/ledgerscope/Xero-OpenAPI" \
           -p:RepositoryType=git \
