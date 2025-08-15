@@ -26,7 +26,7 @@ actions:
 
   - action: modify
     path: servers > * > description
-    content: The Ledgerscope Accounting API exposes accounting and related functions of the main Xero application and can be used for a variety of purposes such as creating transactions like invoices and credit notes, right through to extracting accounting data via our reports endpoint.
+    content: The Ledgerscope Accounting API exposes accounting and related functions of the main Xero application and can be used for a variety of purposes such as reading transactions like invoices and credit notes.
 
   - action: modify
     path: servers > * > url
