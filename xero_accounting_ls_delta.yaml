@@ -133,11 +133,11 @@ actions:
     content: |
       Ledgerscope API gets you connected to a wide variety of different accounting software sources, with every connection looking like a Xero accounting API connection.  So when you develop your new app to work with Xero's API, you can then easily roll it out for lots of other accounting software sources too.
 
-      ## Getting started
+      ## Using this API explorer
 
       This API explorer shows the various operations available in the Ledgerscope API.  Each operation has a [Test] button for you to try it out with an accounting dataset.
 
-      To use it with your own accounting dataset, you'll have to set up a Ledgerscope API account (it's free) and connect it to your accounts dataset. See the [Ledgerscope API guide](https://docs.ledgerscope.com/guide) for how.
+      To use it with your own accounting dataset, you'll have to set up a Ledgerscope API account (it's free) and connect it to your accounts dataset. See the [Ledgerscope API guide](../) for how.
 
       Alternatively, you can use this API explorer with the sample dataset, with nothing to set up.  Just enter _demo_ as the tenant ID header for any operation, and you'll then be using the sample dataset.
 
