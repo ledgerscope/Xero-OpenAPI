@@ -137,7 +137,7 @@ actions:
 
       This API explorer shows the various operations available in the Ledgerscope API.  Each operation has a [Test] button for you to try it out with an accounting dataset.
 
-      To use it with your own accounting dataset, you'll have to set up a Ledgerscope API account (it's free) and connect it to your accounts dataset. See the [Ledgerscope API guide](../setup/about.html) for how.  You'll then have to use the OAuth flow with this API explorer to access Ledgerflow API, which then accesses your accounting dataset.
+      To use it with your own accounting dataset, you'll have to set up a Ledgerscope API account (it's free) and connect it to your accounts dataset. See the [Ledgerscope API guide](../) for how.  You'll then have to use the OAuth flow with this API explorer to access Ledgerflow API, which then accesses your accounting dataset.
 
       Alternatively, you can use this API explorer with the sample dataset, with nothing to set up.  Just enter _demo_ as the tenant ID header for any operation, and you'll then be using the sample dataset.
 
