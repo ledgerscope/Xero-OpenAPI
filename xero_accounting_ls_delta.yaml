@@ -563,4 +563,38 @@ actions:
   - action: delete
     path: components > schemas > Receipt
 
-  
+  - action: addChildFromFile
+    path: paths
+    failIfNotFound: true
+    filePath: ./xero-identity.yaml
+    fileContentPath: paths > /Connections
+    key: /Connections
+
+  - action: modify
+    path: paths > /Connections > get > description
+    failIfNotFound: true
+    content: In Ledgerscope API this operation is found on `/Connections` and `/api.xro/2.0/Connections`
+
+  - action: modify
+    path: paths > /Connections > get > tags > [0]
+    failIfNotFound: true
+    needle: identity
+    content: Identity
+
+  - action: addChildFromFile
+    path: paths
+    failIfNotFound: true
+    filePath: ./xero-identity.yaml
+    fileContentPath: paths > /Connections/{id}
+    key: /Connections/{id}
+
+  - action: modify
+    path: paths > /Connections/{id} > delete > description
+    failIfNotFound: true
+    content: In Ledgerscope API this operation is found on `/Connections/{id}` and `/api.xro/2.0//Connections/{id}`
+
+  - action: modify
+    path: paths > /Connections/{id} > delete > tags > [0]
+    failIfNotFound: true
+    needle: identity
+    content: Identity
