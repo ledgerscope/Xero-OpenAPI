@@ -363,6 +363,9 @@ actions:
     path: paths > /BankTransfers/{BankTransferID}/History
 
   - action: delete
+    path: paths > /Budgets
+
+  - action: delete
     path: paths > /Contacts/{ContactID}/Attachments
 
   - action: delete
@@ -411,6 +414,9 @@ actions:
     path: paths > /Items/{ItemID}/History
 
   - action: delete
+    path: paths > /LinkedTransactions
+
+  - action: delete
     path: paths > /ManualJournals/{ManualJournalID}/Attachments
 
   - action: delete
@@ -421,6 +427,9 @@ actions:
 
   - action: delete
     path: paths > /ManualJournals/{ManualJournalID}/History
+
+  - action: delete
+    path: paths > /Organisation/Actions
 
   - action: delete
     path: paths > /Overpayments/{OverpaymentID}/History
@@ -445,7 +454,16 @@ actions:
 
   - action: delete
     path: paths > /PurchaseOrders/{PurchaseOrderID}/Attachments/{FileName}
-  
+
+  - action: delete
+    path: paths > /Reports
+
+  - action: delete
+    path: paths > /Reports/BudgetSummary
+
+  - action: delete
+    path: paths > /Reports/ExecutiveSummary
+
   - action: delete
     path: paths > /BrandingThemes
 
