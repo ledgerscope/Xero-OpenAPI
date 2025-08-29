@@ -464,7 +464,7 @@ actions:
   - action: delete
     path: paths > /Reports/ExecutiveSummary
 
-    - action: delete
+  - action: delete
     path: paths > /Reports/TenNinetyNine
 
   - action: delete
