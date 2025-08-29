@@ -38,7 +38,7 @@ actions:
 
   - action: modify
     path: components > securitySchemes > OAuth2 > flows > authorizationCode > tokenUrl
-    content: https://xero.api.ledgerscope.com/identity/connect/token
+    content: https://xero.api.ledgerscope.com/connect/token
     
   - action: delete
     path: paths > /ContactGroups/{ContactGroupID}/Contacts
