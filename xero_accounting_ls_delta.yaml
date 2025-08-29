@@ -464,6 +464,9 @@ actions:
   - action: delete
     path: paths > /Reports/ExecutiveSummary
 
+    - action: delete
+    path: paths > /Reports/TenNinetyNine
+
   - action: delete
     path: paths > /BrandingThemes
 
