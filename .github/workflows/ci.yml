@@ -85,3 +85,71 @@ jobs:
     - name: Test
       run: dotnet test --no-restore --verbosity normal
       working-directory: ./output/csharp-netcore/accounting
+
+    - name: Package
+      run: |
+        dotnet pack \
+          -p:PackageId="Ledgerscope.Xero.NetStandard.OAuth2" \
+          -p:PackageVersion=4.0.${{github.run_number}} \
+          -p:RepositoryUrl="https://github.com/ledgerscope/Xero-OpenAPI" \
+          -p:RepositoryType=git \
+          -p:Authors="Ledgerscope Services Limited" \
+          -p:Description="This is a Ledgerscope mangled modification of the Xero .NETStandard SDK library used to communicate with the Xero API using OAuth2.0. See https://github.com/ledgerscope/Xero-OpenAPI for more information" \
+          -p:PackageProjectUrl="https://github.com/ledgerscope/Xero-OpenAPI"
+      working-directory: ./output/csharp-netcore/accounting/src/Xero.NetStandard.OAuth2/
+    
+    - uses: actions/upload-artifact@v4
+      if: success()
+      with:
+        name: Packages
+        path: ./**/*.nupkg
+
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: Source
+        path: ./* 
+
+  publish-yaml:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+    - uses: actions/download-artifact@v4
+      with:
+        name: Source
+
+    - name: Az CLI login
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Confirm Az login
+      run: | 
+        az account show
+        az group list
+
+    - name: Upload xero_accounting_ls_output.yaml to Azure Blob Storage
+      run: az storage blob upload --account-name lfidocsstaging --container-name '$web' --file ./xero_accounting_ls_output.yaml --name api-explorer/xero_accounting_ls_output.yaml --auth-mode login --overwrite
+
+  publish-nuget:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: read
+      packages: write
+    steps:    
+    - uses: actions/download-artifact@v4
+      with:
+        name: Packages
+
+    - name: Setup NuGet
+      run: dotnet nuget add source --username ${{ github.repository_owner }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
+
+    - name: Publish
+      run: dotnet nuget push -s github "**/*.nupkg"
+      working-directory: ./output/csharp-netcore/accounting
