@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using JsonSubTypes;
-using Newtonsoft.Json;
+using System.Text.Json;
 using NUnit.Framework;
 
 using {{packageName}}.{{apiPackage}};
@@ -18,7 +18,7 @@ namespace {{packageName}}.{{modelPackage}}.Test.Client
         public void TestSimpleJsonSubTypesExample()
         {
             var annimal =
-                JsonConvert.DeserializeObject<IAnimal>("{\"Kind\":\"Dog\",\"Breed\":\"Jack Russell Terrier\"}");
+                JsonSerializer.Deserialize<IAnimal>("{\"Kind\":\"Dog\",\"Breed\":\"Jack Russell Terrier\"}");
             Assert.AreEqual("Jack Russell Terrier", (annimal as Dog)?.Breed);
         }
 
@@ -26,7 +26,7 @@ namespace {{packageName}}.{{modelPackage}}.Test.Client
         public void DeserializeObjectWithCustomMapping()
         {
             var annimal =
-                JsonConvert.DeserializeObject<Animal2>("{\"Sound\":\"Bark\",\"Breed\":\"Jack Russell Terrier\"}");
+                JsonSerializer.Deserialize<Animal2>("{\"Sound\":\"Bark\",\"Breed\":\"Jack Russell Terrier\"}");
             Assert.AreEqual("Jack Russell Terrier", (annimal as Dog2)?.Breed);
         }
 
@@ -39,7 +39,7 @@ namespace {{packageName}}.{{modelPackage}}.Test.Client
                 "{\"Skill\":\"Painter\",\"FirstName\":\"FirstName1\",\"LastName\":\"LastName1\"}]";
 
 
-            var persons = JsonConvert.DeserializeObject<ICollection<Person>>(json);
+            var persons = JsonSerializer.Deserialize<ICollection<Person>>(json);
             Assert.AreEqual("Painter", (persons.Last() as Artist)?.Skill);
         }
     }

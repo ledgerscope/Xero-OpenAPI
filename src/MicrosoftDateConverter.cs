@@ -1,44 +1,79 @@
 using System;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Xero.NetStandard.OAuth2.Json.Converters
 {
-	public class MicrosoftDateConverter : DateTimeConverterBase
+	public class MicrosoftDateConverter : JsonConverter<DateTime>
 	{
-		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+		public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 		{
-			if (reader.Value is DateTime dt)
+			var value = reader.GetString();
+			if (DateTime.TryParse(value, out var result))
 			{
-				if (objectType == typeof(DateTime))
-					return dt;
-				else if (objectType == typeof(DateTimeOffset))
-					return new DateTimeOffset(dt);
+				return result;
 			}
-
-			if (reader.Value is DateTimeOffset dto)
+			
+			// Handle Microsoft JSON date format: /Date(ticks)/
+			if (value.StartsWith("/Date(") && value.EndsWith(")/"))
 			{
-				if (objectType == typeof(DateTimeOffset))
-					return dto;
-				else if (objectType == typeof(DateTime))
-					return dto.DateTime;
+				var ticksString = value.Substring(6, value.Length - 8);
+				if (long.TryParse(ticksString, out var ticks))
+				{
+					return new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds(ticks);
+				}
 			}
-
-			return Convert.ToDateTime(reader.Value.ToString());
+			
+			throw new JsonException($"Unable to convert \"{value}\" to DateTime.");
 		}
 
-		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+		public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
 		{
-			var oldDateFormatHandling = writer.DateFormatHandling;
-			var oldDateTimeZoneHandling = writer.DateTimeZoneHandling;
+			var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+			var milliseconds = (long)(value.ToUniversalTime() - epoch).TotalMilliseconds;
+			writer.WriteStringValue($"/Date({milliseconds})/");
+		}
+	}
 
-			writer.DateFormatHandling = DateFormatHandling.MicrosoftDateFormat;
-			writer.DateTimeZoneHandling = DateTimeZoneHandling.Local;
+	public class NullableMicrosoftDateConverter : JsonConverter<DateTime?>
+	{
+		public override DateTime? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+		{
+			if (reader.TokenType == JsonTokenType.Null)
+			{
+				return null;
+			}
 
-			writer.WriteValue(value);
+			var value = reader.GetString();
+			if (DateTime.TryParse(value, out var result))
+			{
+				return result;
+			}
+			
+			// Handle Microsoft JSON date format: /Date(ticks)/
+			if (value.StartsWith("/Date(") && value.EndsWith(")/"))
+			{
+				var ticksString = value.Substring(6, value.Length - 8);
+				if (long.TryParse(ticksString, out var ticks))
+				{
+					return new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds(ticks);
+				}
+			}
+			
+			throw new JsonException($"Unable to convert \"{value}\" to DateTime.");
+		}
 
-			writer.DateFormatHandling = oldDateFormatHandling;
-			writer.DateTimeZoneHandling = oldDateTimeZoneHandling;
+		public override void Write(Utf8JsonWriter writer, DateTime? value, JsonSerializerOptions options)
+		{
+			if (value == null)
+			{
+				writer.WriteNullValue();
+				return;
+			}
+
+			var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+			var milliseconds = (long)(value.Value.ToUniversalTime() - epoch).TotalMilliseconds;
+			writer.WriteStringValue($"/Date({milliseconds})/");
 		}
 	}
 }

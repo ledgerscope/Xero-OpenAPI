@@ -9,12 +9,12 @@
         /// </summary>{{#description}}
         /// <value>{{description}}</value>{{/description}}
         {{#vendorExtensions.x-is-msdate-time}}
-        [Newtonsoft.Json.JsonConverterAttribute(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
+        [JsonConverter(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
         public {{#isNullable}}DateTime?{{/isNullable}}{{^isNullable}}DateTime{{/isNullable}} {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
 
         {{/vendorExtensions.x-is-msdate-time}}
         {{#vendorExtensions.x-is-msdate}}
-        [Newtonsoft.Json.JsonConverterAttribute(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
+        [JsonConverter(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
         public {{#isNullable}}DateTime?{{/isNullable}}{{^isNullable}}DateTime{{/isNullable}} {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
 
         {{/vendorExtensions.x-is-msdate}}
@@ -24,7 +24,7 @@
         {{/vendorExtensions.x-is-money}}
 
         {{#vendorExtensions.x-is-datetime}}
-        [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.IsoDateTimeConverter))]
+        [JsonConverter(typeof({{packageName}}.Client.OpenAPIDateConverter))]
         {{/vendorExtensions.x-is-datetime}}
         {{^vendorExtensions.x-is-msdate-time}}
         {{^vendorExtensions.x-is-msdate}}
@@ -84,6 +84,7 @@
         /// <value>{{description}}</value>
         {{/description}}
         [DataMember(Name="{{baseName}}", EmitDefaultValue={{#isNullable}}true{{/isNullable}}{{^isNullable}}{{#vendorExtensions.x-emit-default}}true{{/vendorExtensions.x-emit-default}}{{^vendorExtensions.x-emit-default}}emitDefault{{/vendorExtensions.x-emit-default}}{{/isNullable}})]
+        [JsonPropertyName("{{baseName}}")]
         public {{#complexType}}{{{complexType}}}{{/complexType}}{{^complexType}}{{{datatypeWithEnum}}}{{/complexType}}{{^isContainer}}{{/isContainer}} {{name}} { get; set; }
         {{/isEnum}}
         {{/vars}}
@@ -92,7 +93,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="{{classname}}" /> class.
         /// </summary>
-        [JsonConstructorAttribute]
+        [JsonConstructor]
         public {{classname}}() { }
     {{/hasOnlyReadOnly}}
     {{/hasRequired}}
@@ -105,14 +106,15 @@
         /// </summary>{{#description}}
         /// <value>{{description}}</value>{{/description}}
         [DataMember(Name="{{baseName}}", EmitDefaultValue={{#isNullable}}true{{/isNullable}}{{^isNullable}}{{#vendorExtensions.x-emit-default}}true{{/vendorExtensions.x-emit-default}}{{^vendorExtensions.x-emit-default}}emitDefault{{/vendorExtensions.x-emit-default}}{{/isNullable}})]{{#isDate}}
-        [JsonConverter(typeof(IsoDateTimeConverter))]{{/isDate}}
+        [JsonConverter(typeof({{packageName}}.Client.OpenAPIDateConverter))]{{/isDate}}
+        [JsonPropertyName("{{baseName}}")]
         {{#vendorExtensions.x-is-msdate-time}}
-        [Newtonsoft.Json.JsonConverterAttribute(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
+        [JsonConverter(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
         public {{#isNullable}}DateTime?{{/isNullable}}{{^isNullable}}DateTime{{/isNullable}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
 
         {{/vendorExtensions.x-is-msdate-time}}
         {{#vendorExtensions.x-is-msdate}}
-        [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.IsoDateTimeConverter))]
+        [JsonConverter(typeof({{packageName}}.Client.OpenAPIDateConverter))]
         public {{#isNullable}}DateTime?{{/isNullable}}{{^isNullable}}DateTime{{/isNullable}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
 
 
@@ -123,7 +125,7 @@
         {{/vendorExtensions.x-is-money}}
 
         {{#vendorExtensions.x-is-datetime}}
-        [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.IsoDateTimeConverter))]
+        [JsonConverter(typeof({{packageName}}.Client.OpenAPIDateConverter))]
         {{/vendorExtensions.x-is-datetime}}
 
         {{^vendorExtensions.x-is-msdate-time}}
@@ -170,7 +172,7 @@
         /// <returns>JSON string presentation of the object</returns>
         public {{#parent}}{{^isArrayModel}}{{^isMapModel}}override {{/isMapModel}}{{/isArrayModel}}{{/parent}}{{^parent}}virtual {{/parent}}string ToJson()
         {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
+            return JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
         }
 
         /// <summary>

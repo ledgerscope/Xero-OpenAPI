@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Newtonsoft.Json;
+using System.Text.Json;
 using Xero.NetStandard.OAuth2.Shared;
 using Xero.NetStandard.OAuth2.Model.Accounting;
 using Xero.NetStandard.OAuth2.Model.Files;
@@ -53,11 +53,11 @@ namespace {{packageName}}.Client
                     
                     try
                     {
-                        error = JsonConvert.DeserializeObject<Error>(response.Content.ToString());
+                        error = JsonSerializer.Deserialize<Error>(response.Content.ToString());
                     }
-                    catch (JsonSerializationException)
+                    catch (JsonException)
                     {
-                        var fileError = JsonConvert.DeserializeObject<FileError[]>(response.Content.ToString()).First();
+                        var fileError = JsonSerializer.Deserialize<FileError[]>(response.Content.ToString()).First();
                         error = new Error()
                         {
                             Type = fileError.Type + " " + fileError.Title,

@@ -18,11 +18,10 @@ using System.Net;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters;
 using System.Text;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using RestSharp;
 using RestSharp.Deserializers;
-using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
 using RestSharpMethod = RestSharp.Method;
 
 namespace {{packageName}}.Client
@@ -33,37 +32,28 @@ namespace {{packageName}}.Client
     internal class CustomJsonCodec : RestSharp.Serializers.ISerializer, RestSharp.Deserializers.IDeserializer
     {
         private readonly IReadableConfiguration _configuration;
-        private readonly JsonSerializer _serializer;
         private string _contentType = "application/json";
-        private readonly JsonSerializerSettings _serializerSettings = new JsonSerializerSettings
+        private readonly JsonSerializerOptions _serializerOptions = new JsonSerializerOptions
         {
-            // OpenAPI generated types generally hide default constructors.
-            ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
-                ContractResolver = new DefaultContractResolver
-                {
-                    NamingStrategy = new CamelCaseNamingStrategy()
-                    {
-                        OverrideSpecifiedNames = true
-                    }
-                }
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = false,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
         };
 
         public CustomJsonCodec(IReadableConfiguration configuration)
         {
             _configuration = configuration;
-            _serializer = JsonSerializer.Create(_serializerSettings);
         }
 
-        public CustomJsonCodec(JsonSerializerSettings serializerSettings, IReadableConfiguration configuration)
+        public CustomJsonCodec(JsonSerializerOptions serializerOptions, IReadableConfiguration configuration)
         {
-            _serializerSettings = serializerSettings;
-            _serializer = JsonSerializer.Create(_serializerSettings);
+            _serializerOptions = serializerOptions;
             _configuration = configuration;
         }
 
         public string Serialize(object obj)
         {
-            String result = JsonConvert.SerializeObject(obj, _serializerSettings);
+            String result = JsonSerializer.Serialize(obj, _serializerOptions);
             return result;
         }
 
@@ -124,7 +114,7 @@ namespace {{packageName}}.Client
             // at this point, it must be a model (json)
             try
             {
-                return JsonConvert.DeserializeObject(response.Content, type, _serializerSettings);
+                return JsonSerializer.Deserialize(response.Content, type, _serializerOptions);
             }
             catch (Exception e)
             {

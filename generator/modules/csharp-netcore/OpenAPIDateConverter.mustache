@@ -1,21 +1,72 @@
 {{>partial_header}}
-using Newtonsoft.Json.Converters;
+using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace {{packageName}}.Client
 {
     /// <summary>
-    /// Formatter for 'date' openapi formats ss defined by full-date - RFC3339
+    /// Formatter for 'date' openapi formats as defined by full-date - RFC3339
     /// see https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#data-types
     /// </summary>
-    public class OpenAPIDateConverter : IsoDateTimeConverter
+    public class OpenAPIDateConverter : JsonConverter<DateTime>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="OpenAPIDateConverter" /> class.
+        /// The date format: full-date = date-fullyear "-" date-month "-" date-mday
         /// </summary>
-        public OpenAPIDateConverter()
+        private const string DateFormat = "yyyy-MM-dd";
+
+        public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            // full-date   = date-fullyear "-" date-month "-" date-mday
-            DateTimeFormat = "yyyy-MM-dd";
+            var value = reader.GetString();
+            if (DateTime.TryParseExact(value, DateFormat, null, System.Globalization.DateTimeStyles.None, out var result))
+            {
+                return result;
+            }
+            throw new JsonException($"Unable to convert \"{value}\" to DateTime using format \"{DateFormat}\".");
+        }
+
+        public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(value.ToString(DateFormat));
+        }
+    }
+
+    /// <summary>
+    /// Formatter for nullable 'date' openapi formats as defined by full-date - RFC3339
+    /// </summary>
+    public class OpenAPIDateConverterNullable : JsonConverter<DateTime?>
+    {
+        /// <summary>
+        /// The date format: full-date = date-fullyear "-" date-month "-" date-mday
+        /// </summary>
+        private const string DateFormat = "yyyy-MM-dd";
+
+        public override DateTime? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+
+            var value = reader.GetString();
+            if (DateTime.TryParseExact(value, DateFormat, null, System.Globalization.DateTimeStyles.None, out var result))
+            {
+                return result;
+            }
+            throw new JsonException($"Unable to convert \"{value}\" to DateTime using format \"{DateFormat}\".");
+        }
+
+        public override void Write(Utf8JsonWriter writer, DateTime? value, JsonSerializerOptions options)
+        {
+            if (value == null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                writer.WriteStringValue(value.Value.ToString(DateFormat));
+            }
         }
     }
 }
