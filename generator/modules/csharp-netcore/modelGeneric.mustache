@@ -326,7 +326,11 @@
             yield break;
         }
 {{/validatable}}
-    }
+    }    
+
+    [JsonSerializable(typeof({{classname}}))]
+    public partial class SourceGenerationContext : JsonSerializerContext
+    { }
 
     {{#vendorExtensions.x-objectArrayKey}}{{#vars}}{{#isListContainer}}
     {{>visibility}} partial class {{classname}} : IXeroCollection<{{classname}}, {{{dataType}}}>
