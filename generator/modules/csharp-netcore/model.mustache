@@ -35,3 +35,15 @@ namespace {{packageName}}.{{modelPackage}}
 {{/model}}
 {{/models}}
 }
+
+
+namespace {{packageName}}.Serialization
+{
+{{#models}}
+{{#model}}        
+[JsonSerializable(typeof({{classname}}))]
+{{/model}}
+{{/models}}
+public partial class SourceGenerationContext : JsonSerializerContext
+{ }
+}
