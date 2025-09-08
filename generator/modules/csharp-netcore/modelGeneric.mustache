@@ -328,24 +328,28 @@
 {{/validatable}}
     }
 
-        {{#vendorExtensions.x-objectArrayKey}}{{#vars}}{{#isListContainer}}
-        {{>visibility}} partial class {{classname}} : IXeroCollection<{{classname}}, {{{dataType}}}>
-        {
-            {{{dataType}}} IXeroCollection<{{classname}}, {{{dataType}}}>.Collection 
-            {
-                get => {{{name}}};
-                set => {{{name}}} = value;
-            }
-        }
+    [JsonSerializable(typeof({{classname}}))]
+    public partial class SourceGenerationContext : JsonSerializerContext
+    { }
 
-        {{/isListContainer}}
-        {{/vars}}{{/vendorExtensions.x-objectArrayKey}}
-    
-        {{#vars}}{{#vendorExtensions.x-is-lineitem}}
-        {{>visibility}} partial class {{classname}} : IHasLineItems
+    {{#vendorExtensions.x-objectArrayKey}}{{#vars}}{{#isListContainer}}
+    {{>visibility}} partial class {{classname}} : IXeroCollection<{{classname}}, {{{dataType}}}>
+    {
+        {{{dataType}}} IXeroCollection<{{classname}}, {{{dataType}}}>.Collection 
         {
-            ICollection<LineItem> IHasLineItems.LineItems => LineItems;
+            get => {{{name}}};
+            set => {{{name}}} = value;
         }
+    }
 
-        {{/vendorExtensions.x-is-lineitem}}
-        {{/vars}}
+    {{/isListContainer}}
+    {{/vars}}{{/vendorExtensions.x-objectArrayKey}}
+
+    {{#vars}}{{#vendorExtensions.x-is-lineitem}}
+    {{>visibility}} partial class {{classname}} : IHasLineItems
+    {
+        ICollection<LineItem> IHasLineItems.LineItems => LineItems;
+    }
+
+    {{/vendorExtensions.x-is-lineitem}}
+    {{/vars}}
