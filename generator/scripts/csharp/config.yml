@@ -1,5 +1,5 @@
 packageName: "Xero.NetStandard.OAuth2"
-targetFramework: "netstandard2.0"
+targetFramework: "net8.0"
 optionalAssemblyInfo: false
 netCoreProjectFile: true
 returnICollection: true
