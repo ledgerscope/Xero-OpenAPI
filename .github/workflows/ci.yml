@@ -44,7 +44,7 @@ jobs:
       run: sed 's|/xero.api.ledgerscope.com/|/xero.api.ledgerscope.dev/|g' ./xero_accounting_ls_output.yaml > ./xero_accounting_ls_output_dev.yaml
 
     - name: Generate localhost copy of xero_accounting_ls_output.yaml
-      run: sed 's|/xero.api.ledgerscope.com/|/localhost:44318/|g' ./xero_accounting_ls_output.yaml > ./xero_accounting_ls_output_localhost.yaml
+      run: sed 's|/xero.api.ledgerscope.com/|/localhost:44363/|g' ./xero_accounting_ls_output.yaml > ./xero_accounting_ls_output_localhost.yaml
 
     - name: Setup NuGet
       run: dotnet nuget add source --username ${{ github.repository_owner }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
