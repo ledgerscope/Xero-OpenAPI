@@ -33,6 +33,10 @@ actions:
     content: https://xero.api.ledgerscope.com/api.xro/2.0
 
   - action: modify
+    path: yes > this > path > does > not > exist
+    content: This is a test to see what happens if the path does not exist
+
+  - action: modify
     path: components > securitySchemes > OAuth2 > flows > authorizationCode > authorizationUrl
     content: https://xero.api.ledgerscope.com/identity/connect/authorize
 
