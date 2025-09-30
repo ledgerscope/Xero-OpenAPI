@@ -22,13 +22,10 @@ jobs:
     - run: dotnet new tool-manifest
 
     - name: Install Ledgerscope YamlMangl
-      run: |
-        echo "Installing YamlMangl"
-        dotnet tool install Ledgerscope.YamlMangl
+      run: dotnet tool install Ledgerscope.YamlMangl
 
     - name: First merge, generating xero_accounting_output.yaml
       run: |
-        echo "First merge"
         dotnet yamlmangl merge -input ./xero_accounting.yaml -delta ./xero_accounting_delta.yaml -output ./xero_accounting_output.yaml -headerType full
         if [ $? -ne 0 ]; then
           echo "YamlMangl first merge failed with exit code $?"
@@ -37,7 +34,6 @@ jobs:
 
     - name: Second merge, generating xero_accounting_ls_output.yaml
       run: |
-        echo "Second merge"
         dotnet yamlmangl merge -input ./xero_accounting_output.yaml -delta ./xero_accounting_ls_delta.yaml -output ./xero_accounting_ls_output.yaml -headerType full
         if [ $? -ne 0 ]; then
           echo "YamlMangl second merge failed with exit code $?"
