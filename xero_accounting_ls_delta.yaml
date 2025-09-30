@@ -1,5 +1,5 @@
 settings:
-  failIfNotFound: false
+  failIfNotFound: true
   applyXeroExampleKludge: true
 
 actions:
@@ -74,9 +74,6 @@ actions:
     path: paths > * > delete
 
   - action: delete
-    path: components > schemas > * > properties > BrandingTheme
-
-  - action: delete
     path: components > schemas > * > allOf > [2] > properties > BrandingTheme
 
   - action: delete
@@ -86,28 +83,13 @@ actions:
     path: components > parameters > BrandingThemeID
 
   - action: delete
-    path: components > schemas > Invoice > properties > RepeatingInvoiceID
-
-  - action: delete
     path: components > schemas > ExpenseClaim > allOf > [1] > properties > Receipts
 
   - action: delete
     path: paths > /ExpenseClaims > get > responses > 200 > content > application/json > example > ExpenseClaims > * > Receipts
 
   - action: delete
-    path: paths > /ExpenseClaims > put > requestBody > content > application/json > example > ExpenseClaims > * > Receipts
-
-  - action: delete
-    path: paths > /ExpenseClaims > put > responses > 200 > content > application/json > example > ExpenseClaims > * > Receipts
-
-  - action: delete
     path: paths > /ExpenseClaims/{ExpenseClaimID} > get > responses > 200 > content > application/json > example > ExpenseClaims > * > Receipts
-
-  - action: delete
-    path: paths > /ExpenseClaims/{ExpenseClaimID} > post > responses > 200 > content > application/json > example > ExpenseClaims > * > Receipts
-
-  - action: delete
-    path: paths > /ExpenseClaims/{ExpenseClaimID} > post > requestBody > content > application/json > example > ExpenseClaims > * > Receipts
 
   - action: delete
     path: paths > /Contacts/{ContactID} > get > responses > 200 > content > application/json > example > Contacts > * > BrandingTheme
@@ -140,135 +122,6 @@ actions:
       To use it with your own accounting dataset, you'll have to set up a Ledgerscope API account (it's free) and connect it to your accounts dataset. See the [Ledgerscope API guide](../) for how.  You'll then have to use the OAuth flow with this API explorer to access Ledgerflow API, which then accesses your accounting dataset.
 
       Alternatively, you can use this API explorer with the sample dataset, with nothing to set up.  Just enter _demo_ as the tenant ID header for any operation, and you'll then be using the sample dataset.
-
-  - action: modify
-    path: components > schemas > Account > properties > HasAttachments > default
-    content: false
-
-  - action: modify
-    path: components > schemas > Account > properties > HasAttachments > example
-    content: false
-
-  - action: addChild
-    path: components > schemas > Account > properties > BankAccountType
-    key: x-ms-enum
-    content:
-      name: BankAccountType
-      values:
-        - value: ''
-          name: EMPTY
-
-  - action: modify
-    path: components > schemas > BankTransaction > properties > HasAttachments > default
-    content: false
-
-  - action: modify
-    path: components > schemas > BankTransaction > properties > HasAttachments > example
-    content: false
-
-  - action: modify
-    path: components > schemas > BankTransfer > properties > HasAttachments > default
-    content: false
-
-  - action: modify
-    path: components > schemas > BankTransfer > properties > HasAttachments > example
-    content: false
-
-  - action: modify
-    path: components > schemas > BankTransfer > properties > FromIsReconciled > default
-    content: false
-
-  - action: modify
-    path: components > schemas > BankTransfer > properties > FromIsReconciled > example
-    content: false
-
-  - action: modify
-    path: components > schemas > BankTransfer > properties > ToIsReconciled > default
-    content: false
-
-  - action: modify
-    path: components > schemas > BankTransfer > properties > ToIsReconciled > example
-    content: false
-
-  - action: modify
-    path: components > schemas > CreditNote > properties > HasAttachments > default
-    content: false
-
-  - action: modify
-    path: components > schemas > CreditNote > properties > HasAttachments > example
-    content: false
-
-  - action: modify
-    path: components > schemas > Invoice > properties > HasAttachments > default
-    content: false
-
-  - action: modify
-    path: components > schemas > Invoice > properties > HasAttachments > example
-    content: false
-
-  - action: modify
-    path: components > schemas > ManualJournal > properties > HasAttachments > default
-    content: false
-
-  - action: modify
-    path: components > schemas > ManualJournal > properties > HasAttachments > example
-    content: false
-
-  - action: modify
-    path: components > schemas > Overpayment > properties > HasAttachments > default
-    content: false
-
-  - action: modify
-    path: components > schemas > Overpayment > properties > HasAttachments > example
-    content: false
-
-  - action: modify
-    path: components > schemas > Payment > properties > HasAttachments > default
-    content: false
-
-  - action: modify
-    path: components > schemas > Payment > properties > HasAttachments > example
-    content: false
-
-  - action: modify
-    path: components > schemas > Payment > properties > HasAccount > default
-    content: false
-
-  - action: modify
-    path: components > schemas > Payment > properties > HasAccount > example
-    content: false
-
-  - action: modify
-    path: components > schemas > Prepayment > properties > HasAttachments > default
-    content: false
-
-  - action: modify
-    path: components > schemas > Prepayment > properties > HasAttachments > example
-    content: false
-
-  - action: modify
-    path: components > schemas > PurchaseOrder > properties > HasAttachments > default
-    content: false
-
-  - action: modify
-    path: components > schemas > PurchaseOrder > properties > HasAttachments > example
-    content: false
-
-  - action: modify
-    path: components > schemas > Receipt > properties > HasAttachments > default
-    content: false
-
-  - action: modify
-    path: components > schemas > Receipt > properties > HasAttachments > example
-    content: false
-
-  - action: modify
-    path: components > schemas > Contact > properties > HasAttachments > default
-    content: false
-
-  - action: modify
-    path: components > schemas > Contact > properties > HasAttachments > example
-    content: false
 
   - action: modify
     path: components > parameters > requiredHeader > name
@@ -366,6 +219,24 @@ actions:
     path: paths > /Budgets
 
   - action: delete
+    path: paths > /Budgets/{BudgetID}
+
+  - action: delete
+    path: components > parameters > BudgetID
+
+  - action: delete
+    path: components > schemas > Budgets
+
+  - action: delete
+    path: components > schemas > Budget
+
+  - action: delete
+    path: components > schemas > BudgetLine
+
+  - action: delete
+    path: components > schemas > BudgetBalance
+
+  - action: delete
     path: paths > /Contacts/{ContactID}/Attachments
 
   - action: delete
@@ -373,6 +244,33 @@ actions:
 
   - action: delete
     path: paths > /Contacts/{ContactID}/Attachments/{FileName}
+
+  - action: delete
+    path: paths > /Contacts/{ContactID}/CISSettings
+
+  - action: delete
+    path: components > schemas > CISSettings
+
+  - action: delete
+    path: components > schemas > CISSetting
+
+  - action: delete
+    path: components > schemas > CISOrgSettings
+
+  - action: delete
+    path: components > schemas > CISOrgSetting
+
+  - action: delete
+    path: components > schemas > CreditNote > allOf > * > properties > CISDeduction
+
+  - action: delete
+    path: components > schemas > Invoice > allOf > * > properties > CISDeduction
+
+  - action: delete
+    path: components > schemas > CreditNote > allOf > * > properties > CISRate
+
+  - action: delete
+    path: components > schemas > Invoice > allOf > * > properties > CISRate
 
   - action: delete
     path: paths > /Contacts/{ContactID}/History
@@ -432,6 +330,9 @@ actions:
     path: paths > /Organisation/Actions
 
   - action: delete
+    path: paths > /Organisation/{OrganisationID}/CISSettings
+
+  - action: delete
     path: paths > /Overpayments/{OverpaymentID}/History
 
   - action: delete
@@ -466,6 +367,9 @@ actions:
 
   - action: delete
     path: paths > /Reports/TenNinetyNine
+
+  - action: delete
+    path: components > securitySchemes > OAuth2 > flows > authorizationCode > scopes > accounting.reports.tenninetynine.read
 
   - action: delete
     path: paths > /BrandingThemes
@@ -525,9 +429,6 @@ actions:
     path: components > schemas > QuoteStatusCodes
 
   - action: delete
-    path: components > schemas > QuotesLineAmountTypes
-
-  - action: delete
     path: paths > /RepeatingInvoices
 
   - action: delete
@@ -583,6 +484,72 @@ actions:
 
   - action: delete
     path: components > schemas > Receipt
+
+  - action: delete
+    path: paths > /Accounts/{AccountID} > get > responses > 200 > content > application/json > example > Accounts > * > ShowInExpenseClaims
+
+  - action: delete
+    path: components > schemas > ExpenseClaim
+
+  - action: delete
+    path: paths > /ExpenseClaims
+
+  - action: delete
+    path: paths > /ExpenseClaims/{ExpenseClaimID}
+
+  - action: delete
+    path: components > parameters > ExpenseClaimID
+
+  - action: delete
+    path: components > schemas > Account > allOf > * > properties > ShowInExpenseClaims
+
+  - action: delete
+    path: components > schemas > ExpenseClaims
+
+  - action: delete
+    path: components > schemas > HistoryRecords
+
+  - action: delete
+    path: components > schemas > HistoryRecord
+
+  - action: delete
+    path: components > requestBodies
+
+  - action: delete
+    path: components > responses > HistoryRecordCreated
+
+  - action: delete
+    path: components > responses > HistoryRetrieved
+
+  - action: delete
+    path: paths > /Invoices/{InvoiceID}/OnlineInvoice
+
+  - action: delete
+    path: components > schemas > OnlineInvoices
+
+  - action: delete
+    path: components > schemas > OnlineInvoice
+
+  - action: delete
+    path: components > schemas > InvoiceReminders
+
+  - action: delete
+    path: components > schemas > InvoiceReminder
+
+  - action: delete
+    path: paths > /InvoiceReminders/Settings
+
+  - action: delete
+    path: components > schemas > ImportSummaryObject
+
+  - action: delete
+    path: components > schemas > ImportSummary
+
+  - action: delete
+    path: components > schemas > ImportSummaryAccounts
+
+  - action: delete
+    path: components > schemas > ImportSummaryOrganisation
 
   - action: addChildFromFile
     path: paths
