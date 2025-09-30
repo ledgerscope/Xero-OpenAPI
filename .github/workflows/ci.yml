@@ -49,7 +49,7 @@ jobs:
     - name: Setup NuGet
       run: dotnet nuget add source --username ${{ github.repository_owner }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
 
-    - name: OpenAPI Version
+    - name: Show the OpenAPI version
       uses: docker://openapitools/openapi-generator-cli:v4.3.1
       with:
         args: version
@@ -94,11 +94,11 @@ jobs:
       run: dotnet restore
       working-directory: ./output/csharp-netcore/accounting
     
-    - name: Build
+    - name: Build the code from the csharp files we just generated
       run: dotnet build --configuration Release --no-restore -p:Version=4.0.${{github.run_number}}
       working-directory: ./output/csharp-netcore/accounting
     
-    - name: Test
+    - name: Run unit tests
       run: dotnet test --no-restore --verbosity normal
       working-directory: ./output/csharp-netcore/accounting
 
@@ -151,6 +151,12 @@ jobs:
 
     - name: Upload xero_accounting_ls_output.yaml to Azure Blob Storage
       run: az storage blob upload --account-name lfidocsstaging --container-name '$web' --file ./xero_accounting_ls_output.yaml --name api-explorer/xero_accounting_ls_output.yaml --auth-mode login --overwrite
+
+    - name: Upload xero_accounting_ls_output_dev.yaml to Azure Blob Storage
+      run: az storage blob upload --account-name lfidocsstaging --container-name '$web' --file ./xero_accounting_ls_output_dev.yaml --name api-explorer/xero_accounting_ls_output_dev.yaml --auth-mode login --overwrite
+
+    - name: Upload xero_accounting_ls_output_localhost.yaml to Azure Blob Storage
+      run: az storage blob upload --account-name lfidocsstaging --container-name '$web' --file ./xero_accounting_ls_output_localhost.yaml --name api-explorer/xero_accounting_ls_output_localhost.yaml --auth-mode login --overwrite
 
   publish-nuget:
     runs-on: ubuntu-latest
