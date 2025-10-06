@@ -86,22 +86,10 @@ actions:
     path: components > schemas > ExpenseClaim > allOf > [1] > properties > Receipts
 
   - action: delete
-    path: paths > /ExpenseClaims > get > responses > 200 > content > application/json > example > ExpenseClaims > * > Receipts
-
-  - action: delete
-    path: paths > /ExpenseClaims/{ExpenseClaimID} > get > responses > 200 > content > application/json > example > ExpenseClaims > * > Receipts
-
-  - action: delete
     path: paths > /Contacts/{ContactID} > get > responses > 200 > content > application/json > example > Contacts > * > BrandingTheme
 
   - action: delete
     path: paths > /Contacts/{ContactNumber} > get > responses > 200 > content > application/json > example > Contacts > * > BrandingTheme
-
-  - action: delete
-    path: paths > /PurchaseOrders/{PurchaseOrderID} > get > responses > 200 > content > application/json > example > PurchaseOrders > * > BrandingThemeID
-
-  - action: delete
-    path: paths > /PurchaseOrders/{PurchaseOrderNumber} > get > responses > 200 > content > application/json > example > PurchaseOrders > * > BrandingThemeID
 
   - action: delete
     path: paths > /Quotes > get > responses > 200 > content > application/json > example > Quotes > * > BrandingThemeID
@@ -291,9 +279,6 @@ actions:
     path: paths > /CreditNotes/{CreditNoteID}/History
 
   - action: delete
-    path: paths > /ExpenseClaims/{ExpenseClaimID}/History
-
-  - action: delete
     path: paths > /Invoices/{InvoiceID}/Attachments
 
   - action: delete
@@ -307,9 +292,6 @@ actions:
 
   - action: delete
     path: paths > /Invoices/{InvoiceID}/History
-
-  - action: delete
-    path: paths > /Items/{ItemID}/History
 
   - action: delete
     path: paths > /LinkedTransactions
@@ -340,21 +322,6 @@ actions:
 
   - action: delete
     path: paths > /Prepayments/{PrepaymentID}/History
-
-  - action: delete
-    path: paths > /PurchaseOrders/{PurchaseOrderID}/pdf
-
-  - action: delete
-    path: paths > /PurchaseOrders/{PurchaseOrderID}/History
-
-  - action: delete
-    path: paths > /PurchaseOrders/{PurchaseOrderID}/Attachments
-
-  - action: delete
-    path: paths > /PurchaseOrders/{PurchaseOrderID}/Attachments/{AttachmentID}
-
-  - action: delete
-    path: paths > /PurchaseOrders/{PurchaseOrderID}/Attachments/{FileName}
 
   - action: delete
     path: paths > /Reports
@@ -498,6 +465,9 @@ actions:
     path: paths > /ExpenseClaims/{ExpenseClaimID}
 
   - action: delete
+    path: paths > /ExpenseClaims/{ExpenseClaimID}/History
+
+  - action: delete
     path: components > parameters > ExpenseClaimID
 
   - action: delete
@@ -550,6 +520,57 @@ actions:
 
   - action: delete
     path: components > schemas > ImportSummaryOrganisation
+
+  - action: delete
+    path: paths > /BatchPayments
+
+  - action: delete
+    path: paths > /BatchPayments/{BatchPaymentID}
+
+  - action: delete
+    path: paths > /ContactGroups
+
+  - action: delete
+    path: paths > /ContactGroups/{ContactGroupID}
+
+  - action: delete
+    path: paths > /Items
+
+  - action: delete
+    path: paths > /Items/{ItemID}
+
+  - action: delete
+    path: paths > /Items/{ItemID}/History
+
+  - action: delete
+    path: paths > /PurchaseOrders
+
+  - action: delete
+    path:  paths > /PurchaseOrders/{PurchaseOrderID}
+
+  - action: delete
+    path: paths > /PurchaseOrders/{PurchaseOrderID}/pdf
+
+  - action: delete
+    path: paths > /PurchaseOrders/{PurchaseOrderID}/History
+
+  - action: delete
+    path: paths > /PurchaseOrders/{PurchaseOrderID}/Attachments
+
+  - action: delete
+    path: paths > /PurchaseOrders/{PurchaseOrderID}/Attachments/{AttachmentID}
+
+  - action: delete
+    path: paths > /PurchaseOrders/{PurchaseOrderID}/Attachments/{FileName}
+
+  - action: delete
+    path: paths > /PurchaseOrders/{PurchaseOrderNumber}
+
+  - action: delete
+    path: paths > /Users
+
+  - action: delete
+    path: paths > /Users/{UserID}
 
   - action: addChildFromFile
     path: paths
