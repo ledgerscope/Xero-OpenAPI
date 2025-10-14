@@ -1,3 +1,12 @@
+# This is the first delta that is applied to Xero's OpenAPI spec
+# It fixes some bugs (that we've struggled to get Xero to take upstream)
+# and adds some enums that were missed
+
+# It also modifies the inheritance structure of some objects to make them easier
+# to work with (for example giving Invoices and Credit Notes a common hierarchy)
+
+# This is used to build the wrapper that _we_ use to interact with Xero's API
+
 settings:
   failIfNotFound: false
   applyXeroExampleKludge: true

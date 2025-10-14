@@ -1,3 +1,15 @@
+# This file is the second delta that is applied (after the first)
+# The purpose of this is to apply the changes to the OpenAPI specification that are specific to the Ledgerscope API
+
+# For example: 
+# - Changing the title of the API
+# - Changing the contact details
+# - Changing the URL of the API
+# - Changing the OAuth2 endpoints
+# - Remove write (and other modifying) operations
+
+# This is used to build the SDKs for our customers to interact with our API and to build the API documentation site
+
 settings:
   failIfNotFound: true
   applyXeroExampleKludge: true
