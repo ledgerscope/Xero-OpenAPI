@@ -149,14 +149,23 @@ jobs:
         az account show
         az group list
 
-    - name: Upload xero_accounting_ls_output.yaml to Azure Blob Storage
-      run: az storage blob upload --account-name lfidocsstaging --container-name '$web' --file ./xero_accounting_ls_output.yaml --name api-explorer/xero_accounting_ls_output.yaml --auth-mode login --overwrite
+    - name: Upload xero_accounting_ls_output.yaml to Azure Blob Storage (staging)
+      run: az storage blob upload --account-name lfidocsstaging --container-name 'yaml' --file ./xero_accounting_ls_output.yaml --name api-explorer/xero_accounting_ls_output.yaml --auth-mode login --overwrite
 
-    - name: Upload xero_accounting_ls_output_dev.yaml to Azure Blob Storage
-      run: az storage blob upload --account-name lfidocsstaging --container-name '$web' --file ./xero_accounting_ls_output_dev.yaml --name api-explorer/xero_accounting_ls_output_dev.yaml --auth-mode login --overwrite
+    - name: Upload xero_accounting_ls_output_dev.yaml to Azure Blob Storage (staging)
+      run: az storage blob upload --account-name lfidocsstaging --container-name 'yaml' --file ./xero_accounting_ls_output_dev.yaml --name api-explorer/xero_accounting_ls_output_dev.yaml --auth-mode login --overwrite
 
-    - name: Upload xero_accounting_ls_output_localhost.yaml to Azure Blob Storage
-      run: az storage blob upload --account-name lfidocsstaging --container-name '$web' --file ./xero_accounting_ls_output_localhost.yaml --name api-explorer/xero_accounting_ls_output_localhost.yaml --auth-mode login --overwrite
+    - name: Upload xero_accounting_ls_output_localhost.yaml to Azure Blob Storage (staging)
+      run: az storage blob upload --account-name lfidocsstaging --container-name 'yaml' --file ./xero_accounting_ls_output_localhost.yaml --name api-explorer/xero_accounting_ls_output_localhost.yaml --auth-mode login --overwrite
+
+    - name: Upload xero_accounting_ls_output.yaml to Azure Blob Storage (production)
+      run: az storage blob upload --account-name lfidocsprod --container-name 'yaml' --file ./xero_accounting_ls_output.yaml --name api-explorer/xero_accounting_ls_output.yaml --auth-mode login --overwrite
+
+    - name: Upload xero_accounting_ls_output_dev.yaml to Azure Blob Storage (production)
+      run: az storage blob upload --account-name lfidocsprod --container-name 'yaml' --file ./xero_accounting_ls_output_dev.yaml --name api-explorer/xero_accounting_ls_output_dev.yaml --auth-mode login --overwrite
+
+    - name: Upload xero_accounting_ls_output_localhost.yaml to Azure Blob Storage (production)
+      run: az storage blob upload --account-name lfidocsprod --container-name 'yaml' --file ./xero_accounting_ls_output_localhost.yaml --name api-explorer/xero_accounting_ls_output_localhost.yaml --auth-mode login --overwrite
 
   publish-nuget:
     runs-on: ubuntu-latest
