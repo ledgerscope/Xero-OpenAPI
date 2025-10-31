@@ -9,6 +9,8 @@ jobs:
       EmbedUntrackedSources: true
 
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
 
     steps:
     - uses: actions/checkout@v1
