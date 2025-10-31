@@ -26548,6 +26548,7 @@ components:
               description: QuoteID GUID is automatically generated and is returned after create or GET.
               type: string
               format: uuid
+              x-entity-identifier: true
             QuoteNumber:
               description: Unique alpha numeric code identifying a quote (Max Length = 255)
               maxLength: 255
@@ -26593,6 +26594,7 @@ components:
               description: The currency rate for a multicurrency quote
               type: number
               format: double 
+              x-is-money: true
             SubTotal:
               description: Total of quote excluding taxes.
               type: number
