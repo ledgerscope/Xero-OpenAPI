@@ -62,6 +62,12 @@ actions:
     path: paths > /CreditNotes/{CreditNoteID}/Allocations
 
   - action: delete
+    path: paths > /Employees
+
+  - action: delete
+    path: paths > /Employees/{EmployeeID}
+
+  - action: delete
     path: paths > /Invoices/{InvoiceID}/Email
 
   - action: delete
