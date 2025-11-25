@@ -91,18 +91,3 @@ jobs:
       with:
         name: Source
         path: ./*
-
-  publish:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:    
-    - uses: actions/download-artifact@v4
-      with:
-        name: Packages
-
-    - name: Setup NuGet
-      run: dotnet nuget add source --username ${{ github.repository_owner }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
-
-    - name: Publish
-      run: dotnet nuget push -s github "**/*.nupkg"
-      working-directory: ./output/csharp-netcore/accounting
