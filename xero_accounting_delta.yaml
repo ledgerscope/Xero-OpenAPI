@@ -59,6 +59,9 @@ actions:
   - action: delete
     path: components > schemas > * > properties > HasValidationErrors
 
+  - action: delete
+    path: components > schemas > * > properties > UpdatedDateUTC
+
   - action: addChild
     path: components > schemas
     key: ValidationResponses
@@ -825,3 +828,11 @@ actions:
     path: components > parameters > requiredHeader
     key: x-is-tenant-id
     content: true
+
+  - action: addChild
+    path: components > schemas > Budget
+    position: 0
+    key: allOf
+    content:
+      - $ref: '#/components/schemas/LastUpdatedDate'
+      - type: object
