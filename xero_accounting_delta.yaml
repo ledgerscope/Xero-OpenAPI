@@ -575,6 +575,11 @@ actions:
     path: components > schemas > Quote > type
 
   - action: addChild
+    path: components > schemas > Quote > properties > QuoteID
+    key: x-entity-identifier
+    content: true
+
+  - action: addChild
     path: components > schemas > Quote
     position: 0
     key: allOf
@@ -836,8 +841,3 @@ actions:
     content:
       - $ref: '#/components/schemas/LastUpdatedDate'
       - type: object
-
-  - action: addChild
-    path: components > schemas > Quote > properties > QuoteID
-    key: x-entity-identifier
-    content: true
