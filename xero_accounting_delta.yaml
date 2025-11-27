@@ -59,9 +59,6 @@ actions:
   - action: delete
     path: components > schemas > * > properties > HasValidationErrors
 
-  - action: delete
-    path: components > schemas > * > properties > UpdatedDateUTC
-
   - action: addChild
     path: components > schemas
     key: ValidationResponses
