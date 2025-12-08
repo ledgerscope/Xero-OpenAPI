@@ -1124,6 +1124,12 @@ paths:
           example: 1
           schema:
             type: integer
+        - in: query
+          name: pageSize
+          description: Used with the page parameter. Sets the number of bank transactions to be returned per call when the pageSize parameter is used with the page parameter e.g. page=1&pageSize=250
+          example: 100
+          schema:
+            type: integer
         - $ref: '#/components/parameters/unitdp'
       responses:
         '200':
