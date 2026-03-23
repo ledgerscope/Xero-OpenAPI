@@ -27548,6 +27548,7 @@ components:
               - ACTIVE
               - ARCHIVED
               - DELETED
+              - ''
             TrackingCategoryID:
               description: Filter by a tracking category e.g. 297c2dc5-cc47-4afd-8ec8-74990b8761e9
               type: string
