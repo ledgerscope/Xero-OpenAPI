@@ -25601,6 +25601,9 @@ components:
             - SOLE_TRADER
             - SUPERANNUATION_FUND
             - TRUST
+            - CCORPORATIONLLC
+            - PARTNERSHIPLLC
+            - SCORPORATIONLLC
         ShortCode:
           description: A unique identifier for the organisation. Potential uses.
           type: string
