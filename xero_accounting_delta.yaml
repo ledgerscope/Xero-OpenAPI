@@ -580,6 +580,11 @@ actions:
     content: true
 
   - action: addChild
+    path: components > schemas > Quote > properties > CurrencyRate
+    key: x-is-money
+    content: true
+
+  - action: addChild
     path: components > schemas > Quote
     position: 0
     key: allOf
@@ -684,6 +689,10 @@ actions:
 
   - action: delete
     path: components > schemas > TrackingOption > type
+
+  - action: addChild
+    path: components > schemas > TrackingOption > properties > Status > enum
+    content: ''
 
   - action: addChild
     path: components > schemas > TrackingOption
@@ -841,12 +850,3 @@ actions:
     content:
       - $ref: '#/components/schemas/LastUpdatedDate'
       - type: object
-
-  - action: addChild
-    path: components > schemas > Quote > properties > CurrencyRate
-    key: x-is-money
-    content: true
-
-  - action: addChild
-    path: components > schemas > TrackingOption > properties > Status > enum
-    content: ''
