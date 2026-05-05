@@ -841,3 +841,8 @@ actions:
     content:
       - $ref: '#/components/schemas/LastUpdatedDate'
       - type: object
+
+  - action: addChild
+    path: components > schemas > Quote > properties > CurrencyRate
+    key: x-is-money
+    content: true
