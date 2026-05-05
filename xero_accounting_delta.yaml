@@ -846,3 +846,7 @@ actions:
     path: components > schemas > Quote > properties > CurrencyRate
     key: x-is-money
     content: true
+
+  - action: addChild
+    path: components > schemas > TrackingOption > properties > Status > enum
+    content: ''
