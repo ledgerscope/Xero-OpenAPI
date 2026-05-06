@@ -858,18 +858,18 @@ actions:
     content: '#/components/schemas/LineItemTracking'
 
   - action: delete
-    path: components > schemas > JournalLine > properties > TrackingCategories > items > $ref
-
-  - action: addChild
-    path: components > schemas > JournalLine > properties > TrackingCategories > items
-    key: $ref
-    content: '#/components/schemas/LineItemTracking'
-
-  - action: delete
     path: components > schemas > ManualJournalLine > properties > Tracking > items > $ref
 
   - action: addChild
     path: components > schemas > ManualJournalLine > properties > Tracking > items
+    key: $ref
+    content: '#/components/schemas/LineItemTracking'
+
+  - action: delete
+    path: components > schemas > JournalLine > properties > TrackingCategories > items > $ref
+
+  - action: addChild
+    path: components > schemas > JournalLine > properties > TrackingCategories > items
     key: $ref
     content: '#/components/schemas/LineItemTracking'
 
