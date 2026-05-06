@@ -666,6 +666,12 @@ actions:
   - action: delete
     path: components > schemas > TrackingCategory > type
 
+  - action: delete
+    path: components > schemas > TrackingCategory > properties > TrackingOptionID
+
+  - action: delete
+    path: components > schemas > TrackingCategory > properties > Option
+
   - action: addChild
     path: components > schemas > TrackingCategory
     position: 0
@@ -842,6 +848,38 @@ actions:
     path: components > parameters > requiredHeader
     key: x-is-tenant-id
     content: true
+
+  - action: delete
+    path: components > schemas > Budget > properties > Tracking > items > $ref
+
+  - action: addChild
+    path: components > schemas > Budget > properties > Tracking > items
+    key: $ref
+    content: '#/components/schemas/LineItemTracking'
+
+  - action: delete
+    path: components > schemas > JournalLine > properties > TrackingCategories > items > $ref
+
+  - action: addChild
+    path: components > schemas > JournalLine > properties > TrackingCategories > items
+    key: $ref
+    content: '#/components/schemas/LineItemTracking'
+
+  - action: delete
+    path: components > schemas > ManualJournalLine > properties > Tracking > items > $ref
+
+  - action: addChild
+    path: components > schemas > ManualJournalLine > properties > Tracking > items
+    key: $ref
+    content: '#/components/schemas/LineItemTracking'
+
+  - action: delete
+    path: components > schemas > TrackingCategories > properties > TrackingCategories > items > $ref
+
+  - action: addChild
+    path: components > schemas > TrackingCategories > properties > TrackingCategories > items
+    key: $ref
+    content: '#/components/schemas/LineItemTracking'
 
   - action: addChild
     path: components > schemas > Budget
