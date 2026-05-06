@@ -873,14 +873,6 @@ actions:
     key: $ref
     content: '#/components/schemas/LineItemTracking'
 
-  - action: delete
-    path: components > schemas > TrackingCategories > properties > TrackingCategories > items > $ref
-
-  - action: addChild
-    path: components > schemas > TrackingCategories > properties > TrackingCategories > items
-    key: $ref
-    content: '#/components/schemas/LineItemTracking'
-
   - action: addChild
     path: components > schemas > Budget
     position: 0
