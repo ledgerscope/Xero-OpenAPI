@@ -880,3 +880,8 @@ actions:
     content:
       - $ref: '#/components/schemas/LastUpdatedDate'
       - type: object
+
+  - action: addChild
+    path: components > schemas > Setup 
+    key: x-emit-default
+    content: true
