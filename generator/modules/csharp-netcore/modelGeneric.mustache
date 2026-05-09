@@ -154,7 +154,7 @@
 
         {{#vendorExtensions.x-entity-identifier}}
         
-        public Guid Id
+        Guid IHasId.Id
         {
             get => {{name}};
             set => {{name}} = value;
