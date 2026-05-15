@@ -178,9 +178,6 @@ jobs:
       with:
         name: Packages
 
-    - name: Setup NuGet
-      run: dotnet nuget add source --username ${{ github.repository_owner }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
-
     - name: Publish
-      run: dotnet nuget push -s github "**/*.nupkg"
+      run: dotnet nuget push "**/*.nupkg" --source https://nuget.pkg.github.com/ledgerscope/index.json --api-key ${{secrets.GITHUB_TOKEN}}
       working-directory: ./output/csharp-netcore/accounting
