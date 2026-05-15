@@ -25503,6 +25503,7 @@ components:
             - PARTNERSHIPLLC
             - SCORPORATIONLLC
             - UNSPECIFIED
+            - SINGLEMEMBERLLC
         BaseCurrency:
           $ref: '#/components/schemas/CurrencyCode'
           type: string
@@ -25608,6 +25609,7 @@ components:
             - PARTNERSHIPLLC
             - SCORPORATIONLLC
             - UNSPECIFIED
+            - SINGLEMEMBERLLC
         ShortCode:
           description: A unique identifier for the organisation. Potential uses.
           type: string
