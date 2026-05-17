@@ -218,7 +218,7 @@ namespace {{packageName}}.{{apiPackage}}
             {{#returnType}}{{packageName}}.Client.ApiResponse<{{{returnType}}}> localVarResponse = await {{operationId}}AsyncWithHttpInfo({{#allParams}}{{paramName}}, {{/allParams}}ct);
             if (localVarResponse.Data != null)
                 return localVarResponse.Data;
-            throw new ApiException(200, localVarResponse.ErrorText, localVarResponse.Content);{{/returnType}}{{^returnType}}await {{operationId}}AsyncWithHttpInfo({{#allParams}}{{paramName}}, {{/allParams}}ct);{{/returnType}}
+            throw new ApiException(200, localVarResponse.ErrorText, localVarResponse.RawBytes);{{/returnType}}{{^returnType}}await {{operationId}}AsyncWithHttpInfo({{#allParams}}{{paramName}}, {{/allParams}}ct);{{/returnType}}
 
         }
 

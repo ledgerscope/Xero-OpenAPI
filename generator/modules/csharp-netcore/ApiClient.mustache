@@ -128,7 +128,7 @@ namespace {{packageName}}.Client
             }
             catch (Exception e)
             {
-                throw new ApiException(500, e.Message, response.Content);
+                throw new ApiException(500, e.Message, response.RawBytes);
             }
         }
 
@@ -352,7 +352,8 @@ namespace {{packageName}}.Client
             {
                 ErrorText = response.ErrorMessage,
                 Cookies = new List<Cookie>(),
-                Content = response.Content
+                Content = response.Content,
+                RawBytes = response.RawBytes
             };
             
             if (response.Headers != null)
