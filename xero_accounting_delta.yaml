@@ -502,9 +502,6 @@ actions:
   - action: delete
     path: components > schemas > Payment > type
 
-  - action: delete
-    path: components > schemas > Payment > properties > BatchPaymentID
-
   - action: addChild
     path: components > schemas > Payment
     position: 0
