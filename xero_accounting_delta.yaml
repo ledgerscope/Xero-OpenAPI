@@ -626,6 +626,12 @@ actions:
       - $ref: '#/components/schemas/LastUpdatedDate'
       - type: object
 
+  - action: addChild
+    path: components > schemas > ReportWithRow > properties > ReportType
+    key: enum
+    content: 
+      - AgedPayablesByContact
+
   - action: adopt
     path: components > schemas > ReportWithRow > externalDocs
     parentPath: components > schemas > ReportWithRow > allOf > [1]
