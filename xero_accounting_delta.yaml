@@ -628,9 +628,9 @@ actions:
 
   - action: addChild
     path: components > schemas > ReportWithRow > properties > ReportType
-    key: enum
-    content: 
-      - AgedPayablesByContact
+    key: $ref
+    content:
+      '#/components/schemas/ReportType'
 
   - action: adopt
     path: components > schemas > ReportWithRow > externalDocs
