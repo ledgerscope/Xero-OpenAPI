@@ -15,34 +15,24 @@ actions:
 
   - action: delete
     path: components > schemas > * > properties > * > readOnly
-    
-  - action: addChild
-    path: components > schemas > Report > properties > ReportType > enum
-    content: BalanceSheet
 
   - action: addChild
-    path: components > schemas > Report > properties > ReportType > enum
-    content: BankSummary
-
-  - action: addChild
-    path: components > schemas > Report > properties > ReportType > enum
-    content: ProfitAndLoss
-
-  - action: addChild
-    path: components > schemas > Report > properties > ReportType > enum
-    content: BudgetSummary
-
-  - action: addChild
-    path: components > schemas > Report > properties > ReportType > enum
-    content: ExecutiveSummary
-
-  - action: addChild
-    path: components > schemas > Report > properties > ReportType > enum
-    content: TrialBalance
-
-  - action: addChild
-    path: components > schemas > Report > properties > ReportType > enum
-    content: AgedReceivablesByContact
+    path: components > schemas
+    key: ReportType
+    content: 
+      type: string
+      description: See Prepayment Types
+      enum:
+        - AgedPayablesByContact
+        - AgedReceivablesByContact
+        - BalanceSheet
+        - BankSummary
+        - BankStatement
+        - BudgetSummary
+        - ExecutiveSummary
+        - ProfitAndLoss
+        - TenNinetyNine
+        - TrialBalance
 
   - action: delete
     path: components > schemas > * > properties > StatusAttributeString
@@ -639,6 +629,15 @@ actions:
   - action: adopt
     path: components > schemas > ReportWithRow > properties
     parentPath: components > schemas > ReportWithRow > allOf > [1]
+
+  - action: addChild
+    path: components > schemas > Report > properties > ReportType
+    key: $ref
+    content:
+      '#/components/schemas/ReportType'
+
+  - action: delete
+    path: components > schemas > Report > properties > ReportType > enum
 
   - action: addChild
     path: components > schemas > Report
