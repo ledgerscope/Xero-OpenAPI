@@ -213,11 +213,6 @@ actions:
     key: x-entity-identifier
     content: true
 
-  - action: addChild
-    path: components > schemas > BatchPayment > properties > BatchPaymentID
-    key: nullable
-    content: true
-
   - action: delete
     path: components > schemas > BatchPayment > type
 
@@ -492,6 +487,11 @@ actions:
   - action: addChild
     path: components > schemas > Payment > properties > PaymentID
     key: x-entity-identifier
+    content: true
+
+  - action: addChild
+    path: components > schemas > Payment > properties > BatchPaymentID
+    key: nullable
     content: true
 
   - action: delete
