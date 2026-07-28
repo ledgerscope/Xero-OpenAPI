@@ -494,6 +494,11 @@ actions:
     key: nullable
     content: true
 
+  - action: addChild
+    path: components > schemas > Payment > properties > BatchPaymentID
+    key: x-emit-default-false
+    content: true # Matters what goes here
+
   - action: delete
     path: components > schemas > Payment > type
 
