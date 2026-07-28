@@ -112,9 +112,8 @@
 
         {{/vendorExtensions.x-is-msdate-time}}
         {{#vendorExtensions.x-is-msdate}}
-        [Newtonsoft.Json.JsonConverterAttribute(typeof(Newtonsoft.Json.Converters.IsoDateTimeConverter))]
+        [Newtonsoft.Json.JsonConverterAttribute(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
         public {{#isNullable}}DateTime?{{/isNullable}}{{^isNullable}}DateTime{{/isNullable}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
-
 
         {{/vendorExtensions.x-is-msdate}}
         {{#vendorExtensions.x-is-money}}
