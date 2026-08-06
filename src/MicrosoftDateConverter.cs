@@ -7,7 +7,17 @@ namespace Xero.NetStandard.OAuth2.Json.Converters
 	public class MicrosoftDateConverter : DateTimeConverterBase
 	{
 		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-		{
+		{			
+			if (reader.TokenType == JsonToken.Null)
+			{
+				if (objectType == typeof(DateTime?))
+					return null;
+				else if (objectType == typeof(DateTimeOffset?))
+					return null;
+				else
+					throw new JsonSerializationException($"Cannot convert null value to {objectType}.");
+			}
+
 			if (reader.Value is DateTime dt)
 			{
 				if (objectType == typeof(DateTime))
