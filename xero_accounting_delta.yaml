@@ -188,6 +188,22 @@ actions:
   - action: delete
     path: components > schemas > BankTransfer > type
 
+  - action: delete
+    path: components > schemas > BankTransfer > properties > FromTracking > items >  $ref
+
+  - action: addChild
+    path: components > schemas > BankTransfer > properties > FromTracking > items
+    key: $ref
+    content: '#/components/schemas/LineItemTracking'
+
+  - action: delete
+    path: components > schemas > BankTransfer > properties > ToTracking > items >  $ref
+
+  - action: addChild
+    path: components > schemas > BankTransfer > properties > ToTracking > items
+    key: $ref
+    content: '#/components/schemas/LineItemTracking'
+
   - action: addChild
     path: components > schemas > BankTransfer
     position: 0
@@ -897,3 +913,6 @@ actions:
     path: components > schemas > Setup 
     key: x-emit-default
     content: true
+
+  - action: delete
+    path: components > schemas > TrackingReference
