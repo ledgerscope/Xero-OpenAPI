@@ -273,7 +273,7 @@ namespace {{packageName}}.{{apiPackage}}
             {{#queryParams}}
             if ({{paramName}} != null)
             {
-                foreach (var kvp in {{packageName}}.Client.ClientUtils.ParameterToMultiMap("{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}", "{{baseName}}", {{paramName}}))
+                foreach (var kvp in {{packageName}}.Client.ClientUtils.ParameterToMultiMap("{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}", "{{baseName}}", {{#isDate}}string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:yyyy-MM-dd}", {{paramName}}){{/isDate}}{{^isDate}}{{paramName}}{{/isDate}}))
                 {
                     foreach (var value in kvp.Value)
                     {

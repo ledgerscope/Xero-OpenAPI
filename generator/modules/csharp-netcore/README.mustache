@@ -79,6 +79,8 @@ Then, publish to a [local feed](https://docs.microsoft.com/en-us/nuget/hosting-p
 <a name="getting-started"></a>
 ## Getting Started
 
+Query parameters declared with OpenAPI `format: date` (including `date`, `fromDate`, and `toDate` on the aged payables and receivables reports) are serialized as `yyyy-MM-dd`, independently of the current culture or `Configuration.DateTimeFormat`. Parameters declared with `format: date-time` retain the configurable timestamp formatting.
+
 ```csharp
 using System.Collections.Generic;
 using System.Diagnostics;
