@@ -273,11 +273,12 @@ namespace {{packageName}}.{{apiPackage}}
             {{#queryParams}}
             if ({{paramName}} != null)
             {
-                foreach (var kvp in {{packageName}}.Client.ClientUtils.ParameterToMultiMap("{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}", "{{baseName}}", {{#isDate}}string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:yyyy-MM-dd}", {{paramName}}){{/isDate}}{{^isDate}}{{paramName}}{{/isDate}}))
+                var parameterCollection = {{packageName}}.Client.ClientUtils.ParameterToNameValueCollection("{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}", "{{baseName}}", {{#isDate}}string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:yyyy-MM-dd}", {{paramName}}){{/isDate}}{{^isDate}}{{paramName}}{{/isDate}});
+                foreach (var key in parameterCollection.AllKeys)
                 {
-                    foreach (var value in kvp.Value)
+                    foreach (var value in parameterCollection.GetValues(key))
                     {
-                        requestOptions.QueryParameters.Add(kvp.Key, value);
+                        requestOptions.QueryParameters.Add(key, value);
                     }
                 }
             }
@@ -313,11 +314,12 @@ namespace {{packageName}}.{{apiPackage}}
             {{#isKeyInQuery}}
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}")))
             {
-                foreach (var kvp in {{packageName}}.Client.ClientUtils.ParameterToMultiMap("", "{{keyParamName}}", this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}")))
+                var parameterCollection = {{packageName}}.Client.ClientUtils.ParameterToNameValueCollection("", "{{keyParamName}}", this.Configuration.GetApiKeyWithPrefix("{{keyParamName}}"));
+                foreach (var key in parameterCollection.AllKeys)
                 {
-                    foreach (var value in kvp.Value)
+                    foreach (var value in parameterCollection.GetValues(key))
                     {
-                        requestOptions.QueryParameters.Add(kvp.Key, value);
+                        requestOptions.QueryParameters.Add(key, value);
                     }
                 }
             }

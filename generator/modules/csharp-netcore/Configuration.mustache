@@ -91,8 +91,8 @@ namespace {{packageName}}.Client
                                         string.Format("Error calling {0}: {1}", methodName, response.Content),
                                         response.Content);
                 case int code when status == 429:
-                    response.Headers.TryGetValue("Retry-After", out var retryAfterList);
-                    response.Headers.TryGetValue("X-Rate-Limit-Problem", out var rateLimitProblemList);
+                    var retryAfterList = response.Headers.GetValues("Retry-After");
+                    var rateLimitProblemList = response.Headers.GetValues("X-Rate-Limit-Problem");
 
                     return new RateLimitExceededException(rateLimitProblemList.FirstOrDefault(), int.Parse(retryAfterList.FirstOrDefault()));
                 case int code when status > 400:

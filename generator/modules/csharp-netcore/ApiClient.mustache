@@ -3,6 +3,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -262,22 +263,30 @@ namespace {{packageName}}.Client
             
             if (options.QueryParameters != null)
             {
-                foreach (var queryParam in options.QueryParameters)
+                foreach (var queryParam in options.QueryParameters.AllKeys)
                 {
-                    foreach (var value in queryParam.Value)
+                    var values = options.QueryParameters.GetValues(queryParam);
+                    if (values != null)
                     {
-                        request.AddQueryParameter(queryParam.Key, value);
+                        foreach (var value in values)
+                        {
+                            request.AddQueryParameter(queryParam, value);
+                        }
                     }
                 }
             }
 
             if (options.HeaderParameters != null)
             {
-                foreach (var headerParam in options.HeaderParameters)
+                foreach (var headerParam in options.HeaderParameters.AllKeys)
                 {
-                    foreach (var value in headerParam.Value)
+                    var values = options.HeaderParameters.GetValues(headerParam);
+                    if (values != null)
                     {
-                        request.AddHeader(headerParam.Key, value);
+                        foreach (var value in values)
+                        {
+                            request.AddHeader(headerParam, value);
+                        }
                     }
                 }
             }
@@ -294,7 +303,7 @@ namespace {{packageName}}.Client
             {
                 if (options.HeaderParameters != null)
                 {
-                    var contentTypes = options.HeaderParameters["Content-Type"];
+                    var contentTypes = options.HeaderParameters.GetValues("Content-Type");
                     if (contentTypes == null || contentTypes.Any(header => header.Contains("application/json")))
                     {
                         request.RequestFormat = DataFormat.Json;
@@ -348,7 +357,7 @@ namespace {{packageName}}.Client
         private ApiResponse<T> toApiResponse<T>({{#supportsAsync}}IRestResponse<T> response{{/supportsAsync}}{{^supportsAsync}}IRestResponse response, CustomJsonCodec des{{/supportsAsync}})
         {
             T result = {{#supportsAsync}}response.Data{{/supportsAsync}}{{^supportsAsync}}(T)des.Deserialize(response, typeof(T)){{/supportsAsync}};
-            var transformed = new ApiResponse<T>(response.StatusCode, new Multimap<string, string>(), result)
+            var transformed = new ApiResponse<T>(response.StatusCode, new NameValueCollection(StringComparer.OrdinalIgnoreCase), result)
             {
                 ErrorText = response.ErrorMessage,
                 Cookies = new List<Cookie>(),

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 
@@ -32,7 +33,7 @@ namespace {{packageName}}.Client
         /// Gets or sets the HTTP headers
         /// </summary>
         /// <value>HTTP headers</value>
-        Multimap<string, string> Headers { get; }
+        NameValueCollection Headers { get; }
 
         /// <summary>
         /// Gets or sets any error text defined by the calling client.
@@ -68,7 +69,7 @@ namespace {{packageName}}.Client
         /// Gets or sets the HTTP headers
         /// </summary>
         /// <value>HTTP headers</value>
-        public Multimap<string, string> Headers { get; }
+        public NameValueCollection Headers { get; }
 
         /// <summary>
         /// Gets or sets the data (parsed HTTP body)
@@ -103,7 +104,8 @@ namespace {{packageName}}.Client
         {
             get
             {
-                if (Headers.TryGetValue("X-MinLimit-Remaining", out var rateLimitRemaining))
+                var rateLimitRemaining = Headers.GetValues("X-MinLimit-Remaining");
+                if (rateLimitRemaining != null)
                 {
                     return rateLimitRemaining.Select(a => int.Parse(a)).Sum();
                 }
@@ -116,7 +118,8 @@ namespace {{packageName}}.Client
         {
             get
             {
-                if (Headers.TryGetValue("X-DayLimit-Remaining", out var rateLimitRemaining))
+                var rateLimitRemaining = Headers.GetValues("X-DayLimit-Remaining");
+                if (rateLimitRemaining != null)
                 {
                     return rateLimitRemaining.Select(a => int.Parse(a)).Sum();
                 }
@@ -129,7 +132,8 @@ namespace {{packageName}}.Client
         {
             get
             {
-                if (Headers.TryGetValue("X-AppMinLimit-Remaining", out var rateLimitRemaining))
+                var rateLimitRemaining = Headers.GetValues("X-AppMinLimit-Remaining");
+                if (rateLimitRemaining != null)
                 {
                     return rateLimitRemaining.Select(a => int.Parse(a)).Sum();
                 }
@@ -148,10 +152,10 @@ namespace {{packageName}}.Client
         /// <param name="statusCode">HTTP status code.</param>
         /// <param name="headers">HTTP headers.</param>
         /// <param name="data">Data (parsed HTTP body)</param>
-        public ApiResponse(HttpStatusCode statusCode, Multimap<string, string> headers, T data)
+        public ApiResponse(HttpStatusCode statusCode, NameValueCollection headers, T data)
         {
             StatusCode = statusCode;
-            Headers = headers;
+            Headers = headers ?? new NameValueCollection(StringComparer.OrdinalIgnoreCase);
             Data = data;
         }
 
@@ -163,6 +167,7 @@ namespace {{packageName}}.Client
         public ApiResponse(HttpStatusCode statusCode, T data)
         {
             StatusCode = statusCode;
+            Headers = new NameValueCollection(StringComparer.OrdinalIgnoreCase);
             Data = data;
         }
 

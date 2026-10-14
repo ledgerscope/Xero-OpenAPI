@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 
@@ -22,13 +23,13 @@ namespace {{packageName}}.Client
         /// Query parameters to be applied to the request.
         /// Keys may have 1 or more values associated.
         /// </summary>
-        public Multimap<String, String> QueryParameters { get; set; }
+        public NameValueCollection QueryParameters { get; set; }
 
         /// <summary>
         /// Header parameters to be applied to to the request.
         /// Keys may have 1 or more values associated.
         /// </summary>
-        public Multimap<String, String> HeaderParameters { get; set; }
+        public NameValueCollection HeaderParameters { get; set; }
 
         /// <summary>
         /// Form parameters to be sent along with the request.
@@ -56,8 +57,8 @@ namespace {{packageName}}.Client
         public RequestOptions()
         {
             PathParameters = new Dictionary<string, string>();
-            QueryParameters = new Multimap<string, string>();
-            HeaderParameters = new Multimap<string, string>();
+            QueryParameters = new NameValueCollection(StringComparer.OrdinalIgnoreCase);
+            HeaderParameters = new NameValueCollection(StringComparer.OrdinalIgnoreCase);
             FormParameters = new Dictionary<string, string>();
             FileParameters = new List<FileParameters>();
             Cookies = new List<Cookie>();
