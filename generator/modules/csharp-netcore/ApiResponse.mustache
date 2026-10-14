@@ -107,7 +107,7 @@ namespace {{packageName}}.Client
                 var rateLimitRemaining = Headers.GetValues("X-MinLimit-Remaining");
                 if (rateLimitRemaining != null)
                 {
-                    return rateLimitRemaining.Select(a => int.Parse(a)).Sum();
+                    return rateLimitRemaining.Select(a => int.Parse(a)).FirstOrDefault();
                 }
 
                 return null;
@@ -121,7 +121,7 @@ namespace {{packageName}}.Client
                 var rateLimitRemaining = Headers.GetValues("X-DayLimit-Remaining");
                 if (rateLimitRemaining != null)
                 {
-                    return rateLimitRemaining.Select(a => int.Parse(a)).Sum();
+                    return rateLimitRemaining.Select(a => int.Parse(a)).FirstOrDefault();
                 }
 
                 return null;
@@ -135,7 +135,7 @@ namespace {{packageName}}.Client
                 var rateLimitRemaining = Headers.GetValues("X-AppMinLimit-Remaining");
                 if (rateLimitRemaining != null)
                 {
-                    return rateLimitRemaining.Select(a => int.Parse(a)).Sum();
+                    return rateLimitRemaining.Select(a => int.Parse(a)).FirstOrDefault();
                 }
 
                 return null;
