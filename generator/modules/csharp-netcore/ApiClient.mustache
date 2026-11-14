@@ -111,12 +111,12 @@ namespace {{packageName}}.Client
                 return stream;
             }
 
-            if (type.Name.StartsWith("System.Nullable`1[[System.DateTime")) // return a datetime object
+            if ((Nullable.GetUnderlyingType(type) ?? type) == typeof(DateTime)) // return a datetime object
             {
                 return DateTime.Parse(response.Content, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AdjustToUniversal | System.Globalization.DateTimeStyles.AssumeUniversal);
             }
 
-            if (type == typeof(String) || type.Name.StartsWith("System.Nullable")) // return primitive type
+            if (type == typeof(string) || Nullable.GetUnderlyingType(type) != null) // return primitive type
             {
                 return ClientUtils.ConvertType(response.Content, type);
             }
