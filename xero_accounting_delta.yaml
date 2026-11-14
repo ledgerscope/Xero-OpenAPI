@@ -101,6 +101,15 @@ actions:
     key: x-entity-identifier
     content: true
 
+  - action: addChild
+    path: components > schemas > Account > properties
+    key: CreatedDateUTC
+    content:
+      description: UTC timestamp of creation date of account
+      type: string
+      x-is-msdate-time: true
+      example: /Date(1573755038314)/
+
   - action: delete
     path: components > schemas > Account > type
 
