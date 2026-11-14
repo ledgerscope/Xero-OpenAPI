@@ -916,3 +916,14 @@ actions:
 
   - action: delete
     path: components > schemas > TrackingReference
+
+  # The C# template generates a <Name>String counterpart for every x-is-msdate property,
+  # so remove the ones the spec already declares explicitly to avoid duplicates
+  - action: delete
+    path: components > schemas > BatchPayment > allOf > * > properties > DateString
+
+  - action: delete
+    path: components > schemas > Quote > allOf > * > properties > DateString
+
+  - action: delete
+    path: components > schemas > Quote > allOf > * > properties > ExpiryDateString

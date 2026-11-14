@@ -17,6 +17,11 @@
         [Newtonsoft.Json.JsonConverterAttribute(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
         public {{#isNullable}}DateTime?{{/isNullable}}{{^isNullable}}DateTime{{/isNullable}} {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
 
+        /// <summary>
+        /// {{name}} rendered as a string (e.g. 2017-11-30T00:00:00)
+        /// </summary>
+        string {{name}}String { get; }
+
         {{/vendorExtensions.x-is-msdate}}
         {{#vendorExtensions.x-is-money}}
         public decimal? {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
@@ -114,6 +119,12 @@
         {{#vendorExtensions.x-is-msdate}}
         [Newtonsoft.Json.JsonConverterAttribute(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
         public {{#isNullable}}DateTime?{{/isNullable}}{{^isNullable}}DateTime{{/isNullable}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
+
+        /// <summary>
+        /// {{name}} rendered as a string (e.g. 2017-11-30T00:00:00)
+        /// </summary>
+        [DataMember(Name="{{baseName}}String", EmitDefaultValue=false)]
+        public string {{name}}String => {{#isNullable}}{{name}}?.ToString("yyyy-MM-dd'T'HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture){{/isNullable}}{{^isNullable}}{{name}} == default ? null : {{name}}.ToString("yyyy-MM-dd'T'HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture){{/isNullable}};
 
         {{/vendorExtensions.x-is-msdate}}
         {{#vendorExtensions.x-is-money}}
