@@ -40,13 +40,15 @@ namespace {{packageName}}.Client
         {
             // OpenAPI generated types generally hide default constructors.
             ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
-                ContractResolver = new DefaultContractResolver
+            // Keep all dates in UTC, never local time
+            DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+            ContractResolver = new DefaultContractResolver
+            {
+                NamingStrategy = new CamelCaseNamingStrategy()
                 {
-                    NamingStrategy = new CamelCaseNamingStrategy()
-                    {
-                        OverrideSpecifiedNames = true
-                    }
+                    OverrideSpecifiedNames = true
                 }
+            }
         };
 
         public CustomJsonCodec(IReadableConfiguration configuration)
@@ -114,7 +116,7 @@ namespace {{packageName}}.Client
 
             if (type.Name.StartsWith("System.Nullable`1[[System.DateTime")) // return a datetime object
             {
-                return DateTime.Parse(response.Content,  null, System.Globalization.DateTimeStyles.RoundtripKind);
+                return DateTime.Parse(response.Content, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AdjustToUniversal | System.Globalization.DateTimeStyles.AssumeUniversal);
             }
 
             if (type == typeof(String) || type.Name.StartsWith("System.Nullable")) // return primitive type

@@ -12,6 +12,11 @@
         [Newtonsoft.Json.JsonConverterAttribute(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
         public {{#isNullable}}DateTime?{{/isNullable}}{{^isNullable}}DateTime{{/isNullable}} {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
 
+        /// <summary>
+        /// {{name}} rendered as a string (e.g. 2017-11-30T13:45:10)
+        /// </summary>
+        string {{name}}String { get; }
+
         {{/vendorExtensions.x-is-msdate-time}}
         {{#vendorExtensions.x-is-msdate}}
         [Newtonsoft.Json.JsonConverterAttribute(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
@@ -115,6 +120,12 @@
         [Newtonsoft.Json.JsonConverterAttribute(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
         public {{#isNullable}}DateTime?{{/isNullable}}{{^isNullable}}DateTime{{/isNullable}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
 
+        /// <summary>
+        /// {{name}} rendered as a string (e.g. 2017-11-30T13:45:10)
+        /// </summary>
+        [DataMember(Name="{{baseName}}String", EmitDefaultValue=false)]
+        public string {{name}}String => Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter.ToDateString({{name}});
+
         {{/vendorExtensions.x-is-msdate-time}}
         {{#vendorExtensions.x-is-msdate}}
         [Newtonsoft.Json.JsonConverterAttribute(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
@@ -124,7 +135,7 @@
         /// {{name}} rendered as a string (e.g. 2017-11-30T00:00:00)
         /// </summary>
         [DataMember(Name="{{baseName}}String", EmitDefaultValue=false)]
-        public string {{name}}String => {{#isNullable}}{{name}}?.ToString("yyyy-MM-dd'T'HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture){{/isNullable}}{{^isNullable}}{{name}} == default ? null : {{name}}.ToString("yyyy-MM-dd'T'HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture){{/isNullable}};
+        public string {{name}}String => Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter.ToDateString({{name}});
 
         {{/vendorExtensions.x-is-msdate}}
         {{#vendorExtensions.x-is-money}}
