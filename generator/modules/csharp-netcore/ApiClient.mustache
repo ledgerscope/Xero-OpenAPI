@@ -34,7 +34,6 @@ namespace {{packageName}}.Client
     internal class CustomJsonCodec : RestSharp.Serializers.ISerializer, RestSharp.Deserializers.IDeserializer
     {
         private readonly IReadableConfiguration _configuration;
-        private readonly JsonSerializer _serializer;
         private string _contentType = "application/json";
         private readonly JsonSerializerSettings _serializerSettings = new JsonSerializerSettings
         {
@@ -54,13 +53,11 @@ namespace {{packageName}}.Client
         public CustomJsonCodec(IReadableConfiguration configuration)
         {
             _configuration = configuration;
-            _serializer = JsonSerializer.Create(_serializerSettings);
         }
 
         public CustomJsonCodec(JsonSerializerSettings serializerSettings, IReadableConfiguration configuration)
         {
             _serializerSettings = serializerSettings;
-            _serializer = JsonSerializer.Create(_serializerSettings);
             _configuration = configuration;
         }
 
