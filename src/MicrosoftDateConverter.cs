@@ -45,8 +45,10 @@ namespace Xero.NetStandard.OAuth2.Json.Converters
 			writer.DateFormatHandling = DateFormatHandling.MicrosoftDateFormat;
 			writer.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
 
+			// Written as a zero-offset DateTimeOffset so the output carries an explicit UTC offset,
+			// e.g. /Date(1630022400000+0000)/ (Json.NET omits the offset for a UTC DateTime)
 			if (value is DateTime dt)
-				writer.WriteValue(ToUtc(dt));
+				writer.WriteValue(new DateTimeOffset(ToUtc(dt), TimeSpan.Zero));
 			else if (value is DateTimeOffset dto)
 				writer.WriteValue(dto.ToUniversalTime());
 			else
