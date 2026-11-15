@@ -573,6 +573,23 @@ actions:
     key: x-entity-identifier
     content: true
 
+  - action: addChild
+    path: components > schemas > PurchaseOrder > properties
+    position: 0
+    key: Type
+    content:
+      description: See Purchase Order Types
+      type: string
+      enum:
+        - PURCHASEORDER
+
+  - action: addChild
+    path: components > schemas > PurchaseOrder > properties
+    key: IsDiscounted
+    content:
+      description: boolean to indicate if a purchase order has a discount
+      type: boolean
+
   - action: delete
     path: components > schemas > PurchaseOrder > type
 
@@ -998,6 +1015,11 @@ actions:
 
   - action: addChild
     path: components > schemas > PurchaseOrder > allOf > [2] > properties > DeliveryDate
+    key: x-render-datestring
+    content: true
+
+  - action: addChild
+    path: components > schemas > PurchaseOrder > allOf > [2] > properties > ExpectedArrivalDate
     key: x-render-datestring
     content: true
 
