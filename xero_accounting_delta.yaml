@@ -926,7 +926,7 @@ actions:
   - action: delete
     path: components > schemas > TrackingReference
 
-  # The C# template generates a <Name>String counterpart for every x-is-msdate and x-is-msdate-time property,
+  # The C# template generates a <Name>String counterpart for any date property marked x-render-datestring,
   # so remove the ones the spec already declares explicitly to avoid duplicates
   - action: delete
     path: components > schemas > BatchPayment > allOf > * > properties > DateString
@@ -939,3 +939,131 @@ actions:
 
   - action: delete
     path: components > schemas > * > allOf > * > properties > UpdatedDateUTCString
+
+  # Only the dates that Xero returns with a <Name>String counterpart (per its example responses) get one
+  - action: addChild
+    path: components > schemas > BankTransaction > allOf > [2] > properties > Date
+    key: x-render-datestring
+    content: true
+
+  - action: addChild
+    path: components > schemas > BankTransfer > allOf > [1] > properties > Date
+    key: x-render-datestring
+    content: true
+
+  - action: addChild
+    path: components > schemas > BankTransfer > allOf > [1] > properties > CreatedDateUTC
+    key: x-render-datestring
+    content: true
+
+  - action: addChild
+    path: components > schemas > BatchPayment > allOf > [2] > properties > Date
+    key: x-render-datestring
+    content: true
+
+  - action: addChild
+    path: components > schemas > CreditNote > allOf > [2] > properties > Date
+    key: x-render-datestring
+    content: true
+
+  - action: addChild
+    path: components > schemas > HistoryRecord > properties > DateUTC
+    key: x-render-datestring
+    content: true
+
+  - action: addChild
+    path: components > schemas > Invoice > allOf > [2] > properties > Date
+    key: x-render-datestring
+    content: true
+
+  - action: addChild
+    path: components > schemas > Invoice > allOf > [2] > properties > DueDate
+    key: x-render-datestring
+    content: true
+
+  - action: addChild
+    path: components > schemas > Overpayment > allOf > [1] > properties > Date
+    key: x-render-datestring
+    content: true
+
+  - action: addChild
+    path: components > schemas > Prepayment > allOf > [1] > properties > Date
+    key: x-render-datestring
+    content: true
+
+  - action: addChild
+    path: components > schemas > PurchaseOrder > allOf > [2] > properties > Date
+    key: x-render-datestring
+    content: true
+
+  - action: addChild
+    path: components > schemas > PurchaseOrder > allOf > [2] > properties > DeliveryDate
+    key: x-render-datestring
+    content: true
+
+  - action: addChild
+    path: components > schemas > Quote > allOf > [2] > properties > Date
+    key: x-render-datestring
+    content: true
+
+  - action: addChild
+    path: components > schemas > Quote > allOf > [2] > properties > ExpiryDate
+    key: x-render-datestring
+    content: true
+
+  # UpdatedDateUTC comes from the shared LastUpdatedDate schema, so re-declare it (with the flag) only on the
+  # models that Xero returns UpdatedDateUTCString for. The model's own property takes precedence over the inherited one.
+  - action: addChild
+    path: components > schemas > CreditNote > allOf > [2] > properties
+    key: UpdatedDateUTC
+    content:
+      description: Last modified date UTC format
+      type: string
+      x-is-msdate-time: true
+      example: "/Date(1573755038314)/"
+      x-is-updated-date: true
+      x-render-datestring: true
+
+  - action: addChild
+    path: components > schemas > Invoice > allOf > [2] > properties
+    key: UpdatedDateUTC
+    content:
+      description: Last modified date UTC format
+      type: string
+      x-is-msdate-time: true
+      example: "/Date(1573755038314)/"
+      x-is-updated-date: true
+      x-render-datestring: true
+
+  - action: addChild
+    path: components > schemas > Overpayment > allOf > [1] > properties
+    key: UpdatedDateUTC
+    content:
+      description: Last modified date UTC format
+      type: string
+      x-is-msdate-time: true
+      example: "/Date(1573755038314)/"
+      x-is-updated-date: true
+      x-render-datestring: true
+
+  - action: addChild
+    path: components > schemas > Payment > allOf > [2] > properties
+    key: UpdatedDateUTC
+    content:
+      description: Last modified date UTC format
+      type: string
+      x-is-msdate-time: true
+      example: "/Date(1573755038314)/"
+      x-is-updated-date: true
+      x-render-datestring: true
+
+  - action: addChild
+    path: components > schemas > Prepayment > allOf > [1] > properties
+    key: UpdatedDateUTC
+    content:
+      description: Last modified date UTC format
+      type: string
+      x-is-msdate-time: true
+      example: "/Date(1573755038314)/"
+      x-is-updated-date: true
+      x-render-datestring: true

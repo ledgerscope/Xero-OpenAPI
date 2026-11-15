@@ -12,21 +12,25 @@
         [Newtonsoft.Json.JsonConverterAttribute(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
         public {{#isNullable}}DateTime?{{/isNullable}}{{^isNullable}}DateTime{{/isNullable}} {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
 
+        {{#vendorExtensions.x-render-datestring}}
         /// <summary>
         /// {{name}} rendered as a string (e.g. 2017-11-30T13:45:10)
         /// </summary>
         string {{name}}String { get; }
 
+        {{/vendorExtensions.x-render-datestring}}
         {{/vendorExtensions.x-is-msdate-time}}
         {{#vendorExtensions.x-is-msdate}}
         [Newtonsoft.Json.JsonConverterAttribute(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
         public {{#isNullable}}DateTime?{{/isNullable}}{{^isNullable}}DateTime{{/isNullable}} {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
 
+        {{#vendorExtensions.x-render-datestring}}
         /// <summary>
         /// {{name}} rendered as a string (e.g. 2017-11-30T00:00:00)
         /// </summary>
         string {{name}}String { get; }
 
+        {{/vendorExtensions.x-render-datestring}}
         {{/vendorExtensions.x-is-msdate}}
         {{#vendorExtensions.x-is-money}}
         public decimal? {{name}} { get; {{^isReadOnly}}set; {{/isReadOnly}} }
@@ -120,23 +124,27 @@
         [Newtonsoft.Json.JsonConverterAttribute(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
         public {{#isNullable}}DateTime?{{/isNullable}}{{^isNullable}}DateTime{{/isNullable}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
 
+        {{#vendorExtensions.x-render-datestring}}
         /// <summary>
         /// {{name}} rendered as a string (e.g. 2017-11-30T13:45:10)
         /// </summary>
         [DataMember(Name="{{baseName}}String", EmitDefaultValue=false)]
         public string {{name}}String => Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter.ToDateString({{name}});
 
+        {{/vendorExtensions.x-render-datestring}}
         {{/vendorExtensions.x-is-msdate-time}}
         {{#vendorExtensions.x-is-msdate}}
         [Newtonsoft.Json.JsonConverterAttribute(typeof(Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter))]
         public {{#isNullable}}DateTime?{{/isNullable}}{{^isNullable}}DateTime{{/isNullable}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
 
+        {{#vendorExtensions.x-render-datestring}}
         /// <summary>
         /// {{name}} rendered as a string (e.g. 2017-11-30T00:00:00)
         /// </summary>
         [DataMember(Name="{{baseName}}String", EmitDefaultValue=false)]
         public string {{name}}String => Xero.NetStandard.OAuth2.Json.Converters.MicrosoftDateConverter.ToDateString({{name}});
 
+        {{/vendorExtensions.x-render-datestring}}
         {{/vendorExtensions.x-is-msdate}}
         {{#vendorExtensions.x-is-money}}
         public decimal? {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
