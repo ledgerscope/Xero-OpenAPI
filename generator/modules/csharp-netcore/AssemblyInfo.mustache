@@ -33,8 +33,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("{{packageVersion}}")]
 {{^supportsAsync}}
 // Settings which don't support asynchronous operations rely on non-public constructors
-// This is due to how RestSharp requires the type constraint `where T : new()` in places it probably shouldn't.
-[assembly: InternalsVisibleTo("RestSharp")]
+// This is due to how Json.NET and JsonSubTypes construct models.
 [assembly: InternalsVisibleTo("NewtonSoft.Json")]
 [assembly: InternalsVisibleTo("JsonSubTypes")]
 {{/supportsAsync}}

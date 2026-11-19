@@ -16,25 +16,24 @@ using System.Web;
 {{/netStandard}}
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using RestSharp;
-using RestSharp.Deserializers;
 using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
-using RestSharpMethod = RestSharp.Method;
+using SystemHttpMethod = System.Net.Http.HttpMethod;
 
 namespace {{packageName}}.Client
 {
     /// <summary>
-    /// Allows RestSharp to Serialize/Deserialize JSON using our custom logic, but only when ContentType is JSON. 
+    /// Serializes/Deserializes JSON using our custom logic.
     /// </summary>
-    internal class CustomJsonCodec : RestSharp.Serializers.ISerializer, RestSharp.Deserializers.IDeserializer
+    internal class CustomJsonCodec
     {
         private readonly IReadableConfiguration _configuration;
-        private string _contentType = "application/json";
         private readonly JsonSerializerSettings _serializerSettings = new JsonSerializerSettings
         {
             // OpenAPI generated types generally hide default constructors.
@@ -67,24 +66,19 @@ namespace {{packageName}}.Client
             return result;
         }
 
-        public T Deserialize<T>(IRestResponse response)
-        {
-            var result = (T) Deserialize(response, typeof(T));
-            return result;
-        }
-
         /// <summary>
-        /// Deserialize the JSON string into a proper object.
+        /// Deserialize the response body into the requested type.
         /// </summary>
-        /// <param name="response">The HTTP response.</param>
+        /// <param name="rawBytes">The raw HTTP response body.</param>
+        /// <param name="content">The HTTP response body decoded as a string.</param>
+        /// <param name="headers">The HTTP response headers.</param>
         /// <param name="type">Object type.</param>
-        /// <returns>Object representation of the JSON string.</returns>
-        internal object Deserialize(IRestResponse response, Type type)
+        /// <returns>Object representation of the response body.</returns>
+        internal object Deserialize(byte[] rawBytes, string content, NameValueCollection headers, Type type)
         {
-            IList<Parameter> headers = response.Headers;
             if (type == typeof(byte[])) // return byte array
             {
-                return response.RawBytes;
+                return rawBytes;
             }
 
             // TODO: ? if (type.IsAssignableFrom(typeof(Stream)))
@@ -96,80 +90,148 @@ namespace {{packageName}}.Client
                         ? Path.GetTempPath()
                         : _configuration.TempFolderPath;
                     var regex = new Regex(@"Content-Disposition=.*filename=['""]?([^'""\s]+)['""]?$");
-                    foreach (var header in headers)
+                    foreach (var name in headers.AllKeys)
                     {
-                        var match = regex.Match(header.ToString());
-                        if (match.Success)
+                        foreach (var value in headers.GetValues(name) ?? new string[0])
                         {
-                            string fileName = filePath + ClientUtils.SanitizeFilename(match.Groups[1].Value.Replace("\"", "").Replace("'", ""));
-                            File.WriteAllBytes(fileName, response.RawBytes);
-                            return new FileStream(fileName, FileMode.Open);
+                            var match = regex.Match(name + "=" + value);
+                            if (match.Success)
+                            {
+                                string fileName = filePath + ClientUtils.SanitizeFilename(match.Groups[1].Value.Replace("\"", "").Replace("'", ""));
+                                File.WriteAllBytes(fileName, rawBytes);
+                                return new FileStream(fileName, FileMode.Open);
+                            }
                         }
                     }
                 }
-                var stream = new MemoryStream(response.RawBytes);
+                var stream = new MemoryStream(rawBytes);
                 return stream;
             }
 
             if ((Nullable.GetUnderlyingType(type) ?? type) == typeof(DateTime)) // return a datetime object
             {
-                return DateTime.Parse(response.Content, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AdjustToUniversal | System.Globalization.DateTimeStyles.AssumeUniversal);
+                return DateTime.Parse(content, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AdjustToUniversal | System.Globalization.DateTimeStyles.AssumeUniversal);
             }
 
             if (type == typeof(string) || Nullable.GetUnderlyingType(type) != null) // return primitive type
             {
-                return ClientUtils.ConvertType(response.Content, type);
+                return ClientUtils.ConvertType(content, type);
             }
 
             // at this point, it must be a model (json)
             try
             {
-                return JsonConvert.DeserializeObject(response.Content, type, _serializerSettings);
+                return JsonConvert.DeserializeObject(content, type, _serializerSettings);
             }
             catch (Exception e)
             {
-                throw new ApiException(500, e.Message, response.Content);
+                throw new ApiException(500, e.Message, content);
             }
         }
-
-        public string RootElement { get; set; }
-        public string Namespace { get; set; }
-        public string DateFormat { get; set; }
-
-        public string ContentType
-        {
-            get { return _contentType; }
-            set { throw new InvalidOperationException("Not allowed to set content type."); }
-        }
     }
-    {{! NOTE: Any changes related to RestSharp should be done in this class. All other client classes are for extensibility by consumers.}}
+    {{! NOTE: Any changes related to the HTTP transport should be done in this class. All other client classes are for extensibility by consumers.}}
     /// <summary>
     /// Provides a default implementation of an Api client (both synchronous and asynchronous implementatios),
     /// encapsulating general REST accessor use cases.
     /// </summary>
+    /// <remarks>
+    /// Requests are sent through a single long-lived <see cref="HttpClient"/> so that TCP/TLS connections
+    /// are pooled and re-used across requests (and across <see cref="ApiClient"/> instances).
+    /// </remarks>
     {{>visibility}} partial class ApiClient : ISynchronousClient{{#supportsAsync}}, IAsynchronousClient{{/supportsAsync}}
     {
+        private static readonly string[] _defaultAccept = new[] { "application/json", "text/json", "text/x-json", "text/javascript" };
+
+        private static readonly object _defaultHttpClientLock = new object();
+        private static HttpClient _defaultHttpClient;
+
         private readonly String _baseUrl;
+        private readonly HttpClient _httpClient;
+
+        /// <summary>
+        /// Gets or sets the <see cref="HttpClient"/> shared by every <see cref="ApiClient"/> that isn't given one explicitly.
+        /// Set this once at application start-up to control the handler (proxy, connection lifetime, etc.).
+        /// The client's own Timeout is not used; per-request timeouts come from <see cref="IReadableConfiguration.Timeout"/>.
+        /// </summary>
+        public static HttpClient DefaultHttpClient
+        {
+            get
+            {
+                if (_defaultHttpClient == null)
+                {
+                    lock (_defaultHttpClientLock)
+                    {
+                        if (_defaultHttpClient == null)
+                        {
+                            _defaultHttpClient = new HttpClient(CreateDefaultHandler()) { Timeout = System.Threading.Timeout.InfiniteTimeSpan };
+                        }
+                    }
+                }
+                return _defaultHttpClient;
+            }
+            set
+            {
+                if (value == null) throw new ArgumentNullException("value");
+                lock (_defaultHttpClientLock)
+                {
+                    _defaultHttpClient = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Builds the handler for <see cref="DefaultHttpClient"/>. On runtimes that have SocketsHttpHandler (.NET Core 2.1+)
+        /// it is used with a bounded connection lifetime so DNS changes are picked up; otherwise HttpClientHandler is used.
+        /// Cookies are disabled on the shared handler so they never leak between requests or tenants.
+        /// </summary>
+        private static HttpMessageHandler CreateDefaultHandler()
+        {
+            var decompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
+            try
+            {
+                var socketsHandlerType = Type.GetType("System.Net.Http.SocketsHttpHandler, System.Net.Http", false);
+                var isSupported = socketsHandlerType?.GetProperty("IsSupported", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+                if (socketsHandlerType != null && (isSupported == null || (bool)isSupported.GetValue(null)))
+                {
+                    var handler = (HttpMessageHandler)Activator.CreateInstance(socketsHandlerType);
+                    socketsHandlerType.GetProperty("PooledConnectionLifetime").SetValue(handler, TimeSpan.FromMinutes(5));
+                    socketsHandlerType.GetProperty("AutomaticDecompression").SetValue(handler, decompression);
+                    socketsHandlerType.GetProperty("UseCookies").SetValue(handler, false);
+                    return handler;
+                }
+            }
+            catch (Exception)
+            {
+                // Fall through to HttpClientHandler
+            }
+
+            return new HttpClientHandler
+            {
+                AutomaticDecompression = decompression,
+                UseCookies = false
+            };
+        }
 
         /// <summary>
         /// Allows for extending request processing for <see cref="ApiClient"/> generated code.
         /// </summary>
-        /// <param name="request">The RestSharp request object</param>
-        partial void InterceptRequest(IRestRequest request);
+        /// <param name="request">The HTTP request message</param>
+        partial void InterceptRequest(HttpRequestMessage request);
 
         /// <summary>
         /// Allows for extending response processing for <see cref="ApiClient"/> generated code.
         /// </summary>
-        /// <param name="request">The RestSharp request object</param>
-        /// <param name="response">The RestSharp response object</param>
-        partial void InterceptResponse(IRestRequest request, IRestResponse response);
+        /// <param name="request">The HTTP request message</param>
+        /// <param name="response">The HTTP response message (null if the request failed before a response was received)</param>
+        partial void InterceptResponse(HttpRequestMessage request, HttpResponseMessage response);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiClient" />, defaulting to the global configurations' base url.
         /// </summary>
         public ApiClient()
+            : this({{packageName}}.Client.GlobalConfiguration.Instance.BasePath, null)
         {
-            _baseUrl = {{packageName}}.Client.GlobalConfiguration.Instance.BasePath;
         }
 
         /// <summary>
@@ -178,65 +240,114 @@ namespace {{packageName}}.Client
         /// <param name="basePath">The target service's base path in URL format.</param>
         /// <exception cref="ArgumentException"></exception>
         public ApiClient(String basePath)
+            : this(basePath, null)
         {
-           if (String.IsNullOrEmpty(basePath))
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ApiClient" /> that sends requests through the given <see cref="HttpClient"/>.
+        /// </summary>
+        /// <param name="basePath">The target service's base path in URL format.</param>
+        /// <param name="httpClient">The HttpClient to use, or null to use <see cref="DefaultHttpClient"/>.
+        /// Its Timeout should be at least <see cref="IReadableConfiguration.Timeout"/>, as that is applied per request.</param>
+        /// <exception cref="ArgumentException"></exception>
+        public ApiClient(String basePath, HttpClient httpClient)
+        {
+            if (String.IsNullOrEmpty(basePath))
                 throw new ArgumentException("basePath cannot be empty");
 
             _baseUrl = basePath;
+            _httpClient = httpClient;
+        }
+
+        private HttpClient HttpClient
+        {
+            get { return _httpClient ?? DefaultHttpClient; }
         }
 
         /// <summary>
-        /// Constructs the RestSharp version of an http method
+        /// Constructs the System.Net.Http version of an http method
         /// </summary>
         /// <param name="method">Swagger Client Custom HttpMethod</param>
-        /// <returns>RestSharp's HttpMethod instance.</returns>
+        /// <returns>System.Net.Http's HttpMethod instance.</returns>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        private RestSharpMethod Method(HttpMethod method)
+        private SystemHttpMethod Method(HttpMethod method)
         {
-            RestSharpMethod other;
             switch (method)
             {
                 case HttpMethod.Get:
-                    other = RestSharpMethod.GET;
-                    break;
+                    return SystemHttpMethod.Get;
                 case HttpMethod.Post:
-                    other = RestSharpMethod.POST;
-                    break;
+                    return SystemHttpMethod.Post;
                 case HttpMethod.Put:
-                    other = RestSharpMethod.PUT;
-                    break;
+                    return SystemHttpMethod.Put;
                 case HttpMethod.Delete:
-                    other = RestSharpMethod.DELETE;
-                    break;
+                    return SystemHttpMethod.Delete;
                 case HttpMethod.Head:
-                    other = RestSharpMethod.HEAD;
-                    break;
+                    return SystemHttpMethod.Head;
                 case HttpMethod.Options:
-                    other = RestSharpMethod.OPTIONS;
-                    break;
+                    return SystemHttpMethod.Options;
                 case HttpMethod.Patch:
-                    other = RestSharpMethod.PATCH;
-                    break;
+                    return new SystemHttpMethod("PATCH");
                 default:
                     throw new ArgumentOutOfRangeException("method", method, null);
             }
-
-            return other;
         }
 
         /// <summary>
-        /// Provides all logic for constructing a new RestSharp <see cref="RestRequest"/>.
+        /// Builds the absolute request URI from the base url, the resource path, and the path and query parameters.
+        /// </summary>
+        private Uri BuildUri(String path, RequestOptions options)
+        {
+            var resource = path;
+            if (options.PathParameters != null)
+            {
+                foreach (var pathParam in options.PathParameters)
+                {
+                    resource = resource.Replace("{" + pathParam.Key + "}", Uri.EscapeDataString(pathParam.Value ?? String.Empty));
+                }
+            }
+
+            var url = new StringBuilder(_baseUrl.TrimEnd('/'));
+            if (!String.IsNullOrEmpty(resource))
+            {
+                url.Append('/').Append(resource.TrimStart('/'));
+            }
+
+            if (options.QueryParameters != null)
+            {
+                var separator = url.ToString().Contains("?") ? '&' : '?';
+                foreach (var queryParam in options.QueryParameters.AllKeys)
+                {
+                    var values = options.QueryParameters.GetValues(queryParam);
+                    if (values == null) continue;
+                    foreach (var value in values)
+                    {
+                        url.Append(separator)
+                            .Append(Uri.EscapeDataString(queryParam))
+                            .Append('=')
+                            .Append(Uri.EscapeDataString(value ?? String.Empty));
+                        separator = '&';
+                    }
+                }
+            }
+
+            return new Uri(url.ToString());
+        }
+
+        /// <summary>
+        /// Provides all logic for constructing a new <see cref="HttpRequestMessage"/>.
         /// At this point, all information for querying the service is known. Here, it is simply
-        /// mapped into the RestSharp request.
+        /// mapped into the HTTP request.
         /// </summary>
         /// <param name="method">The http verb.</param>
         /// <param name="path">The target path (or resource).</param>
         /// <param name="options">The additional request options.</param>
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
-        /// <returns>[private] A new RestRequest instance.</returns>
+        /// <returns>[private] A new HttpRequestMessage instance.</returns>
         /// <exception cref="ArgumentNullException"></exception>
-        private RestRequest newRequest(
+        private HttpRequestMessage newRequest(
             HttpMethod method,
             String path,
             RequestOptions options,
@@ -245,227 +356,260 @@ namespace {{packageName}}.Client
             if (path == null) throw new ArgumentNullException("path");
             if (options == null) throw new ArgumentNullException("options");
             if (configuration == null) throw new ArgumentNullException("configuration");
-            
-            RestRequest request = new RestRequest(Method(method))
-            {
-                Resource = path,
-                JsonSerializer = new CustomJsonCodec(configuration)
-            };
 
-            if (options.PathParameters != null)
-            {
-                foreach (var pathParam in options.PathParameters)
-                {
-                    request.AddParameter(pathParam.Key, pathParam.Value, ParameterType.UrlSegment);
-                }
-            }
-            
-            if (options.QueryParameters != null)
-            {
-                foreach (var queryParam in options.QueryParameters.AllKeys)
-                {
-                    var values = options.QueryParameters.GetValues(queryParam);
-                    if (values != null)
-                    {
-                        foreach (var value in values)
-                        {
-                            request.AddQueryParameter(queryParam, value);
-                        }
-                    }
-                }
-            }
+            var request = new HttpRequestMessage(Method(method), BuildUri(path, options));
 
+            var hasAccept = false;
             if (options.HeaderParameters != null)
             {
                 foreach (var headerParam in options.HeaderParameters.AllKeys)
                 {
+                    // Content-Type is a content header and is decided by the body below
+                    if (String.Equals(headerParam, "Content-Type", StringComparison.OrdinalIgnoreCase)) continue;
+
                     var values = options.HeaderParameters.GetValues(headerParam);
-                    if (values != null)
-                    {
-                        foreach (var value in values)
-                        {
-                            request.AddHeader(headerParam, value);
-                        }
-                    }
+                    if (values == null) continue;
+                    if (String.Equals(headerParam, "Accept", StringComparison.OrdinalIgnoreCase)) hasAccept = true;
+                    request.Headers.TryAddWithoutValidation(headerParam, values);
                 }
             }
 
-            if (options.FormParameters != null)
+            if (!hasAccept)
             {
-                foreach (var formParam in options.FormParameters)
-                {
-                    request.AddParameter(formParam.Key, formParam.Value);
-                }
+                request.Headers.TryAddWithoutValidation("Accept", _defaultAccept);
             }
 
-            if (options.Data != null)
+            if (configuration.UserAgent != null)
             {
-                if (options.HeaderParameters != null)
-                {
-                    var contentTypes = options.HeaderParameters.GetValues("Content-Type");
-                    if (contentTypes == null || contentTypes.Any(header => header.Contains("application/json")))
-                    {
-                        request.RequestFormat = DataFormat.Json;
-                    }
-                    else
-                    {
-                        // TODO: Generated client user should add additional handlers. RestSharp only supports XML and JSON, with XML as default.
-                    }
-                }
-                else
-                {
-                    // Here, we'll assume JSON APIs are more common. XML can be forced by adding produces/consumes to openapi spec explicitly.
-                    request.RequestFormat = DataFormat.Json;
-                }
-
-                if (options.PathParameters.ContainsKey("FileName"))
-                {
-                    //restsharp needs the bytestream to go here. addfile adds metadata which corrupts file. 
-                    request.AddParameter("application/octet-stream",(byte[])options.Data,ParameterType.RequestBody);
-                }
-                else
-                {
-                    request.AddBody(options.Data);
-                }            
-            }
-
-            if (options.FileParameters != null)
-            {
-                foreach (var fileParam in options.FileParameters)
-                {
-                    var bytes = ClientUtils.ReadAsBytes(fileParam.Contents);
-                    var fileStream = fileParam.Contents as FileStream;
-                    if (fileStream != null)
-                        request.AddFile(fileParam.Key, bytes, System.IO.Path.GetFileName(fileStream.Name), fileParam.ContentType);
-                    else
-                        request.AddFile(fileParam.Key, bytes, fileParam.Name, fileParam.ContentType);
-                }
+                request.Headers.TryAddWithoutValidation("User-Agent", configuration.UserAgent);
             }
 
             if (options.Cookies != null && options.Cookies.Count > 0)
             {
-                foreach (var cookie in options.Cookies)
-                {
-                    request.AddCookie(cookie.Name, cookie.Value);
-                }
+                request.Headers.TryAddWithoutValidation("Cookie", String.Join("; ", options.Cookies.Select(c => c.Name + "=" + c.Value)));
             }
-            
+
+            request.Content = newContent(options, configuration);
+
             return request;
         }
 
-        private ApiResponse<T> toApiResponse<T>({{#supportsAsync}}IRestResponse<T> response{{/supportsAsync}}{{^supportsAsync}}IRestResponse response, CustomJsonCodec des{{/supportsAsync}})
+        private HttpContent newContent(RequestOptions options, IReadableConfiguration configuration)
         {
-            T result = {{#supportsAsync}}response.Data{{/supportsAsync}}{{^supportsAsync}}(T)des.Deserialize(response, typeof(T)){{/supportsAsync}};
-            var transformed = new ApiResponse<T>(response.StatusCode, new NameValueCollection(StringComparer.OrdinalIgnoreCase), result)
+            var hasFiles = options.FileParameters != null && options.FileParameters.Count > 0;
+            var hasForm = options.FormParameters != null && options.FormParameters.Count > 0;
+
+            if (options.Data != null)
             {
-                ErrorText = response.ErrorMessage,
-                Cookies = new List<Cookie>(),
-                Content = response.Content
-            };
-            
-            if (response.Headers != null)
-            {
-                foreach (var responseHeader in response.Headers)
+                HttpContent body;
+                if (options.Data is byte[] bytes)
                 {
-                    transformed.Headers.Add(responseHeader.Name, ClientUtils.ParameterToString(responseHeader.Value));
+                    body = new ByteArrayContent(bytes);
+                    body.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
                 }
-            }
-
-            if (response.Cookies != null)
-            {
-                foreach (var responseCookies in response.Cookies)
+                else if (options.Data is Stream dataStream)
                 {
-                    transformed.Cookies.Add(
-                        new Cookie(
-                            responseCookies.Name, 
-                            responseCookies.Value, 
-                            responseCookies.Path, 
-                            responseCookies.Domain)
-                        );
+                    body = new StreamContent(dataStream);
+                    body.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
                 }
-            }
-
-            return transformed;
-        }
-
-        static string[] _jsonTypes = new[] { "application/json", "text/json", "text/x-json", "text/javascript", "*+json", "*" };
-        static string[] _xmlTypes = new[] { "application/xml", "text/xml", "*+xml" };
-
-        private {{#supportsAsync}}async Task<ApiResponse<T>>{{/supportsAsync}}{{^supportsAsync}}ApiResponse<T>{{/supportsAsync}} Exec<T>(RestRequest req, IReadableConfiguration configuration, CancellationToken cancellationToken)
-        {
-            RestClient client = new RestClient(_baseUrl);
-
-            client.ClearHandlers();
-            var existingDeserializer = req.JsonSerializer as IDeserializer;
-            if (existingDeserializer != null)
-            {
-                foreach (var item in _jsonTypes)
-                    client.AddHandler(item, () => existingDeserializer);
-            }
-            else
-            {
-                var codec = new CustomJsonCodec(configuration);
-                foreach (var item in _jsonTypes)
-                    client.AddHandler(item, () => codec);
-            }
-
-            foreach (var item in _xmlTypes)
-            {
-                var xmlDeserializer = new XmlDeserializer();
-                client.AddHandler(item, () => xmlDeserializer);
-            }
-
-            client.Timeout = configuration.Timeout;
-
-            if (configuration.UserAgent != null)
-            {
-                client.UserAgent = configuration.UserAgent;
-            }
-
-            InterceptRequest(req);
-            {{#supportsAsync}}
-            var response = await client.ExecuteTaskAsync<T>(req, cancellationToken);
-            {{/supportsAsync}}
-            {{^supportsAsync}}
-            var response = client.Execute(req);
-            {{/supportsAsync}}
-            InterceptResponse(req, response);
-
-            var result = toApiResponse(response{{^supportsAsync}}, codec{{/supportsAsync}});
-            if (response.ErrorMessage != null)
-            {
-                result.ErrorText = response.ErrorMessage;
-            }
-
-            if (response.Cookies != null && response.Cookies.Count > 0)
-            {
-                if(result.Cookies == null) result.Cookies = new List<Cookie>();
-                foreach (var restResponseCookie in response.Cookies)
+                else
                 {
-                    var cookie = new Cookie(
-                        restResponseCookie.Name,
-                        restResponseCookie.Value,
-                        restResponseCookie.Path,
-                        restResponseCookie.Domain
-                    )
+                    body = new StringContent(new CustomJsonCodec(configuration).Serialize(options.Data), Encoding.UTF8);
+                    body.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                }
+                return body;
+            }
+
+            if (hasFiles)
+            {
+                var boundary = "-------------------------" + DateTime.UtcNow.Ticks.ToString("x", CultureInfo.InvariantCulture);
+                var multipart = new MultipartFormDataContent(boundary);
+                // Send the boundary unquoted, as most servers expect
+                multipart.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data; boundary=" + boundary);
+
+                if (hasForm)
+                {
+                    foreach (var formParam in options.FormParameters)
                     {
-                        Comment = restResponseCookie.Comment,
-                        CommentUri = restResponseCookie.CommentUri,
-                        Discard = restResponseCookie.Discard,
-                        Expired = restResponseCookie.Expired,
-                        Expires = restResponseCookie.Expires,
-                        HttpOnly = restResponseCookie.HttpOnly,
-                        Port = restResponseCookie.Port,
-                        Secure = restResponseCookie.Secure,
-                        Version = restResponseCookie.Version
+                        var part = new StringContent(formParam.Value ?? String.Empty);
+                        part.Headers.ContentType = null;
+                        part.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data") { Name = "\"" + formParam.Key + "\"" };
+                        multipart.Add(part);
+                    }
+                }
+
+                foreach (var fileParam in options.FileParameters)
+                {
+                    var bytes = ClientUtils.ReadAsBytes(fileParam.Contents);
+                    var fileStream = fileParam.Contents as FileStream;
+                    var fileName = fileStream != null ? System.IO.Path.GetFileName(fileStream.Name) : fileParam.Name;
+
+                    var part = new ByteArrayContent(bytes);
+                    part.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+                    {
+                        Name = "\"" + fileParam.Key + "\"",
+                        FileName = "\"" + fileName + "\""
                     };
-                    
-                    result.Cookies.Add(cookie);
+                    part.Headers.ContentType = MediaTypeHeaderValue.Parse(String.IsNullOrEmpty(fileParam.ContentType) ? "application/octet-stream" : fileParam.ContentType);
+                    multipart.Add(part);
+                }
+
+                return multipart;
+            }
+
+            if (hasForm)
+            {
+                return new FormUrlEncodedContent(options.FormParameters);
+            }
+
+            return null;
+        }
+
+        private static NameValueCollection readHeaders(HttpResponseMessage response)
+        {
+            var headers = new NameValueCollection(StringComparer.OrdinalIgnoreCase);
+            foreach (var header in response.Headers)
+            {
+                foreach (var value in header.Value)
+                {
+                    headers.Add(header.Key, value);
                 }
             }
-            return result;
+
+            if (response.Content != null)
+            {
+                foreach (var header in response.Content.Headers)
+                {
+                    foreach (var value in header.Value)
+                    {
+                        headers.Add(header.Key, value);
+                    }
+                }
+            }
+
+            return headers;
         }
-        
+
+        private static List<Cookie> readCookies(HttpResponseMessage response, Uri requestUri)
+        {
+            var cookies = new List<Cookie>();
+            IEnumerable<string> setCookies;
+            if (!response.Headers.TryGetValues("Set-Cookie", out setCookies)) return cookies;
+
+            var container = new CookieContainer();
+            foreach (var setCookie in setCookies)
+            {
+                try
+                {
+                    container.SetCookies(requestUri, setCookie);
+                }
+                catch (CookieException)
+                {
+                    // Ignore malformed cookies, as a browser would
+                }
+            }
+
+            foreach (Cookie cookie in container.GetCookies(requestUri))
+            {
+                cookies.Add(cookie);
+            }
+
+            return cookies;
+        }
+
+        private static string decodeContent(byte[] rawBytes, HttpContent content)
+        {
+            if (rawBytes == null || rawBytes.Length == 0) return String.Empty;
+
+            Encoding encoding = Encoding.UTF8;
+            var charset = content?.Headers?.ContentType?.CharSet;
+            if (!String.IsNullOrEmpty(charset))
+            {
+                try
+                {
+                    encoding = Encoding.GetEncoding(charset.Trim('"'));
+                }
+                catch (ArgumentException)
+                {
+                    // Unknown charset, stick with UTF-8
+                }
+            }
+
+            return encoding.GetString(rawBytes);
+        }
+
+        private async Task<ApiResponse<T>> Exec<T>(HttpRequestMessage req, IReadableConfiguration configuration, CancellationToken cancellationToken)
+        {
+            using (req)
+            using (var timeoutCts = new CancellationTokenSource())
+            using (var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCts.Token))
+            {
+                if (configuration.Timeout > 0)
+                {
+                    timeoutCts.CancelAfter(configuration.Timeout);
+                }
+
+                InterceptRequest(req);
+
+                HttpResponseMessage response;
+                byte[] rawBytes;
+                try
+                {
+                    response = await HttpClient.SendAsync(req, HttpCompletionOption.ResponseContentRead, linkedCts.Token).ConfigureAwait(false);
+                    rawBytes = response.Content != null
+                        ? await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false)
+                        : new byte[0];
+                }
+                catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+                {
+                    throw;
+                }
+                catch (Exception ex) when (ex is HttpRequestException || ex is OperationCanceledException || ex is IOException)
+                {
+                    // Transport failures (including timeouts) are reported on the response rather than thrown,
+                    // leaving it to the ExceptionFactory to decide what to do with them.
+                    InterceptResponse(req, null);
+                    var message = ex is OperationCanceledException
+                        ? String.Format("The request timed out after {0}ms.", configuration.Timeout)
+                        : ex.Message;
+                    return new ApiResponse<T>(0, new NameValueCollection(StringComparer.OrdinalIgnoreCase), default(T))
+                    {
+                        ErrorText = message,
+                        Cookies = new List<Cookie>(),
+                        Content = String.Empty
+                    };
+                }
+
+                using (response)
+                {
+                    InterceptResponse(req, response);
+
+                    var headers = readHeaders(response);
+                    var content = decodeContent(rawBytes, response.Content);
+
+                    T data = default(T);
+                    string errorText = null;
+                    try
+                    {
+                        data = (T)new CustomJsonCodec(configuration).Deserialize(rawBytes, content, headers, typeof(T));
+                    }
+                    catch (Exception ex)
+                    {
+                        // Matches previous behaviour: a body that can't be deserialized (e.g. an HTML error page)
+                        // leaves Data unset and is reported via ErrorText, not thrown.
+                        errorText = ex.Message;
+                    }
+
+                    return new ApiResponse<T>(response.StatusCode, headers, data)
+                    {
+                        ErrorText = errorText,
+                        Cookies = readCookies(response, req.RequestUri),
+                        Content = content
+                    };
+                }
+            }
+        }
+
         {{#supportsAsync}}
         #region IAsynchronousClient
         /// <summary>
@@ -479,7 +623,7 @@ namespace {{packageName}}.Client
         public async Task<ApiResponse<T>> GetAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return await Exec<T>(newRequest(HttpMethod.Get, path, options, config), config, cancellationToken);
+            return await Exec<T>(newRequest(HttpMethod.Get, path, options, config), config, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -493,7 +637,7 @@ namespace {{packageName}}.Client
         public async Task<ApiResponse<T>> PostAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return await Exec<T>(newRequest(HttpMethod.Post, path, options, config), config, cancellationToken);
+            return await Exec<T>(newRequest(HttpMethod.Post, path, options, config), config, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -507,7 +651,7 @@ namespace {{packageName}}.Client
         public async Task<ApiResponse<T>> PutAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return await Exec<T>(newRequest(HttpMethod.Put, path, options, config), config, cancellationToken);
+            return await Exec<T>(newRequest(HttpMethod.Put, path, options, config), config, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -521,7 +665,7 @@ namespace {{packageName}}.Client
         public async Task<ApiResponse<T>> DeleteAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return await Exec<T>(newRequest(HttpMethod.Delete, path, options, config), config, cancellationToken);
+            return await Exec<T>(newRequest(HttpMethod.Delete, path, options, config), config, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -535,7 +679,7 @@ namespace {{packageName}}.Client
         public async Task<ApiResponse<T>> HeadAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return await Exec<T>(newRequest(HttpMethod.Head, path, options, config), config, cancellationToken);
+            return await Exec<T>(newRequest(HttpMethod.Head, path, options, config), config, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -549,7 +693,7 @@ namespace {{packageName}}.Client
         public async Task<ApiResponse<T>> OptionsAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return await Exec<T>(newRequest(HttpMethod.Options, path, options, config), config, cancellationToken);
+            return await Exec<T>(newRequest(HttpMethod.Options, path, options, config), config, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -563,7 +707,7 @@ namespace {{packageName}}.Client
         public async Task<ApiResponse<T>> PatchAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return await Exec<T>(newRequest(HttpMethod.Patch, path, options, config), config, cancellationToken);
+            return await Exec<T>(newRequest(HttpMethod.Patch, path, options, config), config, cancellationToken).ConfigureAwait(false);
         }
         #endregion IAsynchronousClient
         {{/supportsAsync}}
@@ -579,13 +723,7 @@ namespace {{packageName}}.Client
         /// <returns>A Task containing ApiResponse</returns>
         public ApiResponse<T> Get<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
-            {{#supportsAsync}}
-            return GetAsync<T>(path, options, configuration, cancellationToken).Result;
-            {{/supportsAsync}}
-            {{^supportsAsync}}
-            var config = configuration ?? GlobalConfiguration.Instance;
-            return Exec<T>(newRequest(HttpMethod.Get, path, options, config), config, cancellationToken);
-            {{/supportsAsync}}
+            return ExecSync<T>(HttpMethod.Get, path, options, configuration, cancellationToken);
         }
 
         /// <summary>
@@ -598,13 +736,7 @@ namespace {{packageName}}.Client
         /// <returns>A Task containing ApiResponse</returns>
         public ApiResponse<T> Post<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
-            {{#supportsAsync}}
-            return PostAsync<T>(path, options, configuration, cancellationToken).Result;
-            {{/supportsAsync}}
-            {{^supportsAsync}}
-            var config = configuration ?? GlobalConfiguration.Instance;
-            return Exec<T>(newRequest(HttpMethod.Post, path, options, config), config, cancellationToken);
-            {{/supportsAsync}}
+            return ExecSync<T>(HttpMethod.Post, path, options, configuration, cancellationToken);
         }
 
         /// <summary>
@@ -617,13 +749,7 @@ namespace {{packageName}}.Client
         /// <returns>A Task containing ApiResponse</returns>
         public ApiResponse<T> Put<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
-            {{#supportsAsync}}
-            return PutAsync<T>(path, options, configuration, cancellationToken).Result;
-            {{/supportsAsync}}
-            {{^supportsAsync}}
-            var config = configuration ?? GlobalConfiguration.Instance;
-            return Exec<T>(newRequest(HttpMethod.Put, path, options, config), config, cancellationToken);
-            {{/supportsAsync}}
+            return ExecSync<T>(HttpMethod.Put, path, options, configuration, cancellationToken);
         }
 
         /// <summary>
@@ -636,13 +762,7 @@ namespace {{packageName}}.Client
         /// <returns>A Task containing ApiResponse</returns>
         public ApiResponse<T> Delete<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
-            {{#supportsAsync}}
-            return DeleteAsync<T>(path, options, configuration, cancellationToken).Result;
-            {{/supportsAsync}}
-            {{^supportsAsync}}
-            var config = configuration ?? GlobalConfiguration.Instance;
-            return Exec<T>(newRequest(HttpMethod.Delete, path, options, config), config, cancellationToken);
-            {{/supportsAsync}}
+            return ExecSync<T>(HttpMethod.Delete, path, options, configuration, cancellationToken);
         }
 
         /// <summary>
@@ -655,13 +775,7 @@ namespace {{packageName}}.Client
         /// <returns>A Task containing ApiResponse</returns>
         public ApiResponse<T> Head<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
-            {{#supportsAsync}}
-            return HeadAsync<T>(path, options, configuration, cancellationToken).Result;
-            {{/supportsAsync}}
-            {{^supportsAsync}}
-            var config = configuration ?? GlobalConfiguration.Instance;
-            return Exec<T>(newRequest(HttpMethod.Head, path, options, config), config, cancellationToken);
-            {{/supportsAsync}}
+            return ExecSync<T>(HttpMethod.Head, path, options, configuration, cancellationToken);
         }
 
         /// <summary>
@@ -674,13 +788,7 @@ namespace {{packageName}}.Client
         /// <returns>A Task containing ApiResponse</returns>
         public ApiResponse<T> Options<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
-            {{#supportsAsync}}
-            return OptionsAsync<T>(path, options, configuration, cancellationToken).Result;
-            {{/supportsAsync}}
-            {{^supportsAsync}}
-            var config = configuration ?? GlobalConfiguration.Instance;
-            return Exec<T>(newRequest(HttpMethod.Options, path, options, config), config, cancellationToken);
-            {{/supportsAsync}}
+            return ExecSync<T>(HttpMethod.Options, path, options, configuration, cancellationToken);
         }
 
         /// <summary>
@@ -693,13 +801,15 @@ namespace {{packageName}}.Client
         /// <returns>A Task containing ApiResponse</returns>
         public ApiResponse<T> Patch<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
         {
-            {{#supportsAsync}}
-            return PatchAsync<T>(path, options, configuration, cancellationToken).Result;
-            {{/supportsAsync}}
-            {{^supportsAsync}}
+            return ExecSync<T>(HttpMethod.Patch, path, options, configuration, cancellationToken);
+        }
+
+        private ApiResponse<T> ExecSync<T>(HttpMethod method, string path, RequestOptions options, IReadableConfiguration configuration, CancellationToken cancellationToken)
+        {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return Exec<T>(newRequest(HttpMethod.Patch, path, options, config), config, cancellationToken);
-            {{/supportsAsync}}
+            // HttpClient has no synchronous API on netstandard2.0; run on the thread pool to avoid
+            // deadlocking callers that have a synchronization context.
+            return Task.Run(() => Exec<T>(newRequest(method, path, options, config), config, cancellationToken)).GetAwaiter().GetResult();
         }
         #endregion ISynchronousClient
     }
