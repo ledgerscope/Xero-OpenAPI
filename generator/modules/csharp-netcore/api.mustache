@@ -146,20 +146,14 @@ namespace {{packageName}}.{{apiPackage}}
         /// Initializes a new instance of the <see cref="AccountingApi"/> class
         /// using a Configuration object and client instance.
         /// </summary>
-        /// <param name="client">The client interface for synchronous API access.</param>{{#supportsAsync}}
-        /// <param name="asyncClient">The client interface for asynchronous API access.</param>{{/supportsAsync}}
+        /// <param name="asyncClient">The client interface for asynchronous API access.</param>
         /// <param name="configuration">The configuration object.</param>
-        public {{classname}}({{packageName}}.Client.ISynchronousClient client,{{#supportsAsync}}{{packageName}}.Client.IAsynchronousClient asyncClient,{{/supportsAsync}} {{packageName}}.Client.IReadableConfiguration configuration)
+        public {{classname}}({{packageName}}.Client.IAsynchronousClient asyncClient, {{packageName}}.Client.IReadableConfiguration configuration)
         {
-            if(client == null) throw new ArgumentNullException("client");
-            {{#supportsAsync}}
             if(asyncClient == null) throw new ArgumentNullException("asyncClient");
-            {{/supportsAsync}}
             if(configuration == null) throw new ArgumentNullException("configuration");
 
-            {{#supportsAsync}}
             this.AsynchronousClient = asyncClient;
-            {{/supportsAsync}}
             this.Configuration = configuration;
             this.ExceptionFactory = {{packageName}}.Client.Configuration.DefaultExceptionFactory;
         }
