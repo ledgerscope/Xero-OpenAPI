@@ -185,7 +185,7 @@ namespace {{packageName}}.Client
             if (inputStream.CanSeek && inputStream.Position == 0)
 			{
 				buf = new byte[inputStream.Length];
-				inputStream.Read(buf, 0, buf.Length);
+				inputStream.ReadExactly(buf, 0, buf.Length);
 				return buf;
 			}
 

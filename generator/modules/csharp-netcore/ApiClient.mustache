@@ -142,7 +142,6 @@ namespace {{packageName}}.Client
     {
         private static readonly string[] _defaultAccept = new[] { "application/json", "text/json", "text/x-json", "text/javascript" };
 
-        private static readonly object _defaultHttpClientLock = new object();
         private static HttpClient _defaultHttpClient;
 
         private readonly String _baseUrl;
@@ -157,60 +156,40 @@ namespace {{packageName}}.Client
         {
             get
             {
-                if (_defaultHttpClient == null)
+                var client = Volatile.Read(ref _defaultHttpClient);
+                if (client != null) return client;
+
+                var created = CreateDefaultHttpClient();
+                var existing = Interlocked.CompareExchange(ref _defaultHttpClient, created, null);
+                if (existing != null)
                 {
-                    lock (_defaultHttpClientLock)
-                    {
-                        if (_defaultHttpClient == null)
-                        {
-                            _defaultHttpClient = new HttpClient(CreateDefaultHandler()) { Timeout = System.Threading.Timeout.InfiniteTimeSpan };
-                        }
-                    }
+                    // Another thread won the race
+                    created.Dispose();
+                    return existing;
                 }
-                return _defaultHttpClient;
+                return created;
             }
             set
             {
-                if (value == null) throw new ArgumentNullException("value");
-                lock (_defaultHttpClientLock)
-                {
-                    _defaultHttpClient = value;
-                }
+                ArgumentNullException.ThrowIfNull(value);
+                Volatile.Write(ref _defaultHttpClient, value);
             }
         }
 
         /// <summary>
-        /// Builds the handler for <see cref="DefaultHttpClient"/>. On runtimes that have SocketsHttpHandler (.NET Core 2.1+)
-        /// it is used with a bounded connection lifetime so DNS changes are picked up; otherwise HttpClientHandler is used.
-        /// Cookies are disabled on the shared handler so they never leak between requests or tenants.
+        /// Builds the client behind <see cref="DefaultHttpClient"/>. Connections are recycled every few minutes so DNS
+        /// changes are picked up, and cookies are disabled so they never leak between requests or tenants.
         /// </summary>
-        private static HttpMessageHandler CreateDefaultHandler()
+        private static HttpClient CreateDefaultHttpClient()
         {
-            var decompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-
-            try
+            var handler = new SocketsHttpHandler
             {
-                var socketsHandlerType = Type.GetType("System.Net.Http.SocketsHttpHandler, System.Net.Http", false);
-                var isSupported = socketsHandlerType?.GetProperty("IsSupported", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
-                if (socketsHandlerType != null && (isSupported == null || (bool)isSupported.GetValue(null)))
-                {
-                    var handler = (HttpMessageHandler)Activator.CreateInstance(socketsHandlerType);
-                    socketsHandlerType.GetProperty("PooledConnectionLifetime").SetValue(handler, TimeSpan.FromMinutes(5));
-                    socketsHandlerType.GetProperty("AutomaticDecompression").SetValue(handler, decompression);
-                    socketsHandlerType.GetProperty("UseCookies").SetValue(handler, false);
-                    return handler;
-                }
-            }
-            catch (Exception)
-            {
-                // Fall through to HttpClientHandler
-            }
-
-            return new HttpClientHandler
-            {
-                AutomaticDecompression = decompression,
+                PooledConnectionLifetime = TimeSpan.FromMinutes(5),
+                AutomaticDecompression = DecompressionMethods.All,
                 UseCookies = false
             };
+
+            return new HttpClient(handler) { Timeout = System.Threading.Timeout.InfiniteTimeSpan };
         }
 
         /// <summary>
@@ -288,7 +267,7 @@ namespace {{packageName}}.Client
                 case HttpMethod.Options:
                     return SystemHttpMethod.Options;
                 case HttpMethod.Patch:
-                    return new SystemHttpMethod("PATCH");
+                    return SystemHttpMethod.Patch;
                 default:
                     throw new ArgumentOutOfRangeException("method", method, null);
             }
@@ -557,7 +536,7 @@ namespace {{packageName}}.Client
                 {
                     response = await HttpClient.SendAsync(req, HttpCompletionOption.ResponseContentRead, linkedCts.Token).ConfigureAwait(false);
                     rawBytes = response.Content != null
-                        ? await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false)
+                        ? await response.Content.ReadAsByteArrayAsync(linkedCts.Token).ConfigureAwait(false)
                         : new byte[0];
                 }
                 catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
