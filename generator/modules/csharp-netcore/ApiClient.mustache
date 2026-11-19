@@ -175,7 +175,9 @@ namespace {{packageName}}.Client
             {
                 PooledConnectionLifetime = TimeSpan.FromMinutes(5),
                 AutomaticDecompression = DecompressionMethods.All,
-                UseCookies = false
+                UseCookies = false,
+                // Open another HTTP/2 connection rather than queueing once the server's concurrent-stream limit is reached
+                EnableMultipleHttp2Connections = true
             };
 
             return new HttpClient(handler) { Timeout = System.Threading.Timeout.InfiniteTimeSpan };
@@ -325,7 +327,12 @@ namespace {{packageName}}.Client
             if (options == null) throw new ArgumentNullException("options");
             if (configuration == null) throw new ArgumentNullException("configuration");
 
-            var request = new HttpRequestMessage(Method(method), BuildUri(path, options));
+            var request = new HttpRequestMessage(Method(method), BuildUri(path, options))
+            {
+                // Prefer HTTP/2 (negotiated via ALPN); falls back to HTTP/1.1 if the server doesn't support it
+                Version = HttpVersion.Version20,
+                VersionPolicy = HttpVersionPolicy.RequestVersionOrLower
+            };
 
             var hasAccept = false;
             if (options.HeaderParameters != null)
