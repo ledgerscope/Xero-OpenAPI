@@ -341,10 +341,10 @@ namespace {{packageName}}.{{apiPackage}}
             {
                 var difference = MinuteStart.AddMinutes(1).AddSeconds(1) - DateTime.UtcNow;
                 if (difference.TotalMilliseconds > 0)
-                    await System.Threading.Tasks.Task.Delay(difference);
+                    await System.Threading.Tasks.Task.Delay(difference, ct);
             }      
 
-            var response = await this.AsynchronousClient.{{#lambda.titlecase}}{{#lambda.lowercase}}{{httpMethod}}{{/lambda.lowercase}}{{/lambda.titlecase}}Async<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}>("{{#vendorExtensions.x-path}}{{{vendorExtensions.x-path}}}{{/vendorExtensions.x-path}}{{^vendorExtensions.x-path}}{{{path}}}{{/vendorExtensions.x-path}}", requestOptions, this.Configuration);
+            var response = await this.AsynchronousClient.{{#lambda.titlecase}}{{#lambda.lowercase}}{{httpMethod}}{{/lambda.lowercase}}{{/lambda.titlecase}}Async<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}>("{{#vendorExtensions.x-path}}{{{vendorExtensions.x-path}}}{{/vendorExtensions.x-path}}{{^vendorExtensions.x-path}}{{{path}}}{{/vendorExtensions.x-path}}", requestOptions, this.Configuration, ct);
 
             await populateRateLimiterIfNeeded(response);
 
