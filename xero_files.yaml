@@ -930,6 +930,7 @@ components:
       enum:
       - Account  
       - BankTransaction
+      - BankTransfer
       - BatchPayment
       - Contact
       - CreditNote
