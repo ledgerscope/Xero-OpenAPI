@@ -142,37 +142,26 @@ namespace {{packageName}}.Client
     {
         private static readonly string[] _defaultAccept = new[] { "application/json", "text/json", "text/x-json", "text/javascript" };
 
-        private static HttpClient _defaultHttpClient;
+        // Thread-safe and created at most once, on first use (LazyThreadSafetyMode.ExecutionAndPublication)
+        private static readonly Lazy<HttpClient> _builtInHttpClient = new Lazy<HttpClient>(CreateDefaultHttpClient);
+        private static HttpClient _customHttpClient;
 
         private readonly String _baseUrl;
         private readonly HttpClient _httpClient;
 
         /// <summary>
         /// Gets or sets the <see cref="HttpClient"/> shared by every <see cref="ApiClient"/> that isn't given one explicitly.
-        /// Set this once at application start-up to control the handler (proxy, connection lifetime, etc.).
+        /// Set this once at application start-up to control the handler (proxy, connection lifetime, etc.);
+        /// the built-in client is then never created.
         /// The client's own Timeout is not used; per-request timeouts come from <see cref="IReadableConfiguration.Timeout"/>.
         /// </summary>
         public static HttpClient DefaultHttpClient
         {
-            get
-            {
-                var client = Volatile.Read(ref _defaultHttpClient);
-                if (client != null) return client;
-
-                var created = CreateDefaultHttpClient();
-                var existing = Interlocked.CompareExchange(ref _defaultHttpClient, created, null);
-                if (existing != null)
-                {
-                    // Another thread won the race
-                    created.Dispose();
-                    return existing;
-                }
-                return created;
-            }
+            get { return Volatile.Read(ref _customHttpClient) ?? _builtInHttpClient.Value; }
             set
             {
                 ArgumentNullException.ThrowIfNull(value);
-                Volatile.Write(ref _defaultHttpClient, value);
+                Volatile.Write(ref _customHttpClient, value);
             }
         }
 
