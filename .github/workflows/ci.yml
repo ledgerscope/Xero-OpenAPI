@@ -64,10 +64,18 @@ jobs:
       with:
         args: generate -t ./generator/modules/csharp-netcore -i ./xero_bankfeeds.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting --additional-properties=packageVersion=4.0.${{github.run_number}} -c ./generator/scripts/csharp/config.yml --model-package Model.Bankfeeds
 
+    - name: Files merge, generating xero_files_output.yaml
+      run: |
+        dotnet yamlmangl merge -input ./xero_files.yaml -delta ./xero_files_delta.yaml -output ./xero_files_output.yaml -headerType full
+        if [ $? -ne 0 ]; then
+          echo "YamlMangl files merge failed with exit code $?"
+          exit 1
+        fi
+
     - name: generate csharp Files
       uses: docker://openapitools/openapi-generator-cli:v4.3.1
       with:
-        args: generate -t ./generator/modules/csharp-netcore -i ./xero_files.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting --additional-properties=packageVersion=4.0.${{github.run_number}} -c ./generator/scripts/csharp/config.yml --model-package Model.Files
+        args: generate -t ./generator/modules/csharp-netcore -i ./xero_files_output.yaml -g csharp-netcore -o ./output/csharp-netcore/accounting --additional-properties=packageVersion=4.0.${{github.run_number}} -c ./generator/scripts/csharp/config.yml --model-package Model.Files
 
     - name: generate csharp Identity
       uses: docker://openapitools/openapi-generator-cli:v4.3.1

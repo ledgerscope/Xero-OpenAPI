@@ -1,0 +1,116 @@
+settings:
+  failIfNotFound: true
+  applyXeroExampleKludge: true
+
+actions:
+
+  - action: addChild
+    path: components > schemas > FileObject > properties > CreatedDateUtc
+    key: format
+    content: date
+
+  - action: addChild
+    path: components > schemas > FileObject > properties > UpdatedDateUtc
+    key: format
+    content: date
+
+  - action: addChild
+    path: components > parameters > requiredHeader
+    key: x-is-tenant-id
+    content: true
+
+  - action: delete
+    path: components > schemas > UploadObject > properties > body > format
+
+  - action: addChild
+    path: components > schemas > UploadObject > properties > body
+    key: format
+    content: binary
+
+  - action: addChild
+    path: components > schemas
+    key: FileError
+    content: 
+      properties:
+        type:
+          description: Error Type
+          type: string
+        title:
+          description: Error Message
+          type: string
+        detail:
+          description: Error Details
+          type: string
+      type: object
+
+  - action: addChild
+    path: paths > /Files > post > responses > 400 > content > application/json
+    key: schema
+    content:
+         $ref: '#/components/schemas/FileError'
+
+  - action: addChild
+    path: paths > /Files/{FileId} > put > responses > 400 > content > application/json
+    key: schema
+    content:
+         $ref: '#/components/schemas/FileError'
+
+  - action: addChild
+    path: paths > /Files/{FolderId} > post > responses > 400 > content > application/json
+    key: schema
+    content:
+         $ref: '#/components/schemas/FileError'
+
+  - action: addChild
+    path: paths > /Files/{FileId}/Associations > post > responses > 400 > content > application/json
+    key: schema
+    content:
+         $ref: '#/components/schemas/FileError'
+
+  - action: addChild
+    path: paths > /Folders > post > responses > 400 > content > application/json
+    key: schema
+    content:
+         $ref: '#/components/schemas/FileError'
+
+  - action: addChild
+    path: paths > /Folders/{FolderId} > put > responses > 400 > content > application/json
+    key: schema
+    content:
+         $ref: '#/components/schemas/FileError'
+
+  - action: addChild
+    path: components > schemas > ObjectGroup > enum
+    content: BankTransfer
+  
+  - action: addChild
+    path: components > schemas > ObjectGroup > enum
+    content: BatchPayment
+  
+  - action: addChild
+    path: components > schemas > ObjectGroup > enum
+    content: FixedAsset
+  
+  - action: addChild
+    path: components > schemas > ObjectGroup > enum
+    content: FixedAssets
+  
+  - action: addChild
+    path: components > schemas > ObjectGroup > enum
+    content: Payrun
+  
+  - action: addChild
+    path: components > schemas > ObjectGroup > enum
+    content: PurchaseOrder
+  
+  - action: addChild
+    path: components > schemas > ObjectGroup > enum
+    content: Reconciliation
+  
+  - action: addChild
+    path: components > schemas > ObjectGroup > enum
+    content: Unknown
+  
+  - action: addChild
+    path: components > schemas > ObjectType > enum
+    content: PayBatch
